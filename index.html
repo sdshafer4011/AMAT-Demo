@@ -38,6 +38,14 @@
   --green-tag-text: #166534;
   --amber-tag-bg: #FEF3C7;
   --amber-tag-text: #92400E;
+  --yellow-tag-bg: #FEF9C3;
+  --yellow-tag-text: #854D0E;
+  --orange-tag-bg: #FFEDD5;
+  --orange-tag-text: #9A3412;
+  --priority-low: #15803D;
+  --priority-medium: #A16207;
+  --priority-high: #C2410C;
+  --priority-escalated: #B91C1C;
   --orange: #F97316;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -63,6 +71,15 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
 .zone-bar { background: var(--blue-mid); padding: 9px 20px; display: flex; align-items: center; flex-wrap: wrap; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
 .zone-label { font-size: 11px; color: rgba(255,255,255,0.55); margin-right: 4px; }
 .zone-val { font-size: 11px; font-weight: 600; color: #fff; }
+.zone-select {
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  background: transparent; border: none; outline: none;
+  color: #fff; font-size: 11px; font-weight: 600; font-family: inherit;
+  padding: 2px 18px 2px 0; margin: 0; cursor: pointer;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+  background-repeat: no-repeat; background-position: right center; background-size: 11px 11px;
+}
+.zone-select option { color: #111; background: #fff; font-weight: 500; }
 .zone-sep { color: rgba(255,255,255,0.25); margin: 0 10px; font-size: 11px; }
 .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: inline-block; margin-right: 5px; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.45} }
@@ -77,6 +94,10 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
 .prio-label { font-size: 10px; font-weight: 600; color: var(--amber-label); letter-spacing: .07em; text-transform: uppercase; }
 .prio-title { font-size: 14px; font-weight: 600; color: var(--amber-text); margin-top: 3px; line-height: 1.35; }
 .prio-meta { font-size: 11px; color: var(--amber-label); margin-top: 4px; line-height: 1.4; }
+.priority-banner-ok { background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: var(--radius-md); padding: 14px 16px; display: none; align-items: center; gap: 12px; box-shadow: var(--shadow-sm); -webkit-user-select: none; }
+.prio-icon-ok { width: 34px; height: 34px; border-radius: 8px; background: var(--green); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.prio-label-ok { font-size: 10px; font-weight: 600; color: var(--green-tag-text); letter-spacing: .07em; text-transform: uppercase; }
+.prio-title-ok { font-size: 14px; font-weight: 600; color: var(--green-tag-text); margin-top: 3px; line-height: 1.35; }
 .sla-pill { display: inline-block; background: var(--red); color: #fff; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; margin-left: 6px; vertical-align: middle; }
 
 /* SECTION HEADER */
@@ -100,7 +121,7 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
 
 /* TOOL GRID */
 .tool-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-.tool-card { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius-md); padding: 12px 13px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .12s; -webkit-user-select: none; position: relative; overflow: hidden; }
+.tool-card { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius-md); padding: 12px 13px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .12s; -webkit-user-select: none; position: relative; overflow: hidden; display: flex; flex-direction: column; }
 .tool-card::before { content:''; position: absolute; left:0; top:0; bottom:0; width: 3px; }
 .tool-card.t-red::before { background: var(--red); }
 .tool-card.t-amber::before { background: var(--amber); }
@@ -121,6 +142,9 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
 .status-dot.orange { background: var(--orange); }
 .status-text { font-size: 10px; color: var(--text2); line-height: 1.3; }
 .tool-tag { margin-top: 7px; font-size: 10px; font-weight: 500; padding: 3px 7px; border-radius: 6px; display: inline-block; line-height: 1.3; }
+.tool-sub { margin-top: auto; padding-top: 7px; display: flex; justify-content: flex-end; }
+.tool-sub-label { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text3); cursor: pointer; -webkit-user-select: none; }
+.tool-sub-check { width: 13px; height: 13px; flex-shrink: 0; accent-color: var(--blue-accent); cursor: pointer; }
 .tool-tag.alert { background: var(--amber-bg); color: var(--amber-label); }
 .tool-tag.info { background: var(--blue-tag-bg); color: var(--blue-tag-text); }
 .tool-tag.danger { background: var(--red-tag-bg); color: var(--red-tag-text); }
@@ -148,6 +172,8 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
 .activity-item { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius-md); padding: 13px 16px; display: flex; align-items: center; gap: 13px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .12s; -webkit-user-select: none; min-height: 62px; }
 .activity-item:active { transform: scale(0.985); }
 .act-time { font-size: 12px; font-weight: 600; color: var(--text2); min-width: 40px; text-align: right; font-variant-numeric: tabular-nums; }
+.act-time.tbd { min-width: auto; width: auto; flex-shrink: 0; font-size: 10px; font-style: italic; font-weight: 600; color: var(--text3); text-align: left; white-space: nowrap; }
+.act-time.nocap { min-width: auto; width: auto; flex-shrink: 0; font-size: 10px; font-weight: 700; color: var(--red); text-align: left; white-space: nowrap; }
 .act-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .act-dot.red { background: var(--red); }
 .act-dot.blue { background: var(--blue-accent); }
@@ -157,12 +183,25 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
 .act-main { flex: 1; min-width: 0; }
 .act-title { font-size: 13px; font-weight: 600; color: var(--text1); line-height: 1.35; }
 .act-sub { font-size: 11px; color: var(--text3); margin-top: 3px; }
-.act-badge { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; white-space: nowrap; }
+.act-badge { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; white-space: nowrap; width: 112px; text-align: center; }
 .act-badge.corrective { background: var(--red-tag-bg); color: var(--red-tag-text); }
 .act-badge.pm { background: var(--green-tag-bg); color: var(--green-tag-text); }
 .act-badge.pm-re { background: var(--blue-tag-bg); color: var(--blue-tag-text); }
 .act-badge.remote { background: var(--purple-bg); color: var(--purple-text); }
 .act-badge.install { background: var(--amber-tag-bg); color: var(--amber-tag-text); }
+.act-priority { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; white-space: nowrap; width: 66px; text-align: center; }
+.act-priority.low { background: var(--priority-low); color: #fff; }
+.act-priority.medium { background: var(--priority-medium); color: #fff; }
+.act-priority.high { background: var(--priority-high); color: #fff; }
+.act-priority.escalated { background: var(--priority-escalated); color: #fff; }
+.activity-tabs { display: flex; gap: 18px; margin-bottom: 10px; border-bottom: 1px solid var(--border2); }
+.activity-tab { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); padding: 0 2px 8px; cursor: pointer; border-bottom: 2px solid transparent; -webkit-user-select: none; white-space: nowrap; }
+.activity-tab.active { color: var(--text1); border-bottom-color: var(--blue-accent); }
+.activity-tabs-date { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); white-space: nowrap; }
+.activity-tabs-right { margin-left: auto; display: flex; align-items: center; gap: 12px; padding-bottom: 8px; }
+.activity-select { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--blue-accent); cursor: pointer; }
+.activity-action-btn { display: none; background: var(--blue-accent); color: #fff; font-size: 11px; font-weight: 600; padding: 6px 14px; border-radius: 14px; border: none; cursor: pointer; white-space: nowrap; box-shadow: var(--shadow-sm); -webkit-user-select: none; }
+.activity-action-btn:active { transform: scale(0.96); }
 
 /* FOOTER */
 .footer-bar { background: var(--blue-dark); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 -16px 0; }
@@ -236,7 +275,10 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
 .subview.active { display: flex; }
 .subview-header { background: var(--blue-dark); padding: 52px 20px 14px; display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 10; }
 .back-btn { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500; cursor: pointer; -webkit-user-select: none; padding: 6px 0; }
-.subview-title { font-size: 16px; font-weight: 600; color: #fff; }
+.subview-title { font-size: 16px; font-weight: 600; color: #fff; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.subview-meta { margin-left: auto; text-align: right; flex-shrink: 0; }
+.subview-zone { font-size: 11px; font-weight: 600; color: #fff; }
+.subview-datetime { font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 2px; }
 .subview-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; padding-bottom: 36px; }
 .subview-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
 .sheet-close { margin-top: 18px; width: 100%; padding: 14px; background: var(--blue-dark); color: #fff; font-size: 14px; font-weight: 600; border: none; border-radius: var(--radius-md); cursor: pointer; transition: opacity .15s; }
@@ -317,11 +359,11 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
   <div class="header">
     <!-- Row 1: SAP brand RIGHT justified -->
     <div style="text-align:right">
-      <div class="header-brand">SAP FIELD SERVICE MANAGEMENT</div>
+      <div class="header-brand">SAP SERVICE MANAGEMENT</div>
     </div>
     <!-- Row 2: Date and time RIGHT justified -->
     <div style="text-align:right">
-      <div class="header-time">Fri 28 Aug 2026 · 08:05 AM PST</div>
+      <div class="header-time" id="header-time">Tue 12 May 2026 · 03:53 PM CST</div>
     </div>
     <!-- Row 3: Name LEFT | Inbox tile + Refresh RIGHT -->
     <div class="header-row" style="margin-top:4px">
@@ -348,9 +390,13 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
 
   <!-- ZONE BAR -->
   <div class="zone-bar">
-    <span class="zone-label">Zone:</span><span class="zone-val">CVD Bay — Building 4</span>
+    <span class="zone-label">Zone:</span>
+    <select class="zone-select" id="zone-select" onchange="handleZoneChange()">
+      <option value="b4" selected>CVD Bay — Building 4</option>
+      <option value="b1">CVD Bay — Building 1</option>
+    </select>
     <span class="zone-sep">|</span>
-    <span class="live-dot"></span><span class="zone-val">12 tools</span>
+    <span class="live-dot"></span><span class="zone-val" id="zone-tool-count">12 tools</span>
     <span class="zone-sep">|</span>
     <span class="zone-label">ECC</span><span class="zone-val" style="color:#22C55E">Live</span>
     <span class="zone-sep">|</span>
@@ -363,7 +409,7 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
   <div class="body">
 
     <!-- PRIORITY BANNER -->
-    <div class="priority-banner" onclick="openSheet('cvd204-alert')">
+    <div class="priority-banner" id="priority-banner" onclick="openSheet('cvd204-alert')">
       <div class="prio-icon">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       </div>
@@ -375,27 +421,38 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
     </div>
 
+    <!-- PRIORITY BANNER — ALL CLEAR (Building 1) -->
+    <div class="priority-banner-ok" id="priority-banner-ok">
+      <div class="prio-icon-ok">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <div style="flex:1">
+        <div class="prio-label-ok">No Active Priority 1 Alerts</div>
+        <div class="prio-title-ok">All tools in CVD Bay — Building 1 operating within normal parameters</div>
+      </div>
+    </div>
+
     <!-- ZONE OVERVIEW -->
     <div>
       <div class="section-label" style="margin-bottom:8px">Zone overview</div>
       <div class="stat-row">
-        <div class="stat-card" onclick="openSubview('all12')">
-          <div class="stat-val green">12</div>
+        <div class="stat-card" id="stat-card-tools" onclick="openSubview('all12')">
+          <div class="stat-val green" id="stat-val-tools">12</div>
           <div class="stat-lbl">Tools in zone</div>
           <div class="stat-arrow">View all ›</div>
         </div>
-        <div class="stat-card" onclick="openSheet('cvd204')">
-          <div class="stat-val red">1</div>
+        <div class="stat-card" id="stat-card-oos" onclick="openSheet('cvd204')">
+          <div class="stat-val red" id="stat-val-oos">1</div>
           <div class="stat-lbl">Out of service</div>
-          <div class="stat-arrow">View tool ›</div>
+          <div class="stat-arrow" id="stat-arrow-oos">View tool ›</div>
         </div>
-        <div class="stat-card" onclick="openSubview('atrisk')">
-          <div class="stat-val amber">2</div>
+        <div class="stat-card" id="stat-card-atrisk" onclick="openSubview('atrisk')">
+          <div class="stat-val amber" id="stat-val-atrisk">2</div>
           <div class="stat-lbl">At-risk / alerts</div>
           <div class="stat-arrow">View tools ›</div>
         </div>
-        <div class="stat-card" onclick="openSubview('myactivities')">
-          <div class="stat-val" style="color:var(--purple)">5</div>
+        <div class="stat-card" id="stat-card-activities" onclick="openSubview('myactivities')">
+          <div class="stat-val" style="color:var(--purple)" id="stat-val-activities">5</div>
           <div class="stat-lbl">My activities today</div>
           <div class="stat-arrow">View tools ›</div>
         </div>
@@ -415,49 +472,87 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
         <div class="legend-item"><span class="legend-dot" style="background:var(--orange)"></span>Pending parts</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>In service</div>
       </div>
-      <div class="tool-grid">
+      <div class="tool-grid" id="tool-grid-b4">
         <div class="tool-card t-red" onclick="openSheet('cvd204')">
           <div class="tool-id">10190551 CVD-204</div>
           <div class="tool-type">Applied Centura · CVD</div>
           <div class="tool-status"><span class="status-dot red"></span><span class="status-text">Out of service</span></div>
           <div class="tool-tag alert">Pressure exceedance · P1</div>
-        </div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
         <div class="tool-card t-amber" onclick="openSheet('cvd208')">
           <div class="tool-id">10190562 CVD-208</div>
           <div class="tool-type">Applied Centura · CVD</div>
           <div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted — monitoring</span></div>
           <div class="tool-tag alert">RF power drift · P2</div>
-        </div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
         <div class="tool-card t-blue" onclick="openSheet('cvd201')">
           <div class="tool-id">10190556 CVD-201</div>
           <div class="tool-type">Applied Centura · CVD</div>
           <div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 09:00</span></div>
           <div class="tool-tag info">Planned PM today</div>
-        </div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
         <div class="tool-card t-green" onclick="openSheet('cvd202')">
           <div class="tool-id">10190557 CVD-202</div>
           <div class="tool-type">Applied Centura · CVD</div>
           <div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div>
-        </div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)"> Subscribed</label></div></div>
         <div class="tool-card t-green" onclick="openSheet('cvd203')">
           <div class="tool-id">10190558 CVD-203</div>
           <div class="tool-type">Applied Centura · CVD</div>
           <div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div>
-        </div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
         <div class="tool-card t-blue" onclick="openSheet('cvd207')">
           <div class="tool-id">10190561 CVD-207</div>
           <div class="tool-type">Applied Centura · CVD</div>
           <div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 15:00</span></div>
           <div class="tool-tag info">PM rescheduled by P&S</div>
-        </div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      </div>
+      <div class="tool-grid" id="tool-grid-b1" style="display:none">
+        <div class="tool-card t-amber" onclick="openSheet('cvd152')">
+          <div class="tool-id">10190442 CVD-152</div>
+          <div class="tool-type">Applied Centura · CVD</div>
+          <div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted — monitoring</span></div>
+          <div class="tool-tag alert">RF power drift · P2</div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+        <div class="tool-card t-amber" onclick="openSheet('cvd156')">
+          <div class="tool-id">10190446 CVD-156</div>
+          <div class="tool-type">Applied Centura · CVD</div>
+          <div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted — monitoring</span></div>
+          <div class="tool-tag alert">Pressure trending · P2</div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+        <div class="tool-card t-amber" onclick="openSheet('cvd160')">
+          <div class="tool-id">10190450 CVD-160</div>
+          <div class="tool-type">Applied Centura · CVD</div>
+          <div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted — monitoring</span></div>
+          <div class="tool-tag alert">Temperature drift · P2</div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+        <div class="tool-card t-blue" onclick="openSheet('cvd154')">
+          <div class="tool-id">10190444 CVD-154</div>
+          <div class="tool-type">Applied Centura · CVD</div>
+          <div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 10:00</span></div>
+          <div class="tool-tag info">Planned PM today</div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+        <div class="tool-card t-blue" onclick="openSheet('cvd158')">
+          <div class="tool-id">10190448 CVD-158</div>
+          <div class="tool-type">Applied Centura · CVD</div>
+          <div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 13:00</span></div>
+          <div class="tool-tag info">Planned PM today</div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+        <div class="tool-card t-blue" onclick="openSheet('cvd163')">
+          <div class="tool-id">10190453 CVD-163</div>
+          <div class="tool-type">Applied Centura · CVD</div>
+          <div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 15:30</span></div>
+          <div class="tool-tag info">Planned PM today</div>
+        <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
       </div>
     </div>
 
     <!-- TELEMETRY -->
     <div>
       <div class="section-label" style="margin-bottom:8px">Tool telemetry alerts — via SAP APM with integration to AIx</div>
-      <div class="telemetry-card">
-        <div class="telem-row" onclick="openSheet('telem204')">
+      <div class="telemetry-card" id="telemetry-card-b4">
+        <div class="telem-row" onclick="openSheet('cvd204-alert')">
           <div class="telem-left">
             <div class="telem-param">Process chamber pressure</div>
             <div class="telem-source">10190551 CVD-204 · Chamber A · APC → ECC Notif 10042817</div>
@@ -488,12 +583,60 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
           </div>
         </div>
       </div>
+      <div class="telemetry-card" id="telemetry-card-b1" style="display:none">
+        <div class="telem-row" onclick="openSheet('telem152')">
+          <div class="telem-left">
+            <div class="telem-param">RF power delivery</div>
+            <div class="telem-source">10190442 CVD-152 · Generator 1 · APC → ECC Notif 10042901</div>
+          </div>
+          <div class="telem-right">
+            <div class="telem-val warn">1,815 W ↑ <span class="chevron">›</span></div>
+            <div class="telem-spec">Spec: ≤1,750 W · 25 min drift</div>
+          </div>
+        </div>
+        <div class="telem-row" onclick="openSheet('telem156')">
+          <div class="telem-left">
+            <div class="telem-param">Process chamber pressure</div>
+            <div class="telem-source">10190446 CVD-156 · Chamber A · APC → ECC Notif 10042902</div>
+          </div>
+          <div class="telem-right">
+            <div class="telem-val warn">0.00625 mbar ↑ <span class="chevron">›</span></div>
+            <div class="telem-spec">Spec: 0.00560–0.00613 mbar · 40 min trending</div>
+          </div>
+        </div>
+        <div class="telem-row" onclick="openSheet('telem160')">
+          <div class="telem-left">
+            <div class="telem-param">Substrate temperature</div>
+            <div class="telem-source">10190450 CVD-160 · Susceptor · APC → ECC Notif 10042903</div>
+          </div>
+          <div class="telem-right">
+            <div class="telem-val warn">214.8°C ↑ <span class="chevron">›</span></div>
+            <div class="telem-spec">Spec: ≤210°C · 30 min drift</div>
+          </div>
+        </div>
+        <div class="telem-row" onclick="openSheet('telem150')">
+          <div class="telem-left">
+            <div class="telem-param">Deposition rate uniformity</div>
+            <div class="telem-source">10190440 CVD-150 · Full chamber · APC → ECC Notif 10042904</div>
+          </div>
+          <div class="telem-right">
+            <div class="telem-val ok">±1.6% ✓ <span class="chevron">›</span></div>
+            <div class="telem-spec">Spec: ±2.5% · Within range</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- MY ACTIVITIES -->
     <div>
-      <div class="section-header">
-        <div class="section-label">My activities today</div>
+      <div class="activity-tabs">
+        <div class="activity-tab active" id="tab-myact" onclick="switchActivityTab('myact')">My activities today (5)</div>
+        <div class="activity-tab" id="tab-unassigned" onclick="switchActivityTab('unassigned')">Unassigned activities (7)</div>
+        <div class="activity-tabs-right">
+          <button class="activity-action-btn" id="auto-schedule-btn" onclick="runAutoSchedule()">Auto-schedule</button>
+          <button class="activity-action-btn" id="assign-to-me-btn" onclick="assignSelectedToMe()">Assign to me</button>
+          <div class="activity-tabs-date" id="activity-tabs-date">Tue 12 May 2026</div>
+        </div>
       </div>
       <div class="legend" style="margin-bottom:8px;padding:0 2px">
         <div class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>Corrective</div>
@@ -502,51 +645,170 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
         <div class="legend-item"><span class="legend-dot" style="background:var(--purple)"></span>Remote consult</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--blue-accent)"></span>PM — rescheduled</div>
       </div>
-      <div class="activity-list">
-        <div class="activity-item" onclick="openSheet('act1')">
+      <div class="activity-list" id="activity-list-myact">
+        <div class="activity-item" onclick="openSheet('act1')" data-duration-min="150">
           <div class="act-time">07:15</div>
           <div class="act-dot red"></div>
           <div class="act-main">
             <div class="act-title">10190551 CVD-204 · Process chamber pressure — investigate &amp; remediate</div>
             <div class="act-sub">Order 4000821 · Assigned by dispatcher · Est. 2.5h</div>
           </div>
+          <div class="act-priority escalated">Escalated</div>
           <div class="act-badge corrective">Corrective</div>
         </div>
-        <div class="activity-item" onclick="openSheet('act2')">
+        <div class="activity-item" onclick="openSheet('act2')" data-duration-min="180">
           <div class="act-time">09:00</div>
           <div class="act-dot green"></div>
           <div class="act-main">
             <div class="act-title">10190556 CVD-201 · Quarterly preventive maintenance — chamber kit</div>
-            <div class="act-sub">Order 4000804 · Scheduled · Est. 3h</div>
+            <div class="act-sub">Order 4000804 · Auto assigned · Est. 3h</div>
           </div>
+          <div class="act-priority low">Low</div>
           <div class="act-badge pm">Planned PM</div>
         </div>
-        <div class="activity-item" onclick="openSheet('act3')">
+        <div class="activity-item" onclick="openSheet('act3')" data-duration-min="60">
           <div class="act-time">12:00</div>
           <div class="act-dot amber"></div>
           <div class="act-main">
             <div class="act-title">10190566 CVD-213 · New tool installation — electrical &amp; facilities hookup</div>
-            <div class="act-sub">Order 4000835 · Phase 2 of 3 · WBS AMAT-INSTALL-2025-0042</div>
+            <div class="act-sub">Order 4000835 · Assigned by dispatcher · Phase 2 of 3 · WBS AMAT-INSTALL-2026-0042</div>
           </div>
+          <div class="act-priority medium">Medium</div>
           <div class="act-badge install">Installation</div>
         </div>
-        <div class="activity-item" onclick="openSheet('act4')">
+        <div class="activity-item" onclick="openSheet('act4')" data-duration-min="60">
           <div class="act-time">13:30</div>
           <div class="act-dot purple"></div>
           <div class="act-main">
             <div class="act-title">10190562 CVD-208 · RF power drift — remote review with L3 specialist</div>
-            <div class="act-sub">CRM Ticket SR-48821 · Escalated · Teams link attached</div>
+            <div class="act-sub">CRM Ticket SR-48821 · Self assigned · Escalated · Teams link attached</div>
           </div>
+          <div class="act-priority high">High</div>
           <div class="act-badge remote">Remote</div>
         </div>
-        <div class="activity-item" onclick="openSheet('act5')">
+        <div class="activity-item" onclick="openSheet('act5')" data-duration-min="120">
           <div class="act-time">15:00</div>
           <div class="act-dot blue"></div>
           <div class="act-main">
             <div class="act-title">10190561 CVD-207 · Preventive maintenance — rescheduled from AM</div>
-            <div class="act-sub">Order 4000817 · Auto-rescheduled — P1 priority override</div>
+            <div class="act-sub">Order 4000817 · Auto assigned · Auto-rescheduled — P1 priority override</div>
           </div>
+          <div class="act-priority medium">Medium</div>
           <div class="act-badge pm-re">PM — rescheduled</div>
+        </div>
+      </div>
+      <div class="activity-list" id="activity-list-unassigned-b4" style="display:none">
+        <div class="activity-item" onclick="openSheet('unassign1')" data-duration-min="120">
+          <input type="checkbox" class="activity-select" data-id="1" onclick="event.stopPropagation(); handleActivitySelect(this)">
+          <div class="act-dot red"></div>
+          <div class="act-main">
+            <div class="act-title">10190558 CVD-203 · Intermittent vacuum pump noise — needs triage</div>
+            <div class="act-sub">CRM Ticket SR-48830 · Planned Start: <span id="plan-start-1"></span> · Planned Finish: <span id="plan-finish-1"></span> · Est. 2h</div>
+          </div>
+          <div class="act-priority high">High</div>
+          <div class="act-badge corrective">Corrective</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('unassign2')" data-duration-min="60">
+          <input type="checkbox" class="activity-select" data-id="2" onclick="event.stopPropagation(); handleActivitySelect(this)">
+          <div class="act-dot purple"></div>
+          <div class="act-main">
+            <div class="act-title">10190560 CVD-206 · Recipe drift review requested by process engineering</div>
+            <div class="act-sub">CRM Ticket SR-48831 · Planned Start: <span id="plan-start-2"></span> · Planned Finish: <span id="plan-finish-2"></span> · Est. 1h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge remote">Remote</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('unassign3')" data-duration-min="90">
+          <input type="checkbox" class="activity-select" data-id="3" onclick="event.stopPropagation(); handleActivitySelect(this)">
+          <div class="act-dot amber"></div>
+          <div class="act-main">
+            <div class="act-title">10190563 CVD-209 · Spare parts kit installation — throttle valve</div>
+            <div class="act-sub">Order 4000906 · Planned Start: <span id="plan-start-3"></span> · Planned Finish: <span id="plan-finish-3"></span> · Est. 1.5h</div>
+          </div>
+          <div class="act-priority low">Low</div>
+          <div class="act-badge install">Installation</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('unassign4')" data-duration-min="120">
+          <input type="checkbox" class="activity-select" data-id="4" onclick="event.stopPropagation(); handleActivitySelect(this)">
+          <div class="act-dot green"></div>
+          <div class="act-main">
+            <div class="act-title">10190557 CVD-202 · Annual calibration verification — pressure transducers</div>
+            <div class="act-sub">Order 4000907 · Planned Start: <span id="plan-start-4"></span> · Planned Finish: <span id="plan-finish-4"></span> · Est. 2h</div>
+          </div>
+          <div class="act-priority low">Low</div>
+          <div class="act-badge pm">Planned PM</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('unassign5')" data-duration-min="60">
+          <input type="checkbox" class="activity-select" data-id="5" onclick="event.stopPropagation(); handleActivitySelect(this)">
+          <div class="act-dot amber"></div>
+          <div class="act-main">
+            <div class="act-title">10190559 CVD-205 · Firmware update — process controller</div>
+            <div class="act-sub">Order 4000908 · Planned Start: <span id="plan-start-5"></span> · Planned Finish: <span id="plan-finish-5"></span> · Est. 1h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge install">Installation</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('unassign6')" data-duration-min="90">
+          <input type="checkbox" class="activity-select" data-id="6" onclick="event.stopPropagation(); handleActivitySelect(this)">
+          <div class="act-dot red"></div>
+          <div class="act-main">
+            <div class="act-title">10190564 CVD-210 · Leak check follow-up — customer reported odor near enclosure</div>
+            <div class="act-sub">CRM Ticket SR-48832 · Planned Start: <span id="plan-start-6"></span> · Planned Finish: <span id="plan-finish-6"></span> · Est. 1.5h</div>
+          </div>
+          <div class="act-priority high">High</div>
+          <div class="act-badge corrective">Corrective</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('unassign7')" data-duration-min="60">
+          <input type="checkbox" class="activity-select" data-id="7" onclick="event.stopPropagation(); handleActivitySelect(this)">
+          <div class="act-dot purple"></div>
+          <div class="act-main">
+            <div class="act-title">10190565 CVD-211 · Remote review — anomalous OEE dip flagged by AIx</div>
+            <div class="act-sub">CRM Ticket SR-48833 · Planned Start: <span id="plan-start-7"></span> · Planned Finish: <span id="plan-finish-7"></span> · Est. 1h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge remote">Remote</div>
+        </div>
+      </div>
+      <div class="activity-list" id="activity-list-unassigned-b1" style="display:none">
+        <div class="activity-item" onclick="openSheet('b1unassign1')" data-duration-min="60">
+          <input type="checkbox" class="activity-select" data-id="b1-1" onclick="event.stopPropagation(); handleActivitySelect(this)">
+          <div class="act-dot purple"></div>
+          <div class="act-main">
+            <div class="act-title">10190442 CVD-152 · RF power drift — remote review requested</div>
+            <div class="act-sub">CRM Ticket SR-49001 · Planned Start: <span id="plan-start-b1-1"></span> · Planned Finish: <span id="plan-finish-b1-1"></span> · Est. 1h</div>
+          </div>
+          <div class="act-priority high">High</div>
+          <div class="act-badge remote">Remote</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('b1unassign2')" data-duration-min="90">
+          <input type="checkbox" class="activity-select" data-id="b1-2" onclick="event.stopPropagation(); handleActivitySelect(this)">
+          <div class="act-dot red"></div>
+          <div class="act-main">
+            <div class="act-title">10190446 CVD-156 · Chamber pressure trending — on-site inspection needed</div>
+            <div class="act-sub">CRM Ticket SR-49002 · Planned Start: <span id="plan-start-b1-2"></span> · Planned Finish: <span id="plan-finish-b1-2"></span> · Est. 1.5h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge corrective">Corrective</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('b1unassign3')" data-duration-min="120">
+          <input type="checkbox" class="activity-select" data-id="b1-3" onclick="event.stopPropagation(); handleActivitySelect(this)">
+          <div class="act-dot amber"></div>
+          <div class="act-main">
+            <div class="act-title">10190450 CVD-160 · Susceptor heater element — replacement kit installation</div>
+            <div class="act-sub">Order 4000950 · Planned Start: <span id="plan-start-b1-3"></span> · Planned Finish: <span id="plan-finish-b1-3"></span> · Est. 2h</div>
+          </div>
+          <div class="act-priority high">High</div>
+          <div class="act-badge install">Installation</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('b1unassign4')" data-duration-min="120">
+          <input type="checkbox" class="activity-select" data-id="b1-4" onclick="event.stopPropagation(); handleActivitySelect(this)">
+          <div class="act-dot green"></div>
+          <div class="act-main">
+            <div class="act-title">10190440 CVD-150 · Annual calibration verification — process baseline</div>
+            <div class="act-sub">Order 4000951 · Planned Start: <span id="plan-start-b1-4"></span> · Planned Finish: <span id="plan-finish-b1-4"></span> · Est. 2h</div>
+          </div>
+          <div class="act-priority low">Low</div>
+          <div class="act-badge pm">Planned PM</div>
         </div>
       </div>
     </div>
@@ -569,21 +831,104 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
       Back
     </div>
     <div class="subview-title">All tools — CVD Bay (12)</div>
+    <div class="subview-meta">
+      <div class="subview-zone">CVD Bay — Building 4</div>
+      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+    </div>
   </div>
   <div class="subview-body">
     <div class="subview-grid">
-      <div class="tool-card t-red" onclick="openSheet('cvd204')"><div class="tool-id">10190551 CVD-204</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot red"></span><span class="status-text">Out of service</span></div><div class="tool-tag danger">P1 · SLA at risk</div></div>
-      <div class="tool-card t-amber" onclick="openSheet('cvd208')"><div class="tool-id">10190562 CVD-208</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted</span></div><div class="tool-tag alert">RF drift · P2</div></div>
-      <div class="tool-card t-blue" onclick="openSheet('cvd201')"><div class="tool-id">10190556 CVD-201</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 09:00</span></div></div>
-      <div class="tool-card t-green" onclick="openSheet('cvd202')"><div class="tool-id">10190557 CVD-202</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div></div>
-      <div class="tool-card t-green" onclick="openSheet('cvd203')"><div class="tool-id">10190558 CVD-203</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div></div>
-      <div class="tool-card t-green" onclick="openSheet('cvd205')"><div class="tool-id">10190559 CVD-205</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div></div>
-      <div class="tool-card t-green" onclick="openSheet('cvd206')"><div class="tool-id">10190560 CVD-206</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div></div>
-      <div class="tool-card t-blue" onclick="openSheet('cvd207')"><div class="tool-id">10190561 CVD-207</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 15:00</span></div></div>
-      <div class="tool-card t-green" onclick="openSheet('cvd209')"><div class="tool-id">10190563 CVD-209</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div></div>
-      <div class="tool-card t-green" onclick="openSheet('cvd210')"><div class="tool-id">10190564 CVD-210</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div></div>
-      <div class="tool-card t-green" onclick="openSheet('cvd211')"><div class="tool-id">10190565 CVD-211</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div></div>
-      <div class="tool-card t-purple" onclick="openSheet('cvd213')"><div class="tool-id">10190566 CVD-213</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot purple"></span><span class="status-text">Under installation</span></div><div class="tool-tag install">Phase 2 of 3</div></div>
+      <div class="tool-card t-red" onclick="openSheet('cvd204')"><div class="tool-id">10190551 CVD-204</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot red"></span><span class="status-text">Out of service</span></div><div class="tool-tag danger">P1 · SLA at risk</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-amber" onclick="openSheet('cvd208')"><div class="tool-id">10190562 CVD-208</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted</span></div><div class="tool-tag alert">RF drift · P2</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-blue" onclick="openSheet('cvd201')"><div class="tool-id">10190556 CVD-201</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 09:00</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd202')"><div class="tool-id">10190557 CVD-202</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)"> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd203')"><div class="tool-id">10190558 CVD-203</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd205')"><div class="tool-id">10190559 CVD-205</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd206')"><div class="tool-id">10190560 CVD-206</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)"> Subscribed</label></div></div>
+      <div class="tool-card t-blue" onclick="openSheet('cvd207')"><div class="tool-id">10190561 CVD-207</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 15:00</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd209')"><div class="tool-id">10190563 CVD-209</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd210')"><div class="tool-id">10190564 CVD-210</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)"> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd211')"><div class="tool-id">10190565 CVD-211</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-purple" onclick="openSheet('cvd213')"><div class="tool-id">10190566 CVD-213</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot purple"></span><span class="status-text">Under installation</span></div><div class="tool-tag install">Phase 2 of 3</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUBVIEW — ALL 16 TOOLS (BUILDING 1) -->
+<div class="subview" id="sub-b1all">
+  <div class="subview-header">
+    <div class="back-btn" onclick="closeSubview('b1all')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </div>
+    <div class="subview-title">All tools — CVD Bay (16)</div>
+    <div class="subview-meta">
+      <div class="subview-zone">CVD Bay — Building 1</div>
+      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+    </div>
+  </div>
+  <div class="subview-body">
+    <div class="subview-grid">
+      <div class="tool-card t-green" onclick="openSheet('cvd150')"><div class="tool-id">10190440 CVD-150</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd151')"><div class="tool-id">10190441 CVD-151</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-amber" onclick="openSheet('cvd152')"><div class="tool-id">10190442 CVD-152</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted — monitoring</span></div><div class="tool-tag alert">RF power drift · P2</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd153')"><div class="tool-id">10190443 CVD-153</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)"> Subscribed</label></div></div>
+      <div class="tool-card t-blue" onclick="openSheet('cvd154')"><div class="tool-id">10190444 CVD-154</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 10:00</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd155')"><div class="tool-id">10190445 CVD-155</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-amber" onclick="openSheet('cvd156')"><div class="tool-id">10190446 CVD-156</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted — monitoring</span></div><div class="tool-tag alert">Pressure trending · P2</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd157')"><div class="tool-id">10190447 CVD-157</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-blue" onclick="openSheet('cvd158')"><div class="tool-id">10190448 CVD-158</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 13:00</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd159')"><div class="tool-id">10190449 CVD-159</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)"> Subscribed</label></div></div>
+      <div class="tool-card t-amber" onclick="openSheet('cvd160')"><div class="tool-id">10190450 CVD-160</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted — monitoring</span></div><div class="tool-tag alert">Temperature drift · P2</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd161')"><div class="tool-id">10190451 CVD-161</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd162')"><div class="tool-id">10190452 CVD-162</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)"> Subscribed</label></div></div>
+      <div class="tool-card t-blue" onclick="openSheet('cvd163')"><div class="tool-id">10190453 CVD-163</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM · 15:30</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd164')"><div class="tool-id">10190454 CVD-164</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-green" onclick="openSheet('cvd165')"><div class="tool-id">10190455 CVD-165</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot green"></span><span class="status-text">In service</span></div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)"> Subscribed</label></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUBVIEW — AT RISK (BUILDING 1) -->
+<div class="subview" id="sub-b1atrisk">
+  <div class="subview-header">
+    <div class="back-btn" onclick="closeSubview('b1atrisk')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </div>
+    <div class="subview-title">At-risk tools (3)</div>
+    <div class="subview-meta">
+      <div class="subview-zone">CVD Bay — Building 1</div>
+      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+    </div>
+  </div>
+  <div class="subview-body">
+    <div class="subview-grid">
+      <div class="tool-card t-amber" onclick="openSheet('cvd152')"><div class="tool-id">10190442 CVD-152</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted — monitoring</span></div><div class="tool-tag alert">RF power drift · P2</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-amber" onclick="openSheet('cvd156')"><div class="tool-id">10190446 CVD-156</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted — monitoring</span></div><div class="tool-tag alert">Pressure trending · P2</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-amber" onclick="openSheet('cvd160')"><div class="tool-id">10190450 CVD-160</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted — monitoring</span></div><div class="tool-tag alert">Temperature drift · P2</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUBVIEW — MY ACTIVITIES TOOLS (BUILDING 1) -->
+<div class="subview" id="sub-b1myactivities">
+  <div class="subview-header">
+    <div class="back-btn" onclick="closeSubview('b1myactivities')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </div>
+    <div class="subview-title">Tools for my activities today (3)</div>
+    <div class="subview-meta">
+      <div class="subview-zone">CVD Bay — Building 1</div>
+      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+    </div>
+  </div>
+  <div class="subview-body">
+    <div class="subview-grid">
+      <div class="tool-card t-blue" onclick="openSheet('cvd154')"><div class="tool-id">10190444 CVD-154</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM</span></div><div class="tool-tag info">Planned PM · 10:00</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-blue" onclick="openSheet('cvd158')"><div class="tool-id">10190448 CVD-158</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM</span></div><div class="tool-tag info">Planned PM · 13:00</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-blue" onclick="openSheet('cvd163')"><div class="tool-id">10190453 CVD-163</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM</span></div><div class="tool-tag info">Planned PM · 15:30</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
     </div>
   </div>
 </div>
@@ -596,11 +941,15 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
       Back
     </div>
     <div class="subview-title">At-risk tools (2)</div>
+    <div class="subview-meta">
+      <div class="subview-zone">CVD Bay — Building 4</div>
+      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+    </div>
   </div>
   <div class="subview-body">
     <div class="subview-grid">
-      <div class="tool-card t-red" onclick="openSheet('cvd204')"><div class="tool-id">10190551 CVD-204</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot red"></span><span class="status-text">Out of service</span></div><div class="tool-tag danger">P1 · SLA at risk</div></div>
-      <div class="tool-card t-amber" onclick="openSheet('cvd208')"><div class="tool-id">10190562 CVD-208</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted</span></div><div class="tool-tag alert">RF drift · P2</div></div>
+      <div class="tool-card t-red" onclick="openSheet('cvd204')"><div class="tool-id">10190551 CVD-204</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot red"></span><span class="status-text">Out of service</span></div><div class="tool-tag danger">P1 · SLA at risk</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-amber" onclick="openSheet('cvd208')"><div class="tool-id">10190562 CVD-208</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted</span></div><div class="tool-tag alert">RF drift · P2</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
     </div>
   </div>
 </div>
@@ -613,14 +962,18 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
       Back
     </div>
     <div class="subview-title">Tools for my activities today (5)</div>
+    <div class="subview-meta">
+      <div class="subview-zone">CVD Bay — Building 4</div>
+      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+    </div>
   </div>
   <div class="subview-body">
     <div class="subview-grid">
-      <div class="tool-card t-red" onclick="openSheet('cvd204')"><div class="tool-id">10190551 CVD-204</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot red"></span><span class="status-text">Out of service</span></div><div class="tool-tag danger">Corrective · 07:15</div></div>
-      <div class="tool-card t-blue" onclick="openSheet('cvd201')"><div class="tool-id">10190556 CVD-201</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM</span></div><div class="tool-tag info">Planned PM · 09:00</div></div>
-      <div class="tool-card t-purple" onclick="openSheet('cvd213')"><div class="tool-id">10190566 CVD-213</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot purple"></span><span class="status-text">Under installation</span></div><div class="tool-tag install">Install · 12:00</div></div>
-      <div class="tool-card t-amber" onclick="openSheet('cvd208')"><div class="tool-id">10190562 CVD-208</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted</span></div><div class="tool-tag alert">Remote · 13:30</div></div>
-      <div class="tool-card t-blue" onclick="openSheet('cvd207')"><div class="tool-id">10190561 CVD-207</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM</span></div><div class="tool-tag info">PM rescheduled · 15:00</div></div>
+      <div class="tool-card t-red" onclick="openSheet('cvd204')"><div class="tool-id">10190551 CVD-204</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot red"></span><span class="status-text">Out of service</span></div><div class="tool-tag danger">Corrective · 07:15</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-blue" onclick="openSheet('cvd201')"><div class="tool-id">10190556 CVD-201</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM</span></div><div class="tool-tag info">Planned PM · 09:00</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-purple" onclick="openSheet('cvd213')"><div class="tool-id">10190566 CVD-213</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot purple"></span><span class="status-text">Under installation</span></div><div class="tool-tag install">Install · 12:00</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-amber" onclick="openSheet('cvd208')"><div class="tool-id">10190562 CVD-208</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted</span></div><div class="tool-tag alert">Remote · 13:30</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-blue" onclick="openSheet('cvd207')"><div class="tool-id">10190561 CVD-207</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM</span></div><div class="tool-tag info">PM rescheduled · 15:00</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
     </div>
   </div>
 </div>
@@ -653,6 +1006,258 @@ function showTooltip(el, msg) {
   tt.textContent = msg;
   tt.classList.add('show');
   activeTooltip = tt;
+}
+
+function updateHeaderTime(){
+  var el = document.getElementById('header-time');
+  if(!el) return;
+  var now = new Date();
+  var opts = {timeZone:'America/Chicago', weekday:'short', month:'short', day:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', hour12:true};
+  var parts = new Intl.DateTimeFormat('en-US', opts).formatToParts(now);
+  var map = {};
+  parts.forEach(function(p){ map[p.type] = p.value; });
+  var ampm = (map.dayPeriod || '').toUpperCase();
+  var stamp = map.weekday+' '+map.day+' '+map.month+' '+map.year+' &middot; '+map.hour+':'+map.minute+' '+ampm+' CST';
+  el.innerHTML = stamp;
+  var subEls = document.querySelectorAll('.subview-datetime');
+  for(var i=0;i<subEls.length;i++){ subEls[i].innerHTML = stamp; }
+
+  var tabsDate = document.getElementById('activity-tabs-date');
+  if(tabsDate){ tabsDate.textContent = map.weekday+' '+map.day+' '+map.month+' '+map.year; }
+}
+
+function getActiveUnassignedListId(){
+  var sel = document.getElementById('zone-select');
+  return (sel && sel.value === 'b1') ? 'activity-list-unassigned-b1' : 'activity-list-unassigned-b4';
+}
+
+function updateActivityCounts(){
+  var listMyAct = document.getElementById('activity-list-myact');
+  var listUnassigned = document.getElementById(getActiveUnassignedListId());
+  var tabMyAct = document.getElementById('tab-myact');
+  var tabUnassigned = document.getElementById('tab-unassigned');
+  if(listMyAct && tabMyAct){
+    var n = listMyAct.querySelectorAll('.activity-item').length;
+    tabMyAct.textContent = 'My activities today ('+n+')';
+  }
+  if(listUnassigned && tabUnassigned){
+    var m = listUnassigned.querySelectorAll('.activity-item').length;
+    tabUnassigned.textContent = 'Unassigned activities ('+m+')';
+  }
+}
+
+function updateAutoScheduleButtonVisibility(){
+  var btn = document.getElementById('auto-schedule-btn');
+  if(!btn) return;
+  var tabMyAct = document.getElementById('tab-myact');
+  var isMyActTab = tabMyAct && tabMyAct.classList.contains('active');
+  var listMyAct = document.getElementById('activity-list-myact');
+  var tbdCount = listMyAct ? listMyAct.querySelectorAll('.act-time.tbd').length : 0;
+  btn.style.display = (isMyActTab && tbdCount > 0) ? 'inline-block' : 'none';
+}
+
+var PRIORITY_RANK = {escalated:1, high:2, medium:3, low:4};
+var TYPE_RANK = {corrective:1, install:2, remote:3, pm:4, 'pm-re':5};
+
+function formatMinutesToHHMM(mins){
+  var h = Math.floor(mins/60), m = mins%60;
+  return (h<10?'0':'')+h+':'+(m<10?'0':'')+m;
+}
+
+function runAutoSchedule(){
+  var listMyAct = document.getElementById('activity-list-myact');
+  if(!listMyAct) return;
+
+  var items = Array.prototype.slice.call(listMyAct.querySelectorAll('.activity-item'));
+  var data = items.map(function(item){
+    var prioEl = item.querySelector('.act-priority');
+    var badgeEl = item.querySelector('.act-badge');
+    var priority = 'low';
+    ['escalated','high','medium','low'].forEach(function(c){ if(prioEl && prioEl.classList.contains(c)) priority = c; });
+    var type = 'pm';
+    ['corrective','install','remote','pm-re','pm'].forEach(function(c){ if(badgeEl && badgeEl.classList.contains(c)) type = c; });
+    var durationMin = parseInt(item.getAttribute('data-duration-min'), 10) || 60;
+    return { el:item, priority:priority, type:type, durationMin:durationMin };
+  });
+
+  data.sort(function(a,b){
+    var pr = (PRIORITY_RANK[a.priority]||9) - (PRIORITY_RANK[b.priority]||9);
+    if(pr !== 0) return pr;
+    var tr = (TYPE_RANK[a.type]||9) - (TYPE_RANK[b.type]||9);
+    if(tr !== 0) return tr;
+    return a.durationMin - b.durationMin;
+  });
+
+  var cursor = 7*60;
+  var shiftEnd = 17*60;
+  var capacityExhausted = false;
+  data.forEach(function(a){
+    if(!capacityExhausted && (cursor + a.durationMin) <= shiftEnd){
+      a.newTime = formatMinutesToHHMM(cursor);
+      cursor += a.durationMin;
+    } else {
+      capacityExhausted = true;
+      a.newTime = null;
+    }
+  });
+
+  data.forEach(function(a){
+    var timeEl = a.el.querySelector('.act-time');
+    if(!timeEl){
+      timeEl = document.createElement('div');
+      a.el.insertBefore(timeEl, a.el.firstChild);
+    }
+    if(a.newTime){
+      timeEl.className = 'act-time';
+      timeEl.textContent = a.newTime;
+    } else {
+      timeEl.className = 'act-time nocap';
+      timeEl.textContent = 'No remaining capacity for today';
+    }
+    listMyAct.appendChild(a.el);
+  });
+
+  updateActivityCounts();
+  updateAutoScheduleButtonVisibility();
+}
+
+var selectedUnassigned = {};
+function handleActivitySelect(checkbox){
+  var id = checkbox.getAttribute('data-id');
+  selectedUnassigned[id] = checkbox.checked;
+  var anySelected = false;
+  for(var k in selectedUnassigned){ if(selectedUnassigned[k]) anySelected = true; }
+  var btn = document.getElementById('assign-to-me-btn');
+  if(btn) btn.style.display = anySelected ? 'inline-block' : 'none';
+}
+function assignSelectedToMe(){
+  var listUnassigned = document.getElementById(getActiveUnassignedListId());
+  var listMyAct = document.getElementById('activity-list-myact');
+  if(!listUnassigned || !listMyAct) return;
+
+  var checkboxes = listUnassigned.querySelectorAll('.activity-select');
+  var toMove = [];
+  for(var i=0;i<checkboxes.length;i++){
+    if(checkboxes[i].checked) toMove.push(checkboxes[i].closest('.activity-item'));
+  }
+
+  toMove.forEach(function(item){
+    if(!item) return;
+
+    var cb = item.querySelector('.activity-select');
+    if(cb) cb.remove();
+
+    var timeEl = document.createElement('div');
+    timeEl.className = 'act-time tbd';
+    timeEl.textContent = 'To be scheduled';
+    item.insertBefore(timeEl, item.firstChild);
+
+    var sub = item.querySelector('.act-sub');
+    if(sub && sub.innerHTML.indexOf('Self assigned') === -1){
+      sub.innerHTML = sub.innerHTML.replace(' · Planned Start', ' · Self assigned · Planned Start');
+    }
+
+    listMyAct.appendChild(item);
+  });
+
+  selectedUnassigned = {};
+  var btn = document.getElementById('assign-to-me-btn');
+  if(btn) btn.style.display = 'none';
+  updateActivityCounts();
+  updateAutoScheduleButtonVisibility();
+}
+
+function switchActivityTab(tab){
+  var tabMyAct = document.getElementById('tab-myact');
+  var tabUnassigned = document.getElementById('tab-unassigned');
+  var listMyAct = document.getElementById('activity-list-myact');
+  var listB4 = document.getElementById('activity-list-unassigned-b4');
+  var listB1 = document.getElementById('activity-list-unassigned-b1');
+  var showMyAct = (tab === 'myact');
+  var activeUnassignedId = getActiveUnassignedListId();
+  if(tabMyAct) tabMyAct.classList.toggle('active', showMyAct);
+  if(tabUnassigned) tabUnassigned.classList.toggle('active', !showMyAct);
+  if(listMyAct) listMyAct.style.display = showMyAct ? 'flex' : 'none';
+  if(listB4) listB4.style.display = (!showMyAct && activeUnassignedId === 'activity-list-unassigned-b4') ? 'flex' : 'none';
+  if(listB1) listB1.style.display = (!showMyAct && activeUnassignedId === 'activity-list-unassigned-b1') ? 'flex' : 'none';
+
+  var checkboxes = document.querySelectorAll('.activity-select');
+  for(var i=0;i<checkboxes.length;i++){ checkboxes[i].checked = false; }
+  selectedUnassigned = {};
+  var btn = document.getElementById('assign-to-me-btn');
+  if(btn) btn.style.display = 'none';
+  updateAutoScheduleButtonVisibility();
+}
+updateHeaderTime();
+updateUnassignedPlannedDates();
+updateActivityCounts();
+updateAutoScheduleButtonVisibility();
+
+function handleZoneChange(){
+  var sel = document.getElementById('zone-select');
+  var countEl = document.getElementById('zone-tool-count');
+  if(!sel || !countEl) return;
+  var isB1 = (sel.value === 'b1');
+  countEl.textContent = isB1 ? '16 tools' : '12 tools';
+  var banner = document.getElementById('priority-banner');
+  var bannerOk = document.getElementById('priority-banner-ok');
+  if(banner) banner.style.display = isB1 ? 'none' : 'flex';
+  if(bannerOk) bannerOk.style.display = isB1 ? 'flex' : 'none';
+
+  var toolsEl = document.getElementById('stat-val-tools');
+  var oosEl = document.getElementById('stat-val-oos');
+  var oosCard = document.getElementById('stat-card-oos');
+  var oosArrow = document.getElementById('stat-arrow-oos');
+  var atriskEl = document.getElementById('stat-val-atrisk');
+  var actEl = document.getElementById('stat-val-activities');
+  if(toolsEl) toolsEl.textContent = isB1 ? '16' : '12';
+  if(atriskEl) atriskEl.textContent = isB1 ? '3' : '2';
+  if(actEl) actEl.textContent = isB1 ? '3' : '5';
+  if(oosEl){
+    oosEl.textContent = isB1 ? '0' : '1';
+    oosEl.classList.remove('red','green');
+    oosEl.classList.add(isB1 ? 'green' : 'red');
+  }
+  if(oosArrow) oosArrow.textContent = isB1 ? 'All tools operational' : 'View tool ›';
+  if(oosCard){
+    oosCard.style.cursor = isB1 ? 'default' : 'pointer';
+    oosCard.onclick = isB1 ? null : function(){ openSheet('cvd204'); };
+  }
+
+  var zoneLabel = isB1 ? 'CVD Bay — Building 1' : 'CVD Bay — Building 4';
+  var subZoneEls = document.querySelectorAll('.subview-zone');
+  for(var i=0;i<subZoneEls.length;i++){ subZoneEls[i].textContent = zoneLabel; }
+
+  var tabUnassignedEl = document.getElementById('tab-unassigned');
+  var onUnassignedTab = tabUnassignedEl && tabUnassignedEl.classList.contains('active');
+  var listB4Act = document.getElementById('activity-list-unassigned-b4');
+  var listB1Act = document.getElementById('activity-list-unassigned-b1');
+  if(listB4Act) listB4Act.style.display = (onUnassignedTab && !isB1) ? 'flex' : 'none';
+  if(listB1Act) listB1Act.style.display = (onUnassignedTab && isB1) ? 'flex' : 'none';
+
+  var actCheckboxes = document.querySelectorAll('.activity-select');
+  for(var j=0;j<actCheckboxes.length;j++){ actCheckboxes[j].checked = false; }
+  selectedUnassigned = {};
+  var assignBtn = document.getElementById('assign-to-me-btn');
+  if(assignBtn) assignBtn.style.display = 'none';
+  updateActivityCounts();
+
+  var toolsCard = document.getElementById('stat-card-tools');
+  if(toolsCard) toolsCard.onclick = isB1 ? function(){ openSubview('b1all'); } : function(){ openSubview('all12'); };
+  var atriskCard = document.getElementById('stat-card-atrisk');
+  if(atriskCard) atriskCard.onclick = isB1 ? function(){ openSubview('b1atrisk'); } : function(){ openSubview('atrisk'); };
+  var activitiesCard = document.getElementById('stat-card-activities');
+  if(activitiesCard) activitiesCard.onclick = isB1 ? function(){ openSubview('b1myactivities'); } : function(){ openSubview('myactivities'); };
+
+  var gridB4 = document.getElementById('tool-grid-b4');
+  var gridB1 = document.getElementById('tool-grid-b1');
+  if(gridB4) gridB4.style.display = isB1 ? 'none' : 'grid';
+  if(gridB1) gridB1.style.display = isB1 ? 'grid' : 'none';
+
+  var telemB4 = document.getElementById('telemetry-card-b4');
+  var telemB1 = document.getElementById('telemetry-card-b1');
+  if(telemB4) telemB4.style.display = isB1 ? 'none' : 'block';
+  if(telemB1) telemB1.style.display = isB1 ? 'block' : 'none';
 }
 
 
@@ -710,6 +1315,7 @@ function resetInbox() {
 
 function doRefresh(){
   if(inboxRefreshCount>=2)return;
+  updateHeaderTime();
   var btn=document.getElementById('rfbtn');
   btn.classList.add('spinning');
   setTimeout(function(){
@@ -731,6 +1337,16 @@ function doRefresh(){
 
 
 var _toasterTimer = null;
+function handleToolSubscribeToggle(checkbox){
+  var card = checkbox.closest('.tool-card');
+  if(!card) return;
+  var idEl = card.querySelector('.tool-id');
+  var label = idEl ? idEl.textContent : 'Tool';
+  var match = label.match(/CVD-\d+/);
+  var toolName = match ? match[0] : label;
+  showToaster('Tool ' + toolName + (checkbox.checked ? ' subscribed' : ' unsubscribed'));
+}
+
 function showToaster(msg) {
   var t = document.getElementById('toaster');
   if (!t) return;
@@ -818,12 +1434,49 @@ function aixRow(label, val) {
   return '<div class="aix-row"><div class="aix-label">'+label+'</div><div class="aix-val">'+val+'</div></div>';
 }
 
+// Deterministic per-tool day jitter in the range -24..+24, seeded by equipment number
+// so each tool gets a consistent-looking but distinct offset (stable across reloads).
+// Per-tool day jitter in the range -24..+24, explicitly assigned so no two tools
+// land on the same offset (a hash-based approach risked collisions with only 9 tools).
+var pmOffsetTable = {204:-19, 208:7, 202:-3, 203:14, 205:-22, 206:21, 209:-8, 210:16, 211:3,
+  150:-24, 151:-17, 152:-15, 153:-13, 155:-11, 156:-6, 157:-1, 159:2, 160:5, 161:9, 162:12, 164:18, 165:24};
+function pmOffsetDays(seed){
+  return (pmOffsetTable[seed] !== undefined) ? pmOffsetTable[seed] : 0;
+}
+function formatPMDate(d){
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
+}
+// monthsOffset: -3 for Last PM, +3 for Next PM. seed: tool's equipment number.
+function pmDate(monthsOffset, seed){
+  var d = new Date();
+  d.setMonth(d.getMonth()+monthsOffset);
+  d.setDate(d.getDate()+pmOffsetDays(seed));
+  return formatPMDate(d);
+}
+// dayOffset: whole days from today, for near-term Planned Start/Finish dates.
+function plannedDate(dayOffset){
+  var d = new Date();
+  d.setDate(d.getDate()+dayOffset);
+  return formatPMDate(d);
+}
+function updateUnassignedPlannedDates(){
+  var plans = {1:[0,0], 2:[1,2], 3:[2,4], 4:[2,4], 5:[1,2], 6:[0,0], 7:[1,2],
+    'b1-1':[0,0], 'b1-2':[1,2], 'b1-3':[0,0], 'b1-4':[2,4]};
+  for(var k in plans){
+    var s = document.getElementById('plan-start-'+k);
+    var f = document.getElementById('plan-finish-'+k);
+    if(s) s.textContent = plannedDate(plans[k][0]);
+    if(f) f.textContent = plannedDate(plans[k][1]);
+  }
+}
+
 var sheets = {
 
 'cvd204-alert': function(){return '<div class="sheet-title">10190551 CVD-204 — P1 Alert Detail</div>'
   +'<div class="sheet-sub">Notification 10042817 · ECC PM · Chamber A</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--red)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
-  +rows([['Parameter','Process chamber pressure'],['Current reading','0.00642 mbar','red'],['Spec range','0.00560 – 0.00613 mbar'],['Exceedance','+0.00002 mbar above limit','red'],['Trending','90 min continuous · +0.000003 mbar / 15 min'],['APM alert type','Threshold breach — critical'],['APM health impact','-35 points on composite score','red'],['Recommended action','Inspect and replace throttle valve · Chamber A'],['Prior occurrences','3 similar events — last 18 months'],['Last occurrence','14 Jan 2025 · throttle valve replacement']])
+  +rows([['Parameter','Process chamber pressure'],['Current reading','0.00642 mbar','red'],['Spec range','0.00560 – 0.00613 mbar'],['Exceedance','+0.00002 mbar above limit','red'],['Trending','90 min continuous · +0.000003 mbar / 15 min'],['APM alert type','Threshold breach — critical'],['APM health impact','-35 points on composite score','red'],['Recommended action','Inspect and replace throttle valve · Chamber A'],['Prior occurrences','3 similar events — last 18 months'],['Last occurrence','14 Jan 2026 · throttle valve replacement']])
   +aixRow('AIx insight','Chamber pressure anomaly confirmed by AIx process model — probability of throttle valve degradation: 84%')
   +'<div class="faux-links">'
   +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190551 CVD-204/chamber-a/pressure','Live link to AIx telemetry — available in connected deployment')
@@ -860,6 +1513,46 @@ var sheets = {
   +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-201-0009','Live link to SAP APM alert — available in connected deployment')
   +'</div>';},
 
+
+'telem152': function(){return '<div class="sheet-title">Telemetry Detail — 10190442 CVD-152</div>'
+  +'<div class="sheet-sub">Generator 1 · RF power delivery · APM alert APM-ALT-152-0044</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">68 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:68%"></div></div></div>'
+  +rows([['Parameter','RF power delivery'],['Current reading','1,815 W','amber'],['Specification','≤ 1,750 W'],['Exceedance','+65 W · 25 min drift','amber'],['Rate of change','+9 W per 5 min'],['APM alert type','Anomaly detection — predictive'],['Predicted time to critical','~8 hours at current rate — not critical today','amber'],['Recommended action','Check matching network · Generator 1'],['Recommended window','Before end of shift']])
+  +aixRow('AIx insight','RF delivery pattern consistent with early-stage matching network wear — AIx model confidence: 66%')
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190442 CVD-152/generator-1/rf-power','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-152-0044','Live link to SAP APM alert — available in connected deployment')
+  +'</div>';},
+
+'telem156': function(){return '<div class="sheet-title">Telemetry Detail — 10190446 CVD-156</div>'
+  +'<div class="sheet-sub">Chamber A · Process chamber pressure · APM alert APM-ALT-156-0045</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">73 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:73%"></div></div></div>'
+  +rows([['Parameter','Process chamber pressure'],['Current reading','0.00625 mbar','amber'],['Specification','0.00560 – 0.00613 mbar'],['Exceedance','+0.00012 mbar · 40 min trending','amber'],['Rate of change','+0.000002 mbar per 15 min'],['APM alert type','Anomaly detection — predictive'],['Predicted time to critical','~10 hours at current rate — not critical today','amber'],['Recommended action','Monitor pressure trend · schedule inspection if trend continues'],['Recommended window','Within next shift']])
+  +aixRow('AIx insight','Chamber pressure trend consistent with gradual throttle valve wear — AIx model confidence: 58%')
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190446 CVD-156/chamber-a/pressure','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-156-0045','Live link to SAP APM alert — available in connected deployment')
+  +'</div>';},
+
+'telem160': function(){return '<div class="sheet-title">Telemetry Detail — 10190450 CVD-160</div>'
+  +'<div class="sheet-sub">Susceptor · Substrate temperature · APM alert APM-ALT-160-0046</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">65 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:65%"></div></div></div>'
+  +rows([['Parameter','Substrate temperature'],['Current reading','214.8°C','amber'],['Specification','≤ 210°C'],['Exceedance','+4.8°C · 30 min drift','amber'],['Rate of change','+0.8°C per 5 min'],['APM alert type','Anomaly detection — predictive'],['Predicted time to critical','~5 hours at current rate — not critical today','amber'],['Recommended action','Inspect susceptor heater element'],['Recommended window','Before next lot start']])
+  +aixRow('AIx insight','Substrate temperature drift consistent with early heater element degradation — AIx model confidence: 61%')
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190450 CVD-160/susceptor/temperature','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-160-0046','Live link to SAP APM alert — available in connected deployment')
+  +'</div>';},
+
+'telem150': function(){return '<div class="sheet-title">Telemetry Detail — 10190440 CVD-150</div>'
+  +'<div class="sheet-sub">Full chamber · Deposition rate uniformity · Process baseline</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">87 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:87%"></div></div></div>'
+  +rows([['Parameter','Deposition rate uniformity'],['Current reading','±1.6%','green'],['Specification','±2.5% · margin: 0.9%'],['APM alert type','Informational — baseline confirmation'],['Baseline purpose','Routine process baseline capture · 10190440 CVD-150'],['Baseline vs. prior','±1.6% vs. ±1.7% prior — within normal variance'],['Trend','Stable over past 24 hours'],['Next scheduled PM',pmDate(3,150)]])
+  +aixRow('AIx insight','Deposition uniformity within expected steady-state range — no anomaly detected')
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190440 CVD-150/chamber/dep-rate-uniformity','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-150-0047','Live link to SAP APM alert — available in connected deployment')
+  +'</div>';},
 
 'cvd204cha': function(){return '<div class="sheet-title">10190552 CVD-204-CHA</div>'
   +'<div class="sheet-sub">Process Chamber A  |  Serial: SN-CHA-204-001  |  Superior: 10190551 CVD-204</div>'
@@ -900,7 +1593,7 @@ var sheets = {
 'cvd204': function(){return '<div class="sheet-title">10190551 CVD-204 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--red)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
-  +rows([['Applied serial','SN-10190551 CVD-204-001'],['Customer tool ID','FAB-A-CVD-04'],['Platform','Applied Centura · CVD'],['Current status','Out of service','red'],['Open notifications','1 (P1) · SLA at risk'],['Last PM completed','12 Feb 2025'],['Next scheduled PM','27 Apr 2025 — deferred pending corrective'],['Service contract','Applied Global Care — Platinum · Covered']])
+  +rows([['Applied serial','SN-10190551 CVD-204-001'],['Customer tool ID','FAB-A-CVD-04'],['Platform','Applied Centura · CVD'],['Current status','Out of service','red'],['Open notifications','1 (P1) · SLA at risk'],['Last PM completed',pmDate(-3,204)],['Next scheduled PM',pmDate(3,204)+' — deferred pending corrective'],['Service contract','Applied Global Care — Platinum · Covered']])
   +'<div class="hier-header">Equipment hierarchy — sub-assemblies</div>'
   +hierList([
     ['cvd204cha','10190552','CVD-204-CHA','Process Chamber A · DxZ · SN-CHA-204-001','red','OOSV — Out of service · Pressure fault active','red'],
@@ -912,7 +1605,7 @@ var sheets = {
 'cvd208': function(){return '<div class="sheet-title">10190562 CVD-208 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">71 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:71%"></div></div></div>'
-  +rows([['Applied serial','SN-10190562 CVD-208-001'],['Customer tool ID','FAB-A-CVD-08'],['Platform','Applied Centura · CVD'],['Current status','Restricted — monitoring','amber'],['APM anomaly flag','RF power delivery drift · 25 min'],['Open notifications','1 (P2)'],['Last PM completed','3 Mar 2025'],['Service contract','Applied Global Care — Gold · Covered']]);},
+  +rows([['Applied serial','SN-10190562 CVD-208-001'],['Customer tool ID','FAB-A-CVD-08'],['Platform','Applied Centura · CVD'],['Current status','Restricted — monitoring','amber'],['APM anomaly flag','RF power delivery drift · 25 min'],['Open notifications','1 (P2)'],['Last PM completed',pmDate(-3,208)],['Service contract','Applied Global Care — Gold · Covered']]);},
 
 'cvd201': function(){return '<div class="sheet-title">10190556 CVD-201 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
@@ -922,22 +1615,22 @@ var sheets = {
 'cvd202': function(){return '<div class="sheet-title">10190557 CVD-202 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">91 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:91%"></div></div></div>'
-  +rows([['Applied serial','SN-10190557 CVD-202-001'],['Customer tool ID','FAB-A-CVD-02'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed','18 Mar 2025'],['Next scheduled PM','18 Jun 2025'],['Service contract','Applied Global Care — Gold · Covered']]);},
+  +rows([['Applied serial','SN-10190557 CVD-202-001'],['Customer tool ID','FAB-A-CVD-02'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,202)],['Next scheduled PM',pmDate(3,202)],['Service contract','Applied Global Care — Gold · Covered']]);},
 
 'cvd203': function(){return '<div class="sheet-title">10190558 CVD-203 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">88 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:88%"></div></div></div>'
-  +rows([['Applied serial','SN-10190558 CVD-203-001'],['Customer tool ID','FAB-A-CVD-03'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed','2 Apr 2025'],['Next scheduled PM','2 Jul 2025'],['Service contract','Applied Global Care — Platinum · Covered']]);},
+  +rows([['Applied serial','SN-10190558 CVD-203-001'],['Customer tool ID','FAB-A-CVD-03'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,203)],['Next scheduled PM',pmDate(3,203)],['Service contract','Applied Global Care — Platinum · Covered']]);},
 
 'cvd205': function(){return '<div class="sheet-title">10190559 CVD-205 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">94 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:94%"></div></div></div>'
-  +rows([['Applied serial','SN-10190559 CVD-205-001'],['Customer tool ID','FAB-A-CVD-05'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed','22 Mar 2025'],['Next scheduled PM','22 Jun 2025'],['Service contract','Applied Global Care — Gold · Covered']]);},
+  +rows([['Applied serial','SN-10190559 CVD-205-001'],['Customer tool ID','FAB-A-CVD-05'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,205)],['Next scheduled PM',pmDate(3,205)],['Service contract','Applied Global Care — Gold · Covered']]);},
 
 'cvd206': function(){return '<div class="sheet-title">10190560 CVD-206 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">89 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:89%"></div></div></div>'
-  +rows([['Applied serial','SN-10190560 CVD-206-001'],['Customer tool ID','FAB-A-CVD-06'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed','10 Apr 2025'],['Next scheduled PM','10 Jul 2025'],['Service contract','Applied Global Care — Platinum · Covered']]);},
+  +rows([['Applied serial','SN-10190560 CVD-206-001'],['Customer tool ID','FAB-A-CVD-06'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,206)],['Next scheduled PM',pmDate(3,206)],['Service contract','Applied Global Care — Platinum · Covered']]);},
 
 'cvd207': function(){return '<div class="sheet-title">10190561 CVD-207 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
@@ -947,21 +1640,21 @@ var sheets = {
 'cvd209': function(){return '<div class="sheet-title">10190563 CVD-209 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">92 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:92%"></div></div></div>'
-  +rows([['Applied serial','SN-10190563 CVD-209-001'],['Customer tool ID','FAB-A-CVD-09'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed','15 Apr 2025'],['Next scheduled PM','15 Jul 2025'],['Service contract','Applied Global Care — Gold · Covered']]);},
+  +rows([['Applied serial','SN-10190563 CVD-209-001'],['Customer tool ID','FAB-A-CVD-09'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,209)],['Next scheduled PM',pmDate(3,209)],['Service contract','Applied Global Care — Gold · Covered']]);},
 
 'cvd210': function(){return '<div class="sheet-title">10190564 CVD-210 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">86 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:86%"></div></div></div>'
-  +rows([['Applied serial','SN-10190564 CVD-210-001'],['Customer tool ID','FAB-A-CVD-10'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed','8 Apr 2025'],['Next scheduled PM','8 Jul 2025'],['Service contract','Applied Global Care — Platinum · Covered']]);},
+  +rows([['Applied serial','SN-10190564 CVD-210-001'],['Customer tool ID','FAB-A-CVD-10'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,210)],['Next scheduled PM',pmDate(3,210)],['Service contract','Applied Global Care — Platinum · Covered']]);},
 
 'cvd211': function(){return '<div class="sheet-title">10190565 CVD-211 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">90 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:90%"></div></div></div>'
-  +rows([['Applied serial','SN-10190565 CVD-211-001'],['Customer tool ID','FAB-A-CVD-11'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed','1 Apr 2025'],['Next scheduled PM','1 Jul 2025'],['Service contract','Applied Global Care — Gold · Covered']]);},
+  +rows([['Applied serial','SN-10190565 CVD-211-001'],['Customer tool ID','FAB-A-CVD-11'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,211)],['Next scheduled PM',pmDate(3,211)],['Service contract','Applied Global Care — Gold · Covered']]);},
 
 'cvd213': function(){return '<div class="sheet-title">10190566 CVD-213 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · New installation · Fab A · Building 4</div>'
-  +rows([['Applied serial','SN-10190566 CVD-213-001'],['Customer tool ID','FAB-A-CVD-13 (pending commissioning)'],['Platform','Applied Centura · CVD'],['Current status','Under installation — Phase 2 of 3'],['Installation phase','Electrical and facilities hookup'],['PS WBS element','AMAT-INSTALL-2025-0042-01-02'],['CS order','4000835'],['Overall progress','Phase 1 complete · Phase 2 in progress · Phase 3 pending'],['Install contract','New installation — covered'],['Est. commissioning','9 May 2025']])
+  +rows([['Applied serial','SN-10190566 CVD-213-001'],['Customer tool ID','FAB-A-CVD-13 (pending commissioning)'],['Platform','Applied Centura · CVD'],['Current status','Under installation — Phase 2 of 3'],['Installation phase','Electrical and facilities hookup'],['PS WBS element','AMAT-INSTALL-2026-0042-01-02'],['CS order','4000835'],['Overall progress','Phase 1 complete · Phase 2 in progress · Phase 3 pending'],['Install contract','New installation — covered'],['Est. commissioning','16 Dec 2026']])
   +'<div class="hier-header">Equipment hierarchy — sub-assemblies</div>'
   +hierList([
     ['cvd213cha','10190567','CVD-213-CHA','Process Chamber A · DxZ · SN-CHA-213-001','purple','INST — Under installation · Phase 2 active','purple'],
@@ -970,6 +1663,86 @@ var sheets = {
     ['cvd213ll','10190570','CVD-213-LL','Loadlock · Centura · SN-LL-213-001','purple','INST — Under installation','purple']
   ])
   ;},
+
+'cvd150': function(){return '<div class="sheet-title">10190440 CVD-150 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">87 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:87%"></div></div></div>'
+  +rows([['Applied serial','SN-10190440 CVD-150-001'],['Customer tool ID','FAB-A-CVD-50'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,150)],['Next scheduled PM',pmDate(3,150)],['Service contract','Applied Global Care — Platinum · Covered']]);},
+
+'cvd151': function(){return '<div class="sheet-title">10190441 CVD-151 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">90 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:90%"></div></div></div>'
+  +rows([['Applied serial','SN-10190441 CVD-151-001'],['Customer tool ID','FAB-A-CVD-51'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,151)],['Next scheduled PM',pmDate(3,151)],['Service contract','Applied Global Care — Gold · Covered']]);},
+
+'cvd152': function(){return '<div class="sheet-title">10190442 CVD-152 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">68 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:68%"></div></div></div>'
+  +rows([['Applied serial','SN-10190442 CVD-152-001'],['Customer tool ID','FAB-A-CVD-52'],['Platform','Applied Centura · CVD'],['Current status','Restricted — monitoring','amber'],['APM anomaly flag','RF power delivery drift · 25 min'],['Open notifications','1 (P2)'],['Last PM completed',pmDate(-3,152)],['Service contract','Applied Global Care — Platinum · Covered']]);},
+
+'cvd153': function(){return '<div class="sheet-title">10190443 CVD-153 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">85 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:85%"></div></div></div>'
+  +rows([['Applied serial','SN-10190443 CVD-153-001'],['Customer tool ID','FAB-A-CVD-53'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,153)],['Next scheduled PM',pmDate(3,153)],['Service contract','Applied Global Care — Gold · Covered']]);},
+
+'cvd154': function(){return '<div class="sheet-title">10190444 CVD-154 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">84 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:84%"></div></div></div>'
+  +rows([['Applied serial','SN-10190444 CVD-154-001'],['Customer tool ID','FAB-A-CVD-54'],['Current status','In service — PM scheduled'],['Scheduled PM','Quarterly chamber kit · 10:00 today'],['ECC order','4000900'],['Estimated duration','3 hours'],['Service contract','Applied Global Care — Platinum · Covered']]);},
+
+'cvd155': function(){return '<div class="sheet-title">10190445 CVD-155 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">93 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:93%"></div></div></div>'
+  +rows([['Applied serial','SN-10190445 CVD-155-001'],['Customer tool ID','FAB-A-CVD-55'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,155)],['Next scheduled PM',pmDate(3,155)],['Service contract','Applied Global Care — Gold · Covered']]);},
+
+'cvd156': function(){return '<div class="sheet-title">10190446 CVD-156 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">73 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:73%"></div></div></div>'
+  +rows([['Applied serial','SN-10190446 CVD-156-001'],['Customer tool ID','FAB-A-CVD-56'],['Platform','Applied Centura · CVD'],['Current status','Restricted — monitoring','amber'],['APM anomaly flag','Chamber pressure trending · 40 min'],['Open notifications','1 (P2)'],['Last PM completed',pmDate(-3,156)],['Service contract','Applied Global Care — Platinum · Covered']]);},
+
+'cvd157': function(){return '<div class="sheet-title">10190447 CVD-157 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">88 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:88%"></div></div></div>'
+  +rows([['Applied serial','SN-10190447 CVD-157-001'],['Customer tool ID','FAB-A-CVD-57'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,157)],['Next scheduled PM',pmDate(3,157)],['Service contract','Applied Global Care — Gold · Covered']]);},
+
+'cvd158': function(){return '<div class="sheet-title">10190448 CVD-158 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">87 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:87%"></div></div></div>'
+  +rows([['Applied serial','SN-10190448 CVD-158-001'],['Customer tool ID','FAB-A-CVD-58'],['Current status','In service — PM scheduled'],['Scheduled PM','Quarterly chamber kit · 13:00 today'],['ECC order','4000901'],['Estimated duration','3 hours'],['Service contract','Applied Global Care — Platinum · Covered']]);},
+
+'cvd159': function(){return '<div class="sheet-title">10190449 CVD-159 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">91 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:91%"></div></div></div>'
+  +rows([['Applied serial','SN-10190449 CVD-159-001'],['Customer tool ID','FAB-A-CVD-59'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,159)],['Next scheduled PM',pmDate(3,159)],['Service contract','Applied Global Care — Gold · Covered']]);},
+
+'cvd160': function(){return '<div class="sheet-title">10190450 CVD-160 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">65 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:65%"></div></div></div>'
+  +rows([['Applied serial','SN-10190450 CVD-160-001'],['Customer tool ID','FAB-A-CVD-60'],['Platform','Applied Centura · CVD'],['Current status','Restricted — monitoring','amber'],['APM anomaly flag','Substrate temperature drift · 30 min'],['Open notifications','1 (P2)'],['Last PM completed',pmDate(-3,160)],['Service contract','Applied Global Care — Platinum · Covered']]);},
+
+'cvd161': function(){return '<div class="sheet-title">10190451 CVD-161 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">86 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:86%"></div></div></div>'
+  +rows([['Applied serial','SN-10190451 CVD-161-001'],['Customer tool ID','FAB-A-CVD-61'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,161)],['Next scheduled PM',pmDate(3,161)],['Service contract','Applied Global Care — Gold · Covered']]);},
+
+'cvd162': function(){return '<div class="sheet-title">10190452 CVD-162 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">94 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:94%"></div></div></div>'
+  +rows([['Applied serial','SN-10190452 CVD-162-001'],['Customer tool ID','FAB-A-CVD-62'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,162)],['Next scheduled PM',pmDate(3,162)],['Service contract','Applied Global Care — Platinum · Covered']]);},
+
+'cvd163': function(){return '<div class="sheet-title">10190453 CVD-163 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">82 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:82%"></div></div></div>'
+  +rows([['Applied serial','SN-10190453 CVD-163-001'],['Customer tool ID','FAB-A-CVD-63'],['Current status','In service — PM scheduled'],['Scheduled PM','Quarterly chamber kit · 15:30 today'],['ECC order','4000902'],['Estimated duration','3 hours'],['Service contract','Applied Global Care — Gold · Covered']]);},
+
+'cvd164': function(){return '<div class="sheet-title">10190454 CVD-164 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">89 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:89%"></div></div></div>'
+  +rows([['Applied serial','SN-10190454 CVD-164-001'],['Customer tool ID','FAB-A-CVD-64'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,164)],['Next scheduled PM',pmDate(3,164)],['Service contract','Applied Global Care — Platinum · Covered']]);},
+
+'cvd165': function(){return '<div class="sheet-title">10190455 CVD-165 — Equipment Detail</div>'
+  +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">92 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:92%"></div></div></div>'
+  +rows([['Applied serial','SN-10190455 CVD-165-001'],['Customer tool ID','FAB-A-CVD-65'],['Current status','In service','green'],['Open notifications','None'],['Last PM completed',pmDate(-3,165)],['Next scheduled PM',pmDate(3,165)],['Service contract','Applied Global Care — Gold · Covered']]);},
 
 
 'act1': function(){
@@ -999,7 +1772,7 @@ var sheets = {
   var stepHtml = stepper(['Installation kick-off and site readiness','Mechanical installation and uncrating','Electrical and facilities hookup','Initial power-on and system check','Process chamber bringup','Process qualification and sign-off'],2);
   return '<div class="sheet-title">10190566 CVD-213 · Tool Installation — Phase 2</div>'
   +'<div class="sheet-sub">Order 4000835 · Scheduled · 12:00 today</div>'
-  +rows([['Activity type','Tool installation — milestone check'],['Priority','P2 — scheduled installation'],['Assigned to','Philip White · CE Level Principal'],['Estimated duration','1 hour'],['Tool','10190566 CVD-213 · Applied Centura CVD — new unit'],['Installation phase','Phase 2 — electrical and facilities hookup'],['PS WBS element','AMAT-INSTALL-2025-0042-01-02'],['Overall progress','Phase 1 complete · Phase 2 in progress'],['Install contract','New installation · Covered'],['CS order','4000835']])
+  +rows([['Activity type','Tool installation — milestone check'],['Priority','P2 — scheduled installation'],['Assigned to','Philip White · CE Level Principal'],['Estimated duration','1 hour'],['Tool','10190566 CVD-213 · Applied Centura CVD — new unit'],['Installation phase','Phase 2 — electrical and facilities hookup'],['PS WBS element','AMAT-INSTALL-2026-0042-01-02'],['Overall progress','Phase 1 complete · Phase 2 in progress'],['Install contract','New installation · Covered'],['CS order','4000835']])
   +'<div class="stepper-header">Service workflow — Tool Installation · Step 3 of 6</div>'
   +stepHtml
   +'<div class="faux-links">'
@@ -1026,6 +1799,94 @@ var sheets = {
   +stepHtml
   +'<div class="faux-links">'
   +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000817','Direct activity link — available when running as FSM Mobile extension')
+  +'</div>';},
+
+'unassign1': function(){
+  return '<div class="sheet-title">10190558 CVD-203 · Vacuum Pump Noise — Triage Needed</div>'
+  +'<div class="sheet-sub">CRM Ticket SR-48830 · Unassigned · Reported 06:40 today</div>'
+  +rows([['Activity type','Corrective — unplanned'],['Priority','P3 — needs triage','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','2 hours'],['Tool','10190558 CVD-203 · Applied Centura CVD'],['Reported by','Operator — night shift'],['Fault description','Intermittent high-pitched noise from foreline vacuum pump'],['Entitlement','Applied Global Care — Gold · Covered'],['CRM ticket','SR-48830']])
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48830','Direct activity link — available when running as FSM Mobile extension')
+  +'</div>';},
+
+'unassign2': function(){
+  return '<div class="sheet-title">10190560 CVD-206 · Recipe Drift Review</div>'
+  +'<div class="sheet-sub">CRM Ticket SR-48831 · Unassigned · Reported 07:55 today</div>'
+  +rows([['Activity type','Remote diagnostic consult'],['Priority','P3 — process engineering request','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1 hour'],['Tool','10190560 CVD-206 · Applied Centura CVD'],['Requested by','Process Engineering — recipe drift observed on last 3 lots'],['Entitlement','Applied Global Care — Platinum · Covered'],['CRM ticket','SR-48831']])
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48831','Direct activity link — available when running as FSM Mobile extension')
+  +'</div>';},
+
+'unassign3': function(){
+  return '<div class="sheet-title">10190563 CVD-209 · Spare Parts Kit Installation</div>'
+  +'<div class="sheet-sub">Order 4000906 · Unassigned · Parts received today</div>'
+  +rows([['Activity type','Parts installation — planned'],['Priority','P4 — routine'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(2)],['Planned finish',plannedDate(4)],['Estimated duration','1.5 hours'],['Tool','10190563 CVD-209 · Applied Centura CVD'],['Parts','Throttle valve kit — received in inventory today'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000906']])
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000906','Direct activity link — available when running as FSM Mobile extension')
+  +'</div>';},
+
+'unassign4': function(){
+  return '<div class="sheet-title">10190557 CVD-202 · Annual Calibration Verification</div>'
+  +'<div class="sheet-sub">Order 4000907 · Unassigned · Parts N/A · Requested this week</div>'
+  +rows([['Activity type','Calibration verification — planned'],['Priority','P4 — routine'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(2)],['Planned finish',plannedDate(4)],['Estimated duration','2 hours'],['Tool','10190557 CVD-202 · Applied Centura CVD'],['Scope','Pressure transducer calibration verification — annual requirement'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000907']])
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000907','Direct activity link — available when running as FSM Mobile extension')
+  +'</div>';},
+
+'unassign5': function(){
+  return '<div class="sheet-title">10190559 CVD-205 · Firmware Update — Process Controller</div>'
+  +'<div class="sheet-sub">Order 4000908 · Unassigned · Release available now</div>'
+  +rows([['Activity type','Software update — planned'],['Priority','P3 — recommended update'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1 hour'],['Tool','10190559 CVD-205 · Applied Centura CVD'],['Scope','Process controller firmware update — latest AMAT release'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000908']])
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000908','Direct activity link — available when running as FSM Mobile extension')
+  +'</div>';},
+
+'unassign6': function(){
+  return '<div class="sheet-title">10190564 CVD-210 · Leak Check Follow-Up</div>'
+  +'<div class="sheet-sub">CRM Ticket SR-48832 · Unassigned · Reported this morning</div>'
+  +rows([['Activity type','Corrective — customer reported'],['Priority','P3 — needs triage','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','1.5 hours'],['Tool','10190564 CVD-210 · Applied Centura CVD'],['Reported by','Customer — odor reported near enclosure'],['Entitlement','Applied Global Care — Platinum · Covered'],['CRM ticket','SR-48832']])
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48832','Direct activity link — available when running as FSM Mobile extension')
+  +'</div>';},
+
+'unassign7': function(){
+  return '<div class="sheet-title">10190565 CVD-211 · Remote Review — OEE Dip</div>'
+  +'<div class="sheet-sub">CRM Ticket SR-48833 · Unassigned · Flagged by AIx today</div>'
+  +rows([['Activity type','Remote diagnostic consult'],['Priority','P3 — AIx flagged anomaly','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1 hour'],['Tool','10190565 CVD-211 · Applied Centura CVD'],['Fault description','Anomalous OEE dip flagged by AIx — no operator-reported issue'],['Entitlement','Applied Global Care — Gold · Covered'],['CRM ticket','SR-48833']])
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48833','Direct activity link — available when running as FSM Mobile extension')
+  +'</div>';},
+
+'b1unassign1': function(){
+  return '<div class="sheet-title">10190442 CVD-152 · RF Power Drift — Remote Review</div>'
+  +'<div class="sheet-sub">CRM Ticket SR-49001 · Unassigned · Building 1</div>'
+  +rows([['Activity type','Remote diagnostic consult'],['Priority','P3 — process engineering request','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','1 hour'],['Tool','10190442 CVD-152 · Applied Centura CVD · Building 1'],['Fault description','RF power delivery drift · 25 min trending — Generator 1'],['Entitlement','Applied Global Care — Platinum · Covered'],['CRM ticket','SR-49001']])
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-49001','Direct activity link — available when running as FSM Mobile extension')
+  +'</div>';},
+
+'b1unassign2': function(){
+  return '<div class="sheet-title">10190446 CVD-156 · Chamber Pressure Trending</div>'
+  +'<div class="sheet-sub">CRM Ticket SR-49002 · Unassigned · Building 1</div>'
+  +rows([['Activity type','Corrective — on-site inspection'],['Priority','P3 — needs inspection','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1.5 hours'],['Tool','10190446 CVD-156 · Applied Centura CVD · Building 1'],['Fault description','Chamber pressure trending · 40 min — Chamber A'],['Entitlement','Applied Global Care — Gold · Covered'],['CRM ticket','SR-49002']])
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-49002','Direct activity link — available when running as FSM Mobile extension')
+  +'</div>';},
+
+'b1unassign3': function(){
+  return '<div class="sheet-title">10190450 CVD-160 · Susceptor Heater Element Replacement</div>'
+  +'<div class="sheet-sub">Order 4000950 · Unassigned · Building 1</div>'
+  +rows([['Activity type','Parts installation — planned'],['Priority','P2 — degrading component','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','2 hours'],['Tool','10190450 CVD-160 · Applied Centura CVD · Building 1'],['Parts','Susceptor heater element kit — received in inventory'],['Entitlement','Applied Global Care — Platinum · Covered'],['ECC order','4000950']])
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000950','Direct activity link — available when running as FSM Mobile extension')
+  +'</div>';},
+
+'b1unassign4': function(){
+  return '<div class="sheet-title">10190440 CVD-150 · Annual Calibration Verification</div>'
+  +'<div class="sheet-sub">Order 4000951 · Unassigned · Building 1</div>'
+  +rows([['Activity type','Calibration verification — planned'],['Priority','P4 — routine'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(2)],['Planned finish',plannedDate(4)],['Estimated duration','2 hours'],['Tool','10190440 CVD-150 · Applied Centura CVD · Building 1'],['Scope','Process baseline calibration verification — annual requirement'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000951']])
+  +'<div class="faux-links">'
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000951','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';}
 };
 
@@ -1052,6 +1913,7 @@ function openSubview(key) {
   if (!el) return;
   el.classList.add('active');
   document.body.style.overflow = 'hidden';
+  updateHeaderTime();
 }
 
 function closeSubview(key) {
