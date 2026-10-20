@@ -397,6 +397,61 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 /* Orange Parts Ordering badge */
 .inbox-badge.parts-order { background: var(--accent-orange-bg); color: var(--accent-orange-text); }
 
+
+/* ── Landing page personalization ── */
+.icon-btn { padding: 0; font: inherit; -webkit-appearance: none; appearance: none; }
+.lp-panel.lp-hidden { display: none !important; }
+.footer-bar { order: 1000; }
+.footer-spacer { order: 1001; }
+.lp-empty { order: 999; display: none; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 40px 20px; background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); color: var(--sapIconMuted); }
+.lp-empty.show { display: flex; }
+.lp-empty-title { font-size: 16px; font-weight: 700; color: var(--text1); margin-top: 4px; }
+.lp-empty-text { font-size: 13px; color: var(--sapLabelColor); margin-bottom: 10px; }
+
+/* Horizon dialog */
+.lp-overlay { display: none; position: fixed; inset: 0; background: rgba(19,30,41,0.45); z-index: 300; align-items: center; justify-content: center; padding: 16px; }
+.lp-overlay.active { display: flex; }
+.lp-dialog { background: var(--surface); width: 100%; max-width: 560px; max-height: calc(100vh - 32px); border-radius: var(--radius-lg); box-shadow: var(--sapShadow2); display: flex; flex-direction: column; overflow: hidden; animation: lpIn .2s ease-out; }
+@keyframes lpIn { from { transform: translateY(12px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
+.lp-dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 18px 20px 12px; border-bottom: 1px solid var(--sapListBorder); }
+.lp-title { font-size: 18px; font-weight: 700; color: var(--text1); }
+.lp-subtitle { font-size: 13px; color: var(--sapLabelColor); margin-top: 3px; }
+.lp-close { width: 36px; height: 36px; border-radius: var(--radius-sm); border: none; background: transparent; color: var(--text1); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; margin: -4px -8px 0 0; }
+.lp-close:active { background: var(--sapActiveBackground); }
+.lp-list-label { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; padding: 14px 20px 6px; font-size: 13px; font-weight: 700; color: var(--text1); }
+.lp-list-label span { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 400; color: var(--sapLabelColor); }
+.lp-list { padding: 4px 12px 12px; overflow-y: auto; -webkit-overflow-scrolling: touch; position: relative; }
+.lp-row { display: flex; align-items: center; gap: 10px; padding: 10px 8px 10px 4px; background: var(--surface); border: 1px solid var(--sapListBorder); border-radius: var(--radius-md); margin-bottom: 8px; transition: box-shadow .15s, background .15s; touch-action: pan-y; }
+.lp-row.off .lp-row-name, .lp-row.off .lp-row-desc { color: var(--sapIconMuted); }
+.lp-row.dragging { box-shadow: var(--sapShadow2); border-color: var(--sapBrandColor); position: relative; z-index: 2; background: #fff; }
+.lp-row.locked { background: var(--sapBackgroundColor); }
+.lp-pos { width: 22px; height: 22px; border-radius: 50%; background: var(--sapNeutralBackground); color: var(--sapLabelColor); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.lp-handle { width: 32px; height: 40px; display: flex; align-items: center; justify-content: center; color: var(--sapIconMuted); cursor: grab; touch-action: none; flex-shrink: 0; border-radius: var(--radius-sm); }
+.lp-handle:active { cursor: grabbing; background: var(--sapHoverBackground); }
+.lp-handle.disabled { cursor: default; color: var(--sapIconMuted); opacity: .9; }
+.lp-row-text { flex: 1; min-width: 0; }
+.lp-row-name { font-size: 14px; font-weight: 700; color: var(--text1); }
+.lp-row-desc { font-size: 12px; color: var(--sapLabelColor); margin-top: 2px; line-height: 1.35; }
+.lp-lock-note { display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; font-size: 11px; font-weight: 600; color: var(--sapLabelColor); background: var(--sapNeutralBackground); padding: 2px 7px; border-radius: 4px; }
+.lp-arrows { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
+.lp-arrow { width: 32px; height: 24px; border: 1px solid var(--sapButtonBorder); background: var(--surface); color: var(--sapHighlightColor); border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; }
+.lp-arrow:active { background: var(--sapActiveBackground); }
+.lp-arrow:disabled { color: var(--sapGroupBorder); border-color: var(--sapListBorder); cursor: default; background: var(--surface); }
+/* Horizon switch */
+.lp-switch { position: relative; width: 44px; height: 26px; border-radius: 13px; border: none; padding: 0; background: #788FA6; cursor: pointer; flex-shrink: 0; transition: background .18s; }
+.lp-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(34,53,72,0.3); transition: transform .18s; }
+.lp-switch[aria-checked="true"] { background: var(--sapBrandColor); }
+.lp-switch[aria-checked="true"]::after { transform: translateX(18px); }
+.lp-switch:disabled { opacity: .45; cursor: not-allowed; }
+.lp-dialog-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--sapListBorder); background: var(--surface); }
+.lp-foot-right { display: flex; gap: 8px; }
+.lp-btn { font-family: inherit; font-size: 14px; font-weight: 600; padding: 9px 16px; border-radius: var(--radius-sm); border: 1px solid var(--sapButtonBorder); background: var(--surface); color: var(--sapHighlightColor); cursor: pointer; white-space: nowrap; }
+.lp-btn:active { background: var(--sapActiveBackground); }
+.lp-btn-emph { background: var(--sapBrandColor); border-color: var(--sapBrandColor); color: #fff; min-width: 84px; }
+.lp-btn-emph:active { background: var(--sapHighlightColor); border-color: var(--sapHighlightColor); }
+.lp-btn-trans { border-color: transparent; padding-left: 8px; padding-right: 8px; }
+@media (max-width: 480px) { .lp-row-desc { display: none; } .lp-overlay { padding: 8px; } }
+
 /* ── Toaster — Horizon message toast ── */
 .toaster {
   position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px);
@@ -442,6 +497,9 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
             <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
           </svg>
         </div>
+        <button class="refresh-btn icon-btn" id="lp-settings-btn" type="button" onclick="openLayoutSettings()" aria-label="Landing page settings" title="Landing page settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
       </div>
     </div>
     <!-- Row 4: Role LEFT justified -->
@@ -468,6 +526,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
   <!-- BODY -->
   <div class="body">
 
+    <div class="lp-panel" data-panel="priority">
     <!-- PRIORITY BANNER -->
     <div class="priority-banner" id="priority-banner" onclick="openSheet('cvd204-alert')">
       <div class="prio-icon">
@@ -491,9 +550,10 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
         <div class="prio-title-ok">All tools in CVD Bay — Building 1 operating within normal parameters</div>
       </div>
     </div>
+    </div>
 
     <!-- ZONE OVERVIEW -->
-    <div>
+    <div class="lp-panel" data-panel="overview">
       <div class="section-label" style="margin-bottom:8px">Zone overview</div>
       <div class="stat-row">
         <div class="stat-card" id="stat-card-tools" onclick="openSubview('all12')">
@@ -520,7 +580,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     </div>
 
     <!-- TOOL STATUS -->
-    <div>
+    <div class="lp-panel" data-panel="tools">
       <div class="section-header">
         <div class="section-label">Tool status — CVD Bay</div>
       </div>
@@ -609,7 +669,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     </div>
 
     <!-- TELEMETRY -->
-    <div>
+    <div class="lp-panel" data-panel="telemetry">
       <div class="section-label" style="margin-bottom:8px">Tool telemetry alerts — via SAP APM with integration to AIx</div>
       <div class="telemetry-card" id="telemetry-card-b4">
         <div class="telem-row" onclick="openSheet('cvd204-alert')">
@@ -688,7 +748,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     </div>
 
     <!-- MY ACTIVITIES -->
-    <div>
+    <div class="lp-panel" data-panel="activities">
       <div class="activity-tabs">
         <div class="activity-tab active" id="tab-myact" onclick="switchActivityTab('myact')">My activities today (5)</div>
         <div class="activity-tab" id="tab-unassigned" onclick="switchActivityTab('unassigned')">Unassigned activities (7)</div>
@@ -871,6 +931,14 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
           <div class="act-badge pm">Planned PM</div>
         </div>
       </div>
+    </div>
+
+    <!-- EMPTY STATE — shown only when every panel is hidden -->
+    <div class="lp-empty" id="lp-empty">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/></svg>
+      <div class="lp-empty-title">All panels are hidden</div>
+      <div class="lp-empty-text">Choose which panels to show in Landing Page Settings.</div>
+      <button class="lp-btn lp-btn-emph" type="button" onclick="openLayoutSettings()">Open settings</button>
     </div>
 
     <!-- FOOTER -->
@@ -2057,6 +2125,179 @@ function healthBlock(score){
   });
 })();
 
+// ── Landing page personalization (level 1: show / hide + reorder panels) ──
+var LP_PANELS = [
+  {id:'priority',   name:'Priority alert',        desc:'P1 alerts and SLA status for your zone'},
+  {id:'overview',   name:'Zone overview',         desc:'Tools in zone, out of service, at-risk and today’s activities'},
+  {id:'tools',      name:'Tool status',           desc:'Status cards for every tool in the CVD Bay'},
+  {id:'telemetry',  name:'Tool telemetry alerts', desc:'SAP APM / AIx readings outside specification'},
+  {id:'activities', name:'My activities',         desc:'Today’s assigned and unassigned activities'}
+];
+// Administrator policy: a locked panel is always shown and pinned to the top.
+// (Mirrors company / policy-group settings — set locked:false to give users full control.)
+var LP_POLICY = { priority: {locked: true} };
+var LP_STORE_KEY = 'amatCeLandingLayout.v1';
+var lpDraft = null;
+
+function lpIds(){ return LP_PANELS.map(function(p){ return p.id; }); }
+function lpPanel(id){ for (var i=0;i<LP_PANELS.length;i++) if (LP_PANELS[i].id===id) return LP_PANELS[i]; return null; }
+function lpLocked(id){ return !!(LP_POLICY[id] && LP_POLICY[id].locked); }
+function lpNormalize(cfg){
+  var ids = lpIds(), order = [], hidden = [];
+  if (cfg && Array.isArray(cfg.order)) cfg.order.forEach(function(id){ if (ids.indexOf(id)>-1 && order.indexOf(id)<0) order.push(id); });
+  ids.forEach(function(id){ if (order.indexOf(id)<0) order.push(id); });       // new / missing panels go to the end
+  if (cfg && Array.isArray(cfg.hidden)) cfg.hidden.forEach(function(id){ if (ids.indexOf(id)>-1 && hidden.indexOf(id)<0) hidden.push(id); });
+  var locked = ids.filter(lpLocked);                                            // policy wins over saved settings
+  order = locked.concat(order.filter(function(id){ return !lpLocked(id); }));
+  hidden = hidden.filter(function(id){ return !lpLocked(id); });
+  return {order: order, hidden: hidden};
+}
+function lpLoad(){
+  try { var raw = localStorage.getItem(LP_STORE_KEY); return lpNormalize(raw ? JSON.parse(raw) : null); }
+  catch(e){ return lpNormalize(null); }
+}
+function lpStore(cfg){
+  try { localStorage.setItem(LP_STORE_KEY, JSON.stringify(cfg)); return true; } catch(e){ return false; }
+}
+function applyLayout(cfg){
+  cfg.order.forEach(function(id, i){
+    var el = document.querySelector('.lp-panel[data-panel="'+id+'"]');
+    if (!el) return;
+    el.style.order = i + 1;
+    el.classList.toggle('lp-hidden', cfg.hidden.indexOf(id) > -1);
+  });
+  var empty = document.getElementById('lp-empty');
+  if (empty) empty.classList.toggle('show', cfg.hidden.length === cfg.order.length);
+}
+applyLayout(lpLoad());
+
+// ── Settings dialog ──
+function lpCloneCfg(c){ return {order: c.order.slice(), hidden: c.hidden.slice()}; }
+function openLayoutSettings(){
+  lpDraft = lpCloneCfg(lpLoad());
+  renderLpList();
+  document.getElementById('lp-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLayoutSettings(){
+  document.getElementById('lp-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+  lpDraft = null;
+}
+function cancelLayoutSettings(){ closeLayoutSettings(); }
+function saveLayoutSettings(){
+  var cfg = lpNormalize(lpDraft);
+  var stored = lpStore(cfg);
+  applyLayout(cfg);
+  closeLayoutSettings();
+  var shown = cfg.order.length - cfg.hidden.length;
+  showToaster(stored ? 'Landing page saved — '+shown+' of '+cfg.order.length+' panels shown'
+                     : 'Layout applied for this session (this browser can’t save settings)');
+}
+function resetLayoutDraft(){
+  lpDraft = lpNormalize(null);
+  renderLpList();
+}
+function lpFirstMovable(){ return lpDraft.order.filter(lpLocked).length; }
+function lpMove(id, delta){
+  var o = lpDraft.order, i = o.indexOf(id), j = i + delta;
+  if (lpLocked(id) || j < lpFirstMovable() || j > o.length - 1) return;
+  o.splice(i, 1); o.splice(j, 0, id);
+  renderLpList();
+  var again = document.querySelector('.lp-row[data-id="'+id+'"] .lp-arrow[data-dir="'+(delta<0?'up':'down')+'"]');
+  if (again && !again.disabled) again.focus();
+}
+function lpToggle(id){
+  if (lpLocked(id)) return;
+  var h = lpDraft.hidden, k = h.indexOf(id);
+  if (k > -1) h.splice(k, 1); else h.push(id);
+  renderLpList();
+}
+var LP_GRIP = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.7"/><circle cx="15" cy="6" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="18" r="1.7"/><circle cx="15" cy="18" r="1.7"/></svg>';
+var LP_LOCK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+var LP_UP = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
+var LP_DOWN = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+function renderLpList(){
+  var list = document.getElementById('lp-list');
+  var first = lpFirstMovable(), last = lpDraft.order.length - 1;
+  list.innerHTML = lpDraft.order.map(function(id, i){
+    var p = lpPanel(id), locked = lpLocked(id), on = lpDraft.hidden.indexOf(id) < 0;
+    return '<div class="lp-row'+(on?'':' off')+(locked?' locked':'')+'" data-id="'+id+'">'
+      + '<div class="lp-pos">'+(i+1)+'</div>'
+      + (locked ? '<div class="lp-handle disabled" title="Pinned by your administrator">'+LP_LOCK+'</div>'
+                : '<div class="lp-handle" data-drag="'+id+'" aria-label="Drag to reorder '+p.name+'">'+LP_GRIP+'</div>')
+      + '<div class="lp-row-text"><div class="lp-row-name">'+p.name+'</div><div class="lp-row-desc">'+p.desc+'</div>'
+      + (locked ? '<div class="lp-lock-note">'+LP_LOCK.replace('width="16" height="16"','width="11" height="11"')+' Required by your administrator · always shown first</div>' : '')
+      + '</div>'
+      + '<div class="lp-arrows">'
+      +   '<button type="button" class="lp-arrow" data-dir="up" aria-label="Move '+p.name+' up" onclick="lpMove(\''+id+'\',-1)"'+(locked||i<=first?' disabled':'')+'>'+LP_UP+'</button>'
+      +   '<button type="button" class="lp-arrow" data-dir="down" aria-label="Move '+p.name+' down" onclick="lpMove(\''+id+'\',1)"'+(locked||i>=last?' disabled':'')+'>'+LP_DOWN+'</button>'
+      + '</div>'
+      + '<button type="button" class="lp-switch" role="switch" aria-checked="'+on+'" aria-label="Show '+p.name+'" onclick="lpToggle(\''+id+'\')"'+(locked?' disabled':'')+'></button>'
+      + '</div>';
+  }).join('');
+  Array.prototype.forEach.call(list.querySelectorAll('.lp-handle[data-drag]'), function(h){
+    h.addEventListener('pointerdown', lpDragStart);
+  });
+}
+// Touch / mouse drag: rows slide visually during the drag; the order is committed on release.
+// (The DOM isn't moved mid-drag, so iPad Safari never loses the pointer.)
+var lpDrag = null;
+function lpDragStart(e){
+  if (e.button !== undefined && e.button !== 0) return;
+  e.preventDefault();
+  var handle = e.currentTarget, row = handle.closest('.lp-row');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#lp-list .lp-row:not(.locked)'));
+  lpDrag = {
+    handle: handle, row: row, rows: rows, idx: rows.indexOf(row), startY: e.clientY, target: rows.indexOf(row),
+    centers: rows.map(function(r){ return r.offsetTop + r.offsetHeight/2; }),
+    shift: row.offsetHeight + 8
+  };
+  row.classList.add('dragging');
+  rows.forEach(function(r){ if (r !== row) r.style.transition = 'transform .15s'; });
+  try { handle.setPointerCapture(e.pointerId); } catch(err){}
+  handle.addEventListener('pointermove', lpDragMove);
+  handle.addEventListener('pointerup', lpDragEnd);
+  handle.addEventListener('pointercancel', lpDragEnd);
+}
+function lpDragMove(e){
+  if (!lpDrag) return;
+  var d = lpDrag, dy = e.clientY - d.startY;
+  var minDy = d.centers[0] - d.centers[d.idx], maxDy = d.centers[d.centers.length-1] - d.centers[d.idx];
+  dy = Math.max(minDy - d.shift/2, Math.min(maxDy + d.shift/2, dy));
+  d.row.style.transform = 'translateY('+dy+'px)';
+  // swap with a neighbour once the dragged row covers half of it (feels like iOS list reordering)
+  var c = d.centers[d.idx] + dy, half = d.shift / 2, target = 0;
+  d.centers.forEach(function(cj, j){
+    if (j < d.idx && c >= cj + half) target++;    // row above stays above
+    if (j > d.idx && c >  cj - half) target++;    // row below has been passed
+  });
+  d.target = target;
+  d.rows.forEach(function(r, j){
+    if (j === d.idx) return;
+    var t = 0;
+    if (j < d.idx && j >= target) t = d.shift;
+    if (j > d.idx && j <= target) t = -d.shift;
+    r.style.transform = t ? 'translateY('+t+'px)' : '';
+  });
+}
+function lpDragEnd(){
+  if (!lpDrag) return;
+  var d = lpDrag; lpDrag = null;
+  d.handle.removeEventListener('pointermove', lpDragMove);
+  d.handle.removeEventListener('pointerup', lpDragEnd);
+  d.handle.removeEventListener('pointercancel', lpDragEnd);
+  var movable = d.rows.map(function(r){ return r.getAttribute('data-id'); });
+  var id = movable.splice(d.idx, 1)[0];
+  movable.splice(d.target, 0, id);
+  lpDraft.order = lpDraft.order.filter(lpLocked).concat(movable);
+  renderLpList();
+}
+document.addEventListener('keydown', function(e){
+  var ov = document.getElementById('lp-overlay');
+  if (e.key === 'Escape' && ov && ov.classList.contains('active')) cancelLayoutSettings();
+});
+
 // ── Sheet navigation ──
 // openSheet: opens a sheet fresh (from the page, a card, a list row).
 // openChildSheet: drill-in from inside a sheet (e.g. equipment hierarchy) — remembers the
@@ -2145,6 +2386,30 @@ function closeSubview(key) {
     </div>
   </div>
 
+
+  <!-- LANDING PAGE SETTINGS DIALOG -->
+  <div class="lp-overlay" id="lp-overlay" onclick="if(event.target===this)cancelLayoutSettings()">
+    <div class="lp-dialog" role="dialog" aria-modal="true" aria-labelledby="lp-title">
+      <div class="lp-dialog-head">
+        <div>
+          <div class="lp-title" id="lp-title">Landing Page Settings</div>
+          <div class="lp-subtitle">Show, hide and reorder the panels on your landing page</div>
+        </div>
+        <button class="lp-close" type="button" onclick="cancelLayoutSettings()" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="lp-list-label">Panels <span>Drag <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg> or use the arrows to reorder</span></div>
+      <div class="lp-list" id="lp-list"></div>
+      <div class="lp-dialog-foot">
+        <button class="lp-btn lp-btn-trans" type="button" onclick="resetLayoutDraft()">Reset to default</button>
+        <div class="lp-foot-right">
+          <button class="lp-btn" type="button" onclick="cancelLayoutSettings()">Cancel</button>
+          <button class="lp-btn lp-btn-emph" type="button" onclick="saveLayoutSettings()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="toaster" id="toaster"></div>
 </body>
