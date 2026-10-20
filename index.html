@@ -105,8 +105,12 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .header-role { font-size: 12px; color: var(--sapLabelColor); margin-top: 2px; }
 .header-row { display: flex; align-items: center; justify-content: space-between; }
 .header-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-.header-brand { font-size: 11px; font-weight: 700; color: var(--sapLabelColor); letter-spacing: 0.08em; }
-.header-time { font-size: 13px; color: var(--text1); margin-top: 2px; font-weight: 400; }
+/* Logo height = brand label line + gap + date/time line, so it spans exactly both rows */
+.header-brand-row { --brand-lh: 14px; --time-lh: 18px; --stack-gap: 4px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.header-brand-stack { text-align: right; }
+.header-brand { font-size: 11px; line-height: var(--brand-lh); font-weight: 700; color: var(--sapLabelColor); letter-spacing: 0.08em; }
+.header-logo { height: calc(var(--brand-lh) + var(--stack-gap) + var(--time-lh)); width: auto; display: block; flex-shrink: 0; }
+.header-time { font-size: 13px; line-height: var(--time-lh, 18px); color: var(--text1); margin-top: var(--stack-gap, 4px); font-weight: 400; }
 
 /* ZONE BAR — light context bar (like FSA Mobile date row) */
 .zone-bar { background: var(--sapShellColor); padding: 10px 20px; display: flex; align-items: center; flex-wrap: wrap; gap: 0; border-bottom: 1px solid var(--sapListBorder); }
@@ -258,6 +262,11 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .sheet { background: var(--surface); border-radius: var(--radius-lg) var(--radius-lg) 0 0; width: 100%; max-width: 834px; padding: 20px 20px 48px; max-height: 82vh; overflow-y: auto; -webkit-overflow-scrolling: touch; box-shadow: var(--sapShadow2); animation: slideUp .28s cubic-bezier(.34,1.1,.64,1); }
 @keyframes slideUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
 .sheet-handle { width: 36px; height: 4px; background: var(--sapButtonBorder); border-radius: 2px; margin: 0 auto 18px; }
+.sheet-back { display: flex; align-items: center; gap: 4px; margin: -6px 0 14px; padding: 6px 8px 6px 2px; border-radius: var(--radius-sm); color: var(--sapHighlightColor); cursor: pointer; -webkit-user-select: none; min-width: 0; }
+.sheet-back:active { background: var(--sapHoverBackground); }
+.sheet-back svg { flex-shrink: 0; }
+.sheet-back-label { font-size: 14px; font-weight: 600; flex-shrink: 0; }
+.sheet-back-parent { font-size: 13px; color: var(--sapLabelColor); margin-left: 8px; padding-left: 10px; border-left: 1px solid var(--sapGroupBorder); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .sheet-title { font-size: 18px; font-weight: 700; color: var(--text1); margin-bottom: 3px; }
 .sheet-sub { font-size: 13px; color: var(--sapLabelColor); margin-bottom: 14px; }
 .sheet-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border2); gap: 16px; }
@@ -404,13 +413,13 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 
   <!-- HEADER -->
   <div class="header">
-    <!-- Row 1: SAP brand RIGHT justified -->
-    <div style="text-align:right">
-      <div class="header-brand">SAP SERVICE MANAGEMENT</div>
-    </div>
-    <!-- Row 2: Date and time RIGHT justified -->
-    <div style="text-align:right">
-      <div class="header-time" id="header-time">Tue 12 May 2026 · 03:53 PM CST</div>
+    <!-- Rows 1–2: SAP logo LEFT (spans both rows) | brand label + date/time RIGHT -->
+    <div class="header-brand-row">
+      <img class="header-logo" alt="SAP" src="data:image/png;base64,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">
+      <div class="header-brand-stack">
+        <div class="header-brand">SAP SERVICE MANAGEMENT</div>
+        <div class="header-time" id="header-time">&nbsp;</div>
+      </div>
     </div>
     <!-- Row 3: Name LEFT | Inbox tile + Refresh RIGHT -->
     <div class="header-row" style="margin-top:4px">
@@ -682,7 +691,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
         <div class="activity-tabs-right">
           <button class="activity-action-btn" id="auto-schedule-btn" onclick="runAutoSchedule()">Auto-schedule</button>
           <button class="activity-action-btn" id="assign-to-me-btn" onclick="assignSelectedToMe()">Assign to me</button>
-          <div class="activity-tabs-date" id="activity-tabs-date">Tue 12 May 2026</div>
+          <div class="activity-tabs-date" id="activity-tabs-date">&nbsp;</div>
         </div>
       </div>
       <div class="legend" style="margin-bottom:8px;padding:0 2px">
@@ -880,7 +889,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     <div class="subview-title">All tools — CVD Bay (12)</div>
     <div class="subview-meta">
       <div class="subview-zone">CVD Bay — Building 4</div>
-      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+      <div class="subview-datetime">&nbsp;</div>
     </div>
   </div>
   <div class="subview-body">
@@ -911,7 +920,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     <div class="subview-title">All tools — CVD Bay (16)</div>
     <div class="subview-meta">
       <div class="subview-zone">CVD Bay — Building 1</div>
-      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+      <div class="subview-datetime">&nbsp;</div>
     </div>
   </div>
   <div class="subview-body">
@@ -946,7 +955,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     <div class="subview-title">At-risk tools (3)</div>
     <div class="subview-meta">
       <div class="subview-zone">CVD Bay — Building 1</div>
-      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+      <div class="subview-datetime">&nbsp;</div>
     </div>
   </div>
   <div class="subview-body">
@@ -968,7 +977,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     <div class="subview-title">Tools for my activities today (3)</div>
     <div class="subview-meta">
       <div class="subview-zone">CVD Bay — Building 1</div>
-      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+      <div class="subview-datetime">&nbsp;</div>
     </div>
   </div>
   <div class="subview-body">
@@ -990,7 +999,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     <div class="subview-title">At-risk tools (2)</div>
     <div class="subview-meta">
       <div class="subview-zone">CVD Bay — Building 4</div>
-      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+      <div class="subview-datetime">&nbsp;</div>
     </div>
   </div>
   <div class="subview-body">
@@ -1011,7 +1020,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     <div class="subview-title">Tools for my activities today (5)</div>
     <div class="subview-meta">
       <div class="subview-zone">CVD Bay — Building 4</div>
-      <div class="subview-datetime">Tue 12 May 2026 · 03:53 PM CST</div>
+      <div class="subview-datetime">&nbsp;</div>
     </div>
   </div>
   <div class="subview-body">
@@ -1059,12 +1068,14 @@ function updateHeaderTime(){
   var el = document.getElementById('header-time');
   if(!el) return;
   var now = new Date();
-  var opts = {timeZone:'America/Chicago', weekday:'short', month:'short', day:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', hour12:true};
+  var opts = {timeZone:'America/Chicago', weekday:'short', month:'short', day:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', hour12:true, timeZoneName:'short'};
   var parts = new Intl.DateTimeFormat('en-US', opts).formatToParts(now);
   var map = {};
   parts.forEach(function(p){ map[p.type] = p.value; });
   var ampm = (map.dayPeriod || '').toUpperCase();
-  var stamp = map.weekday+' '+map.day+' '+map.month+' '+map.year+' &middot; '+map.hour+':'+map.minute+' '+ampm+' CST';
+  // CST in winter, CDT in summer — follows daylight saving automatically
+  var tz = map.timeZoneName || 'CT';
+  var stamp = map.weekday+' '+map.day+' '+map.month+' '+map.year+' &middot; '+map.hour+':'+map.minute+' '+ampm+' '+tz;
   el.innerHTML = stamp;
   var subEls = document.querySelectorAll('.subview-datetime');
   for(var i=0;i<subEls.length;i++){ subEls[i].innerHTML = stamp; }
@@ -1311,16 +1322,28 @@ function handleZoneChange(){
 
 var inboxRefreshed=false;
 var inboxRefreshCount=0;
-var inboxMsgs=[
-  {sender:'SAP ERP Workflow Message',subject:'AMAT-THROT-VALVE confirmed available — ship date today — CVD-204 repair unblocked',date:'Mon 12 May',date:'Mon 12 May',time:'11:47 AM',badge:'parts-order',bl:'Parts Ordering'},
-  {sender:'Service Manager',subject:'CVD-213 Phase 2 milestone check confirmed 1:00 PM — please confirm attendance',date:'Mon 12 May',time:'11:32 AM',badge:'message',bl:'Message'},
-  {sender:'SAP APM',subject:'Priority 1 — Action Required · 10190551 CVD-204 · Process chamber pressure exceedance · Notification 10042817 · Alert age: 2h 31m · Response SLA: 4h · 1h 29m remaining',date:'Mon 12 May',date:'Mon 12 May',time:'11:15 AM',badge:'telem',bl:'Tool Telemetry Alert'},
-  {sender:'SAP APM',subject:'CVD-208 RF power drift trending — 3 consecutive readings above nominal — monitor recommended',date:'Mon 12 May',date:'Mon 12 May',time:'10:58 AM',badge:'telem',bl:'Tool Telemetry Alert'},
-  {sender:'Applied Materials Safety',subject:'SB-2024-047 acknowledgment required — confirm receipt before end of shift',date:'Mon 12 May',date:'Mon 12 May',time:'09:15 AM',badge:'safety',bl:'Safety'},
-  {sender:'Service Manager',subject:'Great work on CVD-204 diagnosis — customer notified — ETA on repair completion?',date:'Mon 12 May',time:'08:30 AM',badge:'message',bl:'Message'}
-];
-var msg7={sender:'SAP ERP Workflow Message',subject:'Returned part — AMAT-CHAMBER-DXZ — has been received at the Applied Materials General Warehouse',date:'Mon 12 May',time:'12:48 PM',badge:'parts-return',bl:'Parts Return'};
-var msg6={sender:'SAP ERP Workflow Message',subject:'Part — AMAT Loadlock — has been issued from — General Warehouse — and shipping to — Philip White — at — Customer 0001 World Communications Dr., 7350, 68122, Omaha, US. Scheduled arrival Wed 13 May 2026 approx 10:00 AM EST',date:'Mon 12 May',time:'12:21 PM',badge:'parts-order',bl:'Parts Ordering'};
+// ── Inbox content — all dates are relative to the current day ──
+// Starting 6 messages: used on first load AND on the double-tap reset, so both always match.
+function buildStartingInbox(){
+  var today = inboxDate(0);
+  return [
+    {sender:'SAP ERP Workflow Message',subject:'AMAT-THROT-VALVE confirmed available — ship date today — CVD-204 repair unblocked',date:today,time:'11:47 AM',badge:'parts-order',bl:'Parts Ordering'},
+    {sender:'Service Manager',subject:'CVD-213 Phase 2 milestone check confirmed 1:00 PM — please confirm attendance',date:today,time:'11:32 AM',badge:'message',bl:'Message'},
+    {sender:'SAP APM',subject:'Priority 1 — Action Required · 10190551 CVD-204 · Process chamber pressure exceedance · Notification 10042817 · Alert age: 2h 31m · Response SLA: 4h · 1h 29m remaining',date:today,time:'11:15 AM',badge:'telem',bl:'Tool Telemetry Alert'},
+    {sender:'SAP APM',subject:'CVD-208 RF power drift trending — 3 consecutive readings above nominal — monitor recommended',date:today,time:'10:58 AM',badge:'telem',bl:'Tool Telemetry Alert'},
+    {sender:'Applied Materials Safety',subject:'SB-2024-047 acknowledgment required — confirm receipt before end of shift',date:today,time:'09:15 AM',badge:'safety',bl:'Safety'},
+    {sender:'Service Manager',subject:'Great work on CVD-204 diagnosis — customer notified — ETA on repair completion?',date:today,time:'08:30 AM',badge:'message',bl:'Message'}
+  ];
+}
+// Refresh 1 — STO parts transfer; scheduled arrival = tomorrow
+function makeMsg6(){
+  return {sender:'SAP ERP Workflow Message',subject:'Part — AMAT Loadlock — has been issued from — General Warehouse — and shipping to — Philip White — at — Customer 0001 World Communications Dr., 7350, 68122, Omaha, US. Scheduled arrival '+longDate(1)+' approx 10:00 AM EST',date:inboxDate(0),time:'12:21 PM',badge:'parts-order',bl:'Parts Ordering'};
+}
+// Refresh 2 — parts return received
+function makeMsg7(){
+  return {sender:'SAP ERP Workflow Message',subject:'Returned part — AMAT-CHAMBER-DXZ — has been received at the Applied Materials General Warehouse',date:inboxDate(0),time:'12:48 PM',badge:'parts-return',bl:'Parts Return'};
+}
+var inboxMsgs=buildStartingInbox();
 
 
 var _nameClickLast = 0;
@@ -1336,14 +1359,7 @@ function handleNameClick() {
 function resetInbox() {
   inboxRefreshed = false;
   inboxRefreshCount = 0;
-  inboxMsgs = [
-    {sender:'SAP ERP Workflow Message',subject:'AMAT-THROT-VALVE confirmed available — ship date today — CVD-204 repair unblocked',time:'11:47 AM',badge:'parts-order',bl:'Parts Ordering'},
-    {sender:'Service Manager',subject:'CVD-213 Phase 2 milestone check confirmed 1:00 PM — please confirm attendance',date:'Mon 12 May',time:'11:32 AM',badge:'message',bl:'Message'},
-    {sender:'SAP APM',subject:'Priority 1 — Action Required · 10190551 CVD-204 · Process chamber pressure exceedance · Notification 10042817 · Alert age: 2h 31m · Response SLA: 4h · 1h 29m remaining',time:'11:15 AM',badge:'telem',bl:'Tool Telemetry Alert'},
-    {sender:'SAP APM',subject:'CVD-208 RF power drift trending — 3 consecutive readings above nominal — monitor recommended',time:'10:58 AM',badge:'telem',bl:'Tool Telemetry Alert'},
-    {sender:'Applied Materials Safety',subject:'SB-2024-047 acknowledgment required — confirm receipt before end of shift',time:'09:15 AM',badge:'safety',bl:'Safety'},
-    {sender:'Service Manager',subject:'Great work on CVD-204 diagnosis — customer notified — ETA on repair completion?',date:'Mon 12 May',time:'08:30 AM',badge:'message',bl:'Message'}
-  ];
+  inboxMsgs = buildStartingInbox();
   var el = document.getElementById('inbox-count');
   if (el) {
     el.style.opacity = '0';
@@ -1369,12 +1385,12 @@ function doRefresh(){
     btn.classList.remove('spinning');
     inboxRefreshCount++;
     if(inboxRefreshCount===1){
-      inboxMsgs.unshift(msg6);
+      inboxMsgs.unshift(makeMsg6());
       var el=document.getElementById('inbox-count');
       el.style.opacity='0';
       setTimeout(function(){el.innerHTML='My Inbox <span class="count-badge">7</span>';el.style.opacity='1';},220);
     } else if(inboxRefreshCount===2){
-      inboxMsgs.unshift(msg7);
+      inboxMsgs.unshift(makeMsg7());
       var el=document.getElementById('inbox-count');
       el.style.opacity='0';
       setTimeout(function(){el.innerHTML='My Inbox <span class="count-badge">8</span>';el.style.opacity='1';},220);
@@ -1449,7 +1465,7 @@ function hierList(items) {
   var html = '<div class="hier-list">';
   items.forEach(function(item) {
     // item = [sheetKey, equipNum, equipName, subType, dotClass, statusText, statusClass]
-    html += '<div class="hier-item" onclick="openSheet(\''+item[0]+'\')">'      +'<div class="hier-dot '+item[4]+'">&#10625;</div>'      +'<div class="hier-content">'      +'<div class="hier-id">'+item[1]+' '+item[2]+'</div>'      +'<div class="hier-type">'+item[3]+'</div>'      +'<div class="hier-status '+item[6]+'">'+item[5]+'</div>'      +'<div class="hier-tap">Tap for detail ›</div>'      +'</div></div>';
+    html += '<div class="hier-item" onclick="openChildSheet(\''+item[0]+'\')">'      +'<div class="hier-dot '+item[4]+'">&#10625;</div>'      +'<div class="hier-content">'      +'<div class="hier-id">'+item[1]+' '+item[2]+'</div>'      +'<div class="hier-type">'+item[3]+'</div>'      +'<div class="hier-status '+item[6]+'">'+item[5]+'</div>'      +'<div class="hier-tap">Tap for detail ›</div>'      +'</div></div>';
   });
   return html + '</div>';
 }
@@ -1501,11 +1517,29 @@ function pmDate(monthsOffset, seed){
   d.setDate(d.getDate()+pmOffsetDays(seed));
   return formatPMDate(d);
 }
-// dayOffset: whole days from today, for near-term Planned Start/Finish dates.
+// dayOffset: whole days from today (negative = past), e.g. "20 Oct 2026".
+// Used for Planned Start/Finish dates and any historical / future dates in detail sheets.
 function plannedDate(dayOffset){
+  return formatPMDate(dayFromToday(dayOffset));
+}
+// Shared base: today + n days, pinned to midday so DST changes never shift the day.
+function dayFromToday(n){
   var d = new Date();
-  d.setDate(d.getDate()+dayOffset);
-  return formatPMDate(d);
+  d.setHours(12,0,0,0);
+  d.setDate(d.getDate()+n);
+  return d;
+}
+// Inbox message date, e.g. "Tue 20 Oct"
+// (name lists kept local: the inbox is built at load, before later top-level vars are initialized)
+function inboxDate(n){
+  var wd = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var d = dayFromToday(n);
+  return wd[d.getDay()]+' '+d.getDate()+' '+mon[d.getMonth()];
+}
+// Date inside message text, e.g. "Wed 21 Oct 2026"
+function longDate(n){
+  return inboxDate(n)+' '+dayFromToday(n).getFullYear();
 }
 function updateUnassignedPlannedDates(){
   var plans = {1:[0,0], 2:[1,2], 3:[2,4], 4:[2,4], 5:[1,2], 6:[0,0], 7:[1,2],
@@ -1523,7 +1557,7 @@ var sheets = {
 'cvd204-alert': function(){return '<div class="sheet-title">10190551 CVD-204 — P1 Alert Detail</div>'
   +'<div class="sheet-sub">Notification 10042817 · ECC PM · Chamber A</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--neg-text)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
-  +rows([['Parameter','Process chamber pressure'],['Current reading','0.00642 mbar','red'],['Spec range','0.00560 – 0.00613 mbar'],['Exceedance','+0.00002 mbar above limit','red'],['Trending','90 min continuous · +0.000003 mbar / 15 min'],['APM alert type','Threshold breach — critical'],['APM health impact','-35 points on composite score','red'],['Recommended action','Inspect and replace throttle valve · Chamber A'],['Prior occurrences','3 similar events — last 18 months'],['Last occurrence','14 Jan 2026 · throttle valve replacement']])
+  +rows([['Parameter','Process chamber pressure'],['Current reading','0.00642 mbar','red'],['Spec range','0.00560 – 0.00613 mbar'],['Exceedance','+0.00002 mbar above limit','red'],['Trending','90 min continuous · +0.000003 mbar / 15 min'],['APM alert type','Threshold breach — critical'],['APM health impact','-35 points on composite score','red'],['Recommended action','Inspect and replace throttle valve · Chamber A'],['Prior occurrences','3 similar events — last 18 months'],['Last occurrence',plannedDate(-279)+' · throttle valve replacement']])
   +aixRow('AIx insight','Chamber pressure anomaly confirmed by AIx process model — probability of throttle valve degradation: 84%')
   +'<div class="faux-links">'
   +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#256F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190551 CVD-204/chamber-a/pressure','Live link to AIx telemetry — available in connected deployment')
@@ -1533,7 +1567,7 @@ var sheets = {
 'telem204': function(){return '<div class="sheet-title">Telemetry Detail — 10190551 CVD-204</div>'
   +'<div class="sheet-sub">Chamber A · Process pressure · APM alert APM-ALT-204-0042</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--neg-text)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
-  +rows([['Parameter','Process chamber pressure'],['Current reading','0.00642 mbar','red'],['Specification','0.00560 – 0.00613 mbar'],['Exceedance','+0.00002 mbar · 90 min trending','red'],['Rate of change','+0.000003 mbar per 15 min'],['APM alert type','Threshold breach — critical'],['APM health impact','-35 points (score: 42/100)','red'],['Recommended action','Inspect and replace throttle valve · Chamber A'],['Prior occurrences','3 events in last 18 months · last: 14 Jan 2025']])
+  +rows([['Parameter','Process chamber pressure'],['Current reading','0.00642 mbar','red'],['Specification','0.00560 – 0.00613 mbar'],['Exceedance','+0.00002 mbar · 90 min trending','red'],['Rate of change','+0.000003 mbar per 15 min'],['APM alert type','Threshold breach — critical'],['APM health impact','-35 points (score: 42/100)','red'],['Recommended action','Inspect and replace throttle valve · Chamber A'],['Prior occurrences','3 events in last 18 months · last: '+plannedDate(-279)]])
   +aixRow('AIx insight','Pressure anomaly confirmed by AIx process model — throttle valve degradation probability: 84%')
   +'<div class="faux-links">'
   +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#256F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190551 CVD-204/chamber-a/pressure','Live link to AIx telemetry — available in connected deployment')
@@ -1619,7 +1653,7 @@ var sheets = {
 'cvd204ll': function(){return '<div class="sheet-title">10190555 CVD-204-LL</div>'
   +'<div class="sheet-sub">Loadlock  |  Serial: SN-LL-204-001  |  Superior: 10190551 CVD-204</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">94 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:94%"></div></div></div>'
-  +rows([['Equipment category','S — Customer equipment'],['Object type','AMAT-CVD-LL'],['Model','Centura Loadlock'],['User status','INSV — In service','green'],['Warranty','AMAT-CVD-WTY-002 — Direct override (12 month · parts and labor only)'],['Post-warranty','Applied Global Care Platinum from March 15 2023'],['FLOC','AMATUS-FAB-CUST1-BLDG4-CVD-204']]);},
+  +rows([['Equipment category','S — Customer equipment'],['Object type','AMAT-CVD-LL'],['Model','Centura Loadlock'],['User status','INSV — In service','green'],['Warranty','AMAT-CVD-WTY-002 — Direct override (12 month · parts and labor only)'],['Post-warranty','Applied Global Care Platinum from 15 Mar 2023'],['FLOC','AMATUS-FAB-CUST1-BLDG4-CVD-204']]);},
 
 'cvd213cha': function(){return '<div class="sheet-title">10190567 CVD-213-CHA</div>'
   +'<div class="sheet-sub">Process Chamber A  |  Serial: SN-CHA-213-001  |  Superior: 10190566 CVD-213</div>'
@@ -1701,7 +1735,7 @@ var sheets = {
 
 'cvd213': function(){return '<div class="sheet-title">10190566 CVD-213 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · New installation · Fab A · Building 4</div>'
-  +rows([['Applied serial','SN-10190566 CVD-213-001'],['Customer tool ID','FAB-A-CVD-13 (pending commissioning)'],['Platform','Applied Centura · CVD'],['Current status','Under installation — Phase 2 of 3'],['Installation phase','Electrical and facilities hookup'],['PS WBS element','AMAT-INSTALL-2026-0042-01-02'],['CS order','4000835'],['Overall progress','Phase 1 complete · Phase 2 in progress · Phase 3 pending'],['Install contract','New installation — covered'],['Est. commissioning','16 Dec 2026']])
+  +rows([['Applied serial','SN-10190566 CVD-213-001'],['Customer tool ID','FAB-A-CVD-13 (pending commissioning)'],['Platform','Applied Centura · CVD'],['Current status','Under installation — Phase 2 of 3'],['Installation phase','Electrical and facilities hookup'],['PS WBS element','AMAT-INSTALL-2026-0042-01-02'],['CS order','4000835'],['Overall progress','Phase 1 complete · Phase 2 in progress · Phase 3 pending'],['Install contract','New installation — covered'],['Est. commissioning',plannedDate(57)]])
   +'<div class="hier-header">Equipment hierarchy — sub-assemblies</div>'
   +hierList([
     ['cvd213cha','10190567','CVD-213-CHA','Process Chamber A · DxZ · SN-CHA-213-001','purple','INST — Under installation · Phase 2 active','purple'],
@@ -1937,18 +1971,58 @@ var sheets = {
   +'</div>';}
 };
 
-function openSheet(key) {
+// ── Sheet navigation ──
+// openSheet: opens a sheet fresh (from the page, a card, a list row).
+// openChildSheet: drill-in from inside a sheet (e.g. equipment hierarchy) — remembers the
+// parent so a back link can return to it, at the same scroll position.
+var sheetStack = [];          // [{key, scroll}] of parent sheets
+var currentSheetKey = null;
+
+function sheetTitleText(key){
+  var t = document.createElement('div');
+  t.innerHTML = sheets[key]();
+  var h = t.querySelector('.sheet-title');
+  return h ? h.textContent : '';
+}
+function renderSheet(key, scrollTo){
   var fn = sheets[key];
-  if (!fn) return;
-  document.getElementById('sheet-content').innerHTML = fn();
+  if (!fn) return false;
+  var back = '';
+  if (sheetStack.length){
+    var parent = sheetStack[sheetStack.length-1].key;
+    back = '<div class="sheet-back" onclick="sheetBack()">'
+      + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>'
+      + '<span class="sheet-back-label">Back</span>'
+      + '<span class="sheet-back-parent">'+sheetTitleText(parent)+'</span></div>';
+  }
+  currentSheetKey = key;
+  document.getElementById('sheet-content').innerHTML = back + fn();
+  document.getElementById('sheet').scrollTop = scrollTo || 0;
+  activeTooltip = null;
+  return true;
+}
+function openSheet(key) {
+  sheetStack = [];
+  if (!renderSheet(key)) return;
   document.getElementById('overlay').classList.add('active');
   document.body.style.overflow = 'hidden';
+}
+function openChildSheet(key) {
+  if (!sheets[key]) return;
+  if (currentSheetKey) sheetStack.push({key: currentSheetKey, scroll: document.getElementById('sheet').scrollTop});
+  renderSheet(key);
+}
+function sheetBack() {
+  var prev = sheetStack.pop();
+  if (prev) renderSheet(prev.key, prev.scroll);
 }
 
 function closeSheet() {
   document.getElementById('overlay').classList.remove('active');
   document.body.style.overflow = '';
   activeTooltip = null;
+  sheetStack = [];
+  currentSheetKey = null;
 }
 
 function handleOverlayClick(e) {
