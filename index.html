@@ -4,346 +4,393 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>SAP Field Service — Shift Start</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#FFFFFF">
+<title>SAP Service Management — Shift Start</title>
 <style>
+/* ─────────────────────────────────────────────────────────────
+   SAP Morning Horizon (sap_horizon) — values from SAP's official
+   @sap-theming/theming-base-content 11.36.5 css_variables.css
+   ───────────────────────────────────────────────────────────── */
+@font-face { font-family: "72"; font-weight: 400; font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@sap-theming/theming-base-content@11.36.5/content/Base/baseLib/baseTheme/fonts/72-Regular.woff2") format("woff2"); }
+@font-face { font-family: "72"; font-weight: 600; font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@sap-theming/theming-base-content@11.36.5/content/Base/baseLib/baseTheme/fonts/72-Semibold.woff2") format("woff2"); }
+@font-face { font-family: "72"; font-weight: 700; font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@sap-theming/theming-base-content@11.36.5/content/Base/baseLib/baseTheme/fonts/72-Bold.woff2") format("woff2"); }
+
 :root {
-  --bg: #f4f5f7;
-  --surface: #ffffff;
-  --surface2: #f8f9fa;
-  --border: rgba(0,0,0,0.10);
-  --border2: rgba(0,0,0,0.06);
-  --text1: #1a1a2e;
-  --text2: #5a6478;
-  --text3: #8a94a6;
-  --blue-dark: #0A2540;
-  --blue-mid: #0D3060;
-  --blue-accent: #1B6FE4;
-  --red: #EF4444;
-  --amber: #F59E0B;
-  --amber-bg: #FEF3C7;
-  --amber-border: #F59E0B;
-  --amber-text: #78350F;
-  --amber-label: #92400E;
-  --green: #22C55E;
-  --green-text: #16A34A;
-  --purple: #8B5CF6;
-  --purple-bg: #F3E8FF;
-  --purple-text: #6B21A8;
-  --blue-tag-bg: #DBEAFE;
-  --blue-tag-text: #1E40AF;
-  --red-tag-bg: #FEE2E2;
-  --red-tag-text: #991B1B;
-  --green-tag-bg: #DCFCE7;
-  --green-tag-text: #166534;
-  --amber-tag-bg: #FEF3C7;
-  --amber-tag-text: #92400E;
-  --yellow-tag-bg: #FEF9C3;
-  --yellow-tag-text: #854D0E;
-  --orange-tag-bg: #FFEDD5;
-  --orange-tag-text: #9A3412;
-  --priority-low: #15803D;
-  --priority-medium: #A16207;
-  --priority-high: #C2410C;
-  --priority-escalated: #B91C1C;
-  --orange: #F97316;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  /* Horizon base */
+  --sapBrandColor: #0070F2;           /* emphasized buttons, badges */
+  --sapHighlightColor: #0064D9;       /* links, button text, selected tab */
+  --sapBackgroundColor: #F5F6F7;
+  --sapShellColor: #FFFFFF;
+  --sapNeutralBackground: #EFF1F2;
+  --sapTextColor: #131E29;
+  --sapLabelColor: #556B82;
+  --sapIconMuted: #758CA4;
+  --sapButtonBorder: #BCC3CA;
+  --sapHoverBackground: #EAECEE;
+  --sapActiveBackground: #DEE2E5;
+  --sapGroupBorder: #D9D9D9;
+  --sapListBorder: #E5E5E5;
+  --sapToastBackground: rgba(29,45,62,0.94);
+  --sapShadow0: 0 0 0.125rem 0 rgba(34,53,72,0.2), 0 0.125rem 0.25rem 0 rgba(34,53,72,0.2);
+  --sapShadow2: 0 0 0 0.0625rem rgba(34,53,72,0.12), 0 0.625rem 1.875rem 0 rgba(34,53,72,0.25);
+
+  /* Semantic — element (dots, bars, stripes) / text / background / border */
+  --neg-el: #F53232;  --neg-text: #AA0808;  --neg-bg: #FFEAF4;  --neg-border: #FFC2DE;
+  --crit-el: #E76500; --crit-text: #B44F00; --crit-bg: #FFF8D6; --crit-border: #DD6100;
+  --pos-el: #30914C;  --pos-text: #256F3A;  --pos-bg: #F5FAE5;  --pos-border: #DBEDA0;
+  --info-el: #0070F2; --info-text: #0064D9; --info-bg: #E1F4FF;
+  --accent-purple: #6C32A9; --accent-purple-bg: #DDCCF0;
+  --accent-orange: #D27700; --accent-orange-text: #A45D00; --accent-orange-bg: #FFF3B8;
+  --accent-magenta: #A100C2; --accent-magenta-bg: #FFDCF3;
+
+  /* Legacy token names kept so existing markup/JS keeps working */
+  --bg: var(--sapBackgroundColor);
+  --surface: #FFFFFF;
+  --surface2: var(--sapBackgroundColor);
+  --border: var(--sapGroupBorder);
+  --border2: var(--sapListBorder);
+  --text1: var(--sapTextColor);
+  --text2: var(--sapLabelColor);
+  --text3: #5B738B;
+  --blue-dark: #1D2D3E;
+  --blue-mid: #1D2D3E;
+  --blue-accent: var(--sapBrandColor);
+  --blue-light: #D1EFFF;
+  --red: var(--neg-el);
+  --amber: var(--crit-el);
+  --amber-bg: var(--crit-bg);
+  --amber-border: var(--crit-border);
+  --amber-text: var(--crit-text);
+  --amber-label: var(--crit-text);
+  --green: var(--pos-el);
+  --green-text: var(--pos-text);
+  --purple: var(--accent-purple);
+  --purple-bg: var(--accent-purple-bg);
+  --purple-text: var(--accent-purple);
+  --blue-tag-bg: var(--info-bg);
+  --blue-tag-text: var(--info-text);
+  --red-tag-bg: var(--neg-bg);
+  --red-tag-text: var(--neg-text);
+  --green-tag-bg: var(--pos-bg);
+  --green-tag-text: var(--pos-text);
+  --amber-tag-bg: var(--crit-bg);
+  --amber-tag-text: var(--crit-text);
+  --yellow-tag-bg: var(--accent-orange-bg);
+  --yellow-tag-text: var(--accent-orange-text);
+  --orange-tag-bg: var(--accent-orange-bg);
+  --orange-tag-text: var(--accent-orange-text);
+  --priority-low: var(--pos-text);
+  --priority-medium: var(--crit-el);
+  --priority-high: #B95100;
+  --priority-escalated: var(--neg-text);
+  --orange: var(--accent-orange);
+  --radius-sm: 8px;     /* buttons  (sapButton_BorderCornerRadius .5rem) */
+  --radius-md: 12px;    /* elements (sapElement_BorderCornerRadius .75rem) */
+  --radius-lg: 16px;    /* tiles    (sapTile_BorderCornerRadius 1rem) */
+  --shadow-sm: var(--sapShadow0);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .app { max-width: 834px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; overflow-y: visible; }
 
-/* HEADER */
-.header { background: var(--blue-dark); padding: 14px 20px 12px; display: flex; flex-direction: column; gap: 4px; position: sticky; top: 0; z-index: 100; }
+/* HEADER — Horizon shell bar */
+.header { background: var(--sapShellColor); padding: 12px 20px 12px; display: flex; flex-direction: column; gap: 4px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--sapGroupBorder); box-shadow: 0 2px 4px rgba(34,53,72,0.06); }
 .header-left { display: flex; align-items: center; gap: 12px; }
-.avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--blue-accent); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: #fff; flex-shrink: 0; }
-.header-name { font-size: 16px; font-weight: 600; color: #fff; }
-.header-role { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+.avatar { width: 42px; height: 42px; border-radius: 50%; background: #D1EFFF; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #0057D2; flex-shrink: 0; }
+.header-name { font-size: 17px; font-weight: 700; color: var(--text1); }
+.header-role { font-size: 12px; color: var(--sapLabelColor); margin-top: 2px; }
 .header-row { display: flex; align-items: center; justify-content: space-between; }
 .header-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-.header-brand { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; }
-.header-time { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 3px; font-weight: 500; }
+.header-brand { font-size: 11px; font-weight: 700; color: var(--sapLabelColor); letter-spacing: 0.08em; }
+.header-time { font-size: 13px; color: var(--text1); margin-top: 2px; font-weight: 400; }
 
-/* ZONE BAR */
-.zone-bar { background: var(--blue-mid); padding: 9px 20px; display: flex; align-items: center; flex-wrap: wrap; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
-.zone-label { font-size: 11px; color: rgba(255,255,255,0.55); margin-right: 4px; }
-.zone-val { font-size: 11px; font-weight: 600; color: #fff; }
+/* ZONE BAR — light context bar (like FSA Mobile date row) */
+.zone-bar { background: var(--sapShellColor); padding: 10px 20px; display: flex; align-items: center; flex-wrap: wrap; gap: 0; border-bottom: 1px solid var(--sapListBorder); }
+.zone-label { font-size: 12px; color: var(--sapLabelColor); margin-right: 4px; }
+.zone-val { font-size: 12px; font-weight: 600; color: var(--text1); }
 .zone-select {
   -webkit-appearance: none; -moz-appearance: none; appearance: none;
   background: transparent; border: none; outline: none;
-  color: #fff; font-size: 11px; font-weight: 600; font-family: inherit;
+  color: var(--sapHighlightColor); font-size: 12px; font-weight: 700; font-family: inherit;
   padding: 2px 18px 2px 0; margin: 0; cursor: pointer;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%230064D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
   background-repeat: no-repeat; background-position: right center; background-size: 11px 11px;
 }
-.zone-select option { color: #111; background: #fff; font-weight: 500; }
-.zone-sep { color: rgba(255,255,255,0.25); margin: 0 10px; font-size: 11px; }
+.zone-select option { color: var(--text1); background: #fff; font-weight: 400; }
+.zone-sep { color: var(--sapGroupBorder); margin: 0 10px; font-size: 12px; }
 .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: inline-block; margin-right: 5px; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.45} }
 
 /* BODY */
-.body { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 14px; padding-bottom: 36px; }
+.body { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 18px; padding-bottom: 36px; }
 
-/* PRIORITY BANNER */
-.priority-banner { background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: var(--radius-md); padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .12s; -webkit-user-select: none; }
+/* PRIORITY BANNER — Horizon error message strip */
+.priority-banner { background: var(--neg-bg); border: 1px solid var(--neg-border); border-radius: var(--radius-md); padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; cursor: pointer; transition: transform .12s; -webkit-user-select: none; }
 .priority-banner:active { transform: scale(0.985); }
-.prio-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--amber); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-.prio-label { font-size: 10px; font-weight: 600; color: var(--amber-label); letter-spacing: .07em; text-transform: uppercase; }
-.prio-title { font-size: 14px; font-weight: 600; color: var(--amber-text); margin-top: 3px; line-height: 1.35; }
-.prio-meta { font-size: 11px; color: var(--amber-label); margin-top: 4px; line-height: 1.4; }
-.priority-banner-ok { background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: var(--radius-md); padding: 14px 16px; display: none; align-items: center; gap: 12px; box-shadow: var(--shadow-sm); -webkit-user-select: none; }
-.prio-icon-ok { width: 34px; height: 34px; border-radius: 8px; background: var(--green); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.prio-label-ok { font-size: 10px; font-weight: 600; color: var(--green-tag-text); letter-spacing: .07em; text-transform: uppercase; }
-.prio-title-ok { font-size: 14px; font-weight: 600; color: var(--green-tag-text); margin-top: 3px; line-height: 1.35; }
-.sla-pill { display: inline-block; background: var(--red); color: #fff; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; margin-left: 6px; vertical-align: middle; }
+.prio-icon { width: 34px; height: 34px; border-radius: var(--radius-sm); background: var(--neg-text); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.prio-label { font-size: 11px; font-weight: 700; color: var(--neg-text); letter-spacing: .04em; text-transform: uppercase; }
+.prio-title { font-size: 14px; font-weight: 700; color: var(--text1); margin-top: 3px; line-height: 1.35; }
+.prio-meta { font-size: 12px; color: var(--sapLabelColor); margin-top: 4px; line-height: 1.4; }
+.priority-banner-ok { background: var(--pos-bg); border: 1px solid var(--pos-border); border-radius: var(--radius-md); padding: 14px 16px; display: none; align-items: center; gap: 12px; -webkit-user-select: none; }
+.prio-icon-ok { width: 34px; height: 34px; border-radius: var(--radius-sm); background: var(--pos-text); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.prio-label-ok { font-size: 11px; font-weight: 700; color: var(--pos-text); letter-spacing: .04em; text-transform: uppercase; }
+.prio-title-ok { font-size: 14px; font-weight: 700; color: var(--text1); margin-top: 3px; line-height: 1.35; }
+.sla-pill { display: inline-block; background: var(--neg-text); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-left: 6px; vertical-align: middle; }
 
-/* SECTION HEADER */
+/* SECTION HEADER — Horizon section titles (FLP "To-Dos", "Pages") */
 .section-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 8px; flex-wrap: wrap; }
-.section-label { font-size: 10px; font-weight: 600; color: var(--text3); letter-spacing: .08em; text-transform: uppercase; padding: 0 2px; flex-shrink: 0; }
-.legend { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-.legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text2); white-space: nowrap; }
+.section-label { font-size: 15px; font-weight: 700; color: var(--text1); letter-spacing: 0; text-transform: none; padding: 0 2px; flex-shrink: 0; }
+.legend { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.legend-item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--sapLabelColor); white-space: nowrap; }
 .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-/* STAT ROW */
-.stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
-.stat-card { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius-md); padding: 12px 14px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .12s; -webkit-user-select: none; }
-.stat-card:active { transform: scale(0.96); }
-.stat-val { font-size: 26px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
-.stat-val.red { color: var(--red); }
-.stat-val.amber { color: #D97706; }
-.stat-val.green { color: var(--green-text); }
-.stat-val.blue { color: var(--blue-accent); }
-.stat-lbl { font-size: 10px; color: var(--text3); margin-top: 5px; line-height: 1.3; }
-.stat-arrow { font-size: 10px; color: var(--text3); margin-top: 4px; }
+/* STAT ROW — Horizon tiles */
+.stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+.stat-card { background: var(--surface); border-radius: var(--radius-lg); padding: 14px 16px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .12s, background .12s; -webkit-user-select: none; }
+.stat-card:active { transform: scale(0.96); background: var(--sapHoverBackground); }
+.stat-val { font-size: 28px; font-weight: 400; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat-val.red { color: var(--neg-text); }
+.stat-val.amber { color: var(--crit-text); }
+.stat-val.green { color: var(--pos-text); }
+.stat-val.blue { color: var(--info-text); }
+.stat-lbl { font-size: 12px; color: var(--sapLabelColor); margin-top: 6px; line-height: 1.3; }
+.stat-arrow { font-size: 12px; font-weight: 600; color: var(--sapHighlightColor); margin-top: 6px; }
 
 /* TOOL GRID */
-.tool-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-.tool-card { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius-md); padding: 12px 13px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .12s; -webkit-user-select: none; position: relative; overflow: hidden; display: flex; flex-direction: column; }
-.tool-card::before { content:''; position: absolute; left:0; top:0; bottom:0; width: 3px; }
-.tool-card.t-red::before { background: var(--red); }
-.tool-card.t-amber::before { background: var(--amber); }
-.tool-card.t-blue::before { background: var(--blue-accent); }
-.tool-card.t-green::before { background: var(--green); }
-.tool-card.t-purple::before { background: var(--purple); }
-.tool-card.t-orange::before { background: var(--orange); }
-.tool-card:active { transform: scale(0.97); }
-.tool-id { font-size: 13px; font-weight: 600; color: var(--text1); }
-.tool-type { font-size: 10px; color: var(--text3); margin-top: 2px; }
-.tool-status { margin-top: 8px; display: flex; align-items: center; gap: 5px; }
-.status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.status-dot.red { background: var(--red); }
-.status-dot.amber { background: var(--amber); }
-.status-dot.green { background: var(--green); }
-.status-dot.blue { background: var(--blue-accent); }
-.status-dot.purple { background: var(--purple); }
-.status-dot.orange { background: var(--orange); }
-.status-text { font-size: 10px; color: var(--text2); line-height: 1.3; }
-.tool-tag { margin-top: 7px; font-size: 10px; font-weight: 500; padding: 3px 7px; border-radius: 6px; display: inline-block; line-height: 1.3; }
-.tool-sub { margin-top: auto; padding-top: 7px; display: flex; justify-content: flex-end; }
-.tool-sub-label { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text3); cursor: pointer; -webkit-user-select: none; }
-.tool-sub-check { width: 13px; height: 13px; flex-shrink: 0; accent-color: var(--blue-accent); cursor: pointer; }
-.tool-tag.alert { background: var(--amber-bg); color: var(--amber-label); }
-.tool-tag.info { background: var(--blue-tag-bg); color: var(--blue-tag-text); }
-.tool-tag.danger { background: var(--red-tag-bg); color: var(--red-tag-text); }
-.tool-tag.install { background: var(--amber-tag-bg); color: var(--amber-tag-text); }
-.tool-tag.parts { background: #FFF7ED; color: #9A3412; }
+.tool-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.tool-card { background: var(--surface); border-radius: var(--radius-md); padding: 12px 13px 12px 15px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .12s, background .12s; -webkit-user-select: none; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+.tool-card::before { content:''; position: absolute; left:0; top:0; bottom:0; width: 4px; }
+.tool-card.t-red::before { background: var(--neg-el); }
+.tool-card.t-amber::before { background: var(--crit-el); }
+.tool-card.t-blue::before { background: var(--info-el); }
+.tool-card.t-green::before { background: var(--pos-el); }
+.tool-card.t-purple::before { background: var(--accent-purple); }
+.tool-card.t-orange::before { background: var(--accent-orange); }
+.tool-card:active { transform: scale(0.97); background: var(--sapHoverBackground); }
+.tool-id { font-size: 13px; font-weight: 700; color: var(--text1); }
+.tool-type { font-size: 11px; color: var(--sapLabelColor); margin-top: 2px; }
+.tool-status { margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.status-dot.red { background: var(--neg-el); }
+.status-dot.amber { background: var(--crit-el); }
+.status-dot.green { background: var(--pos-el); }
+.status-dot.blue { background: var(--info-el); }
+.status-dot.purple { background: var(--accent-purple); }
+.status-dot.orange { background: var(--accent-orange); }
+.status-text { font-size: 11px; color: var(--text1); line-height: 1.3; }
+.tool-tag { margin-top: 7px; font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 4px; display: inline-block; line-height: 1.3; align-self: flex-start; }
+.tool-sub { margin-top: auto; padding-top: 8px; display: flex; justify-content: flex-end; }
+.tool-sub-label { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--sapLabelColor); cursor: pointer; -webkit-user-select: none; }
+.tool-sub-check { width: 14px; height: 14px; flex-shrink: 0; accent-color: var(--sapBrandColor); cursor: pointer; }
+.tool-tag.alert { background: var(--crit-bg); color: var(--crit-text); }
+.tool-tag.info { background: var(--info-bg); color: var(--info-text); }
+.tool-tag.danger { background: var(--neg-bg); color: var(--neg-text); }
+.tool-tag.install { background: var(--accent-purple-bg); color: var(--accent-purple); }
+.tool-tag.parts { background: var(--accent-orange-bg); color: var(--accent-orange-text); }
 
 /* TELEMETRY */
-.telemetry-card { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius-md); padding: 4px 0; box-shadow: var(--shadow-sm); overflow: hidden; }
+.telemetry-card { background: var(--surface); border-radius: var(--radius-lg); padding: 4px 0; box-shadow: var(--shadow-sm); overflow: hidden; }
 .telem-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border2); gap: 12px; cursor: pointer; transition: background .12s; -webkit-user-select: none; }
 .telem-row:last-child { border-bottom: none; }
-.telem-row:active { background: var(--surface2); }
+.telem-row:active { background: var(--sapActiveBackground); }
 .telem-left { flex: 1; min-width: 0; }
-.telem-param { font-size: 12px; font-weight: 500; color: var(--text1); }
-.telem-source { font-size: 10px; color: var(--text3); margin-top: 2px; }
+.telem-param { font-size: 13px; font-weight: 600; color: var(--text1); }
+.telem-source { font-size: 11px; color: var(--sapLabelColor); margin-top: 2px; }
 .telem-right { text-align: right; flex-shrink: 0; }
-.telem-val { font-size: 13px; font-weight: 600; }
-.telem-val.alert { color: var(--red); }
-.telem-val.warn { color: #D97706; }
-.telem-val.ok { color: var(--green-text); }
-.telem-spec { font-size: 10px; color: var(--text3); margin-top: 2px; }
-.chevron { color: var(--text3); font-size: 12px; margin-left: 4px; }
+.telem-val { font-size: 14px; font-weight: 700; }
+.telem-val.alert { color: var(--neg-text); }
+.telem-val.warn { color: var(--crit-text); }
+.telem-val.ok { color: var(--pos-text); }
+.telem-spec { font-size: 11px; color: var(--sapLabelColor); margin-top: 2px; }
+.chevron { color: var(--sapIconMuted); font-size: 12px; margin-left: 4px; }
 
 /* ACTIVITY LIST */
 .activity-list { display: flex; flex-direction: column; gap: 8px; }
-.activity-item { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius-md); padding: 13px 16px; display: flex; align-items: center; gap: 13px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .12s; -webkit-user-select: none; min-height: 62px; }
-.activity-item:active { transform: scale(0.985); }
-.act-time { font-size: 12px; font-weight: 600; color: var(--text2); min-width: 40px; text-align: right; font-variant-numeric: tabular-nums; }
-.act-time.tbd { min-width: auto; width: auto; flex-shrink: 0; font-size: 10px; font-style: italic; font-weight: 600; color: var(--text3); text-align: left; white-space: nowrap; }
-.act-time.nocap { min-width: auto; width: auto; flex-shrink: 0; font-size: 10px; font-weight: 700; color: var(--red); text-align: left; white-space: nowrap; }
+.activity-item { background: var(--surface); border-radius: var(--radius-md); padding: 13px 16px; display: flex; align-items: center; gap: 13px; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform .12s, background .12s; -webkit-user-select: none; min-height: 62px; }
+.activity-item:active { transform: scale(0.985); background: var(--sapHoverBackground); }
+.act-time { font-size: 13px; font-weight: 600; color: var(--text1); min-width: 40px; text-align: right; font-variant-numeric: tabular-nums; }
+.act-time.tbd { min-width: auto; width: auto; flex-shrink: 0; font-size: 11px; font-style: italic; font-weight: 600; color: var(--sapLabelColor); text-align: left; white-space: nowrap; }
+.act-time.nocap { min-width: auto; width: auto; flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--neg-text); text-align: left; white-space: nowrap; }
 .act-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.act-dot.red { background: var(--red); }
-.act-dot.blue { background: var(--blue-accent); }
-.act-dot.purple { background: var(--purple); }
-.act-dot.green { background: var(--green); }
-.act-dot.amber { background: var(--amber); }
+.act-dot.red { background: var(--neg-el); }
+.act-dot.blue { background: var(--info-el); }
+.act-dot.purple { background: var(--accent-purple); }
+.act-dot.green { background: var(--pos-el); }
+.act-dot.amber { background: var(--crit-el); }
 .act-main { flex: 1; min-width: 0; }
-.act-title { font-size: 13px; font-weight: 600; color: var(--text1); line-height: 1.35; }
-.act-sub { font-size: 11px; color: var(--text3); margin-top: 3px; }
-.act-badge { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; white-space: nowrap; width: 112px; text-align: center; }
-.act-badge.corrective { background: var(--red-tag-bg); color: var(--red-tag-text); }
-.act-badge.pm { background: var(--green-tag-bg); color: var(--green-tag-text); }
-.act-badge.pm-re { background: var(--blue-tag-bg); color: var(--blue-tag-text); }
-.act-badge.remote { background: var(--purple-bg); color: var(--purple-text); }
-.act-badge.install { background: var(--amber-tag-bg); color: var(--amber-tag-text); }
-.act-priority { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; white-space: nowrap; width: 66px; text-align: center; }
+.act-title { font-size: 13px; font-weight: 700; color: var(--text1); line-height: 1.35; }
+.act-sub { font-size: 11px; color: var(--sapLabelColor); margin-top: 3px; }
+.act-badge { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 4px; flex-shrink: 0; white-space: nowrap; width: 112px; text-align: center; }
+.act-badge.corrective { background: var(--neg-bg); color: var(--neg-text); }
+.act-badge.pm { background: var(--pos-bg); color: var(--pos-text); }
+.act-badge.pm-re { background: var(--info-bg); color: var(--info-text); }
+.act-badge.remote { background: var(--accent-purple-bg); color: var(--accent-purple); }
+.act-badge.install { background: var(--crit-bg); color: var(--crit-text); }
+/* Priority chips — solid, as in FSA Mobile ("Medium") */
+.act-priority { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 4px; flex-shrink: 0; white-space: nowrap; width: 66px; text-align: center; }
 .act-priority.low { background: var(--priority-low); color: #fff; }
-.act-priority.medium { background: var(--priority-medium); color: #fff; }
+.act-priority.medium { background: var(--priority-medium); color: var(--text1); }
 .act-priority.high { background: var(--priority-high); color: #fff; }
 .act-priority.escalated { background: var(--priority-escalated); color: #fff; }
-.activity-tabs { display: flex; gap: 18px; margin-bottom: 10px; border-bottom: 1px solid var(--border2); }
-.activity-tab { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); padding: 0 2px 8px; cursor: pointer; border-bottom: 2px solid transparent; -webkit-user-select: none; white-space: nowrap; }
-.activity-tab.active { color: var(--text1); border-bottom-color: var(--blue-accent); }
-.activity-tabs-date { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); white-space: nowrap; }
+/* Tabs — Horizon icon tab bar text style */
+.activity-tabs { display: flex; gap: 22px; margin-bottom: 12px; border-bottom: 1px solid var(--sapGroupBorder); }
+.activity-tab { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--text1); padding: 2px 2px 9px; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px; -webkit-user-select: none; white-space: nowrap; }
+.activity-tab.active { color: var(--sapHighlightColor); border-bottom-color: var(--sapHighlightColor); }
+.activity-tabs-date { font-size: 12px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--sapLabelColor); white-space: nowrap; }
 .activity-tabs-right { margin-left: auto; display: flex; align-items: center; gap: 12px; padding-bottom: 8px; }
-.activity-select { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--blue-accent); cursor: pointer; }
-.activity-action-btn { display: none; background: var(--blue-accent); color: #fff; font-size: 11px; font-weight: 600; padding: 6px 14px; border-radius: 14px; border: none; cursor: pointer; white-space: nowrap; box-shadow: var(--shadow-sm); -webkit-user-select: none; }
-.activity-action-btn:active { transform: scale(0.96); }
+.activity-select { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--sapBrandColor); cursor: pointer; }
+.activity-action-btn { display: none; background: var(--sapBrandColor); color: #fff; font-family: inherit; font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: var(--radius-sm); border: none; cursor: pointer; white-space: nowrap; -webkit-user-select: none; }
+.activity-action-btn:active { background: var(--sapHighlightColor); transform: scale(0.96); }
 
 /* FOOTER */
-.footer-bar { background: var(--blue-dark); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 -16px 0; }
-.footer-spacer { background: var(--surface); height: 18px; margin: 0 -16px -36px; border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
-.footer-src { font-size: 10px; color: rgba(255,255,255,0.55); line-height: 1.5; }
-.footer-live { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.75); flex-shrink: 0; }
+.footer-bar { background: var(--sapShellColor); border-top: 1px solid var(--sapGroupBorder); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 -16px 0; }
+.footer-spacer { background: var(--sapShellColor); height: 18px; margin: 0 -16px -36px; }
+.footer-src { font-size: 11px; color: var(--sapLabelColor); line-height: 1.5; }
+.footer-live { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--pos-text); flex-shrink: 0; }
 
-/* OVERLAY / SHEET */
-.overlay { display: none; position: fixed; inset: 0; background: rgba(10,37,64,0.55); z-index: 200; align-items: flex-end; justify-content: center; }
+/* OVERLAY / SHEET — Horizon dialog surface */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(19,30,41,0.45); z-index: 200; align-items: flex-end; justify-content: center; }
 .overlay.active { display: flex; }
-.sheet { background: var(--surface); border-radius: 20px 20px 0 0; width: 100%; max-width: 834px; padding: 20px 20px 48px; max-height: 82vh; overflow-y: auto; -webkit-overflow-scrolling: touch; animation: slideUp .28s cubic-bezier(.34,1.1,.64,1); }
+.sheet { background: var(--surface); border-radius: var(--radius-lg) var(--radius-lg) 0 0; width: 100%; max-width: 834px; padding: 20px 20px 48px; max-height: 82vh; overflow-y: auto; -webkit-overflow-scrolling: touch; box-shadow: var(--sapShadow2); animation: slideUp .28s cubic-bezier(.34,1.1,.64,1); }
 @keyframes slideUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
-.sheet-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 18px; }
-.sheet-title { font-size: 17px; font-weight: 700; color: var(--text1); margin-bottom: 3px; }
-.sheet-sub { font-size: 12px; color: var(--text3); margin-bottom: 14px; }
-.sheet-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--border2); gap: 16px; }
+.sheet-handle { width: 36px; height: 4px; background: var(--sapButtonBorder); border-radius: 2px; margin: 0 auto 18px; }
+.sheet-title { font-size: 18px; font-weight: 700; color: var(--text1); margin-bottom: 3px; }
+.sheet-sub { font-size: 13px; color: var(--sapLabelColor); margin-bottom: 14px; }
+.sheet-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border2); gap: 16px; }
 .sheet-row:last-of-type { border-bottom: none; }
-.sheet-key { font-size: 12px; color: var(--text3); flex-shrink: 0; min-width: 130px; }
-.sheet-val { font-size: 12px; font-weight: 500; color: var(--text1); text-align: right; line-height: 1.4; }
-.sheet-val.red { color: var(--red); }
-.sheet-val.amber { color: #D97706; }
-.sheet-val.green { color: var(--green-text); }
-.aix-row { background: #F0FDF4; border-left: 3px solid var(--green); border-radius: 0 6px 6px 0; padding: 8px 12px; margin: 8px 0; }
-.aix-label { font-size: 10px; font-weight: 600; color: var(--green-text); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 3px; }
-.aix-val { font-size: 12px; color: var(--text1); line-height: 1.4; }
+.sheet-key { font-size: 13px; color: var(--sapLabelColor); flex-shrink: 0; min-width: 130px; }
+.sheet-val { font-size: 13px; font-weight: 400; color: var(--text1); text-align: right; line-height: 1.4; }
+.sheet-val.red { color: var(--neg-text); font-weight: 600; }
+.sheet-val.amber { color: var(--crit-text); font-weight: 600; }
+.sheet-val.green { color: var(--pos-text); font-weight: 600; }
+.aix-row { background: var(--pos-bg); border-left: 3px solid var(--pos-el); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 8px 12px; margin: 8px 0; }
+.aix-label { font-size: 11px; font-weight: 700; color: var(--pos-text); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 3px; }
+.aix-val { font-size: 13px; color: var(--text1); line-height: 1.4; }
 
 /* HEALTH BAR */
 .health-wrap { margin: 10px 0 6px; }
-.health-label { font-size: 11px; color: var(--text3); margin-bottom: 5px; }
-.health-track { height: 8px; background: var(--border2); border-radius: 4px; overflow: hidden; }
+.health-label { font-size: 12px; color: var(--sapLabelColor); margin-bottom: 5px; }
+.health-track { height: 8px; background: var(--sapNeutralBackground); border-radius: 4px; overflow: hidden; }
 .health-fill { height: 100%; border-radius: 4px; }
-.health-fill.critical { background: var(--red); }
-.health-fill.warning { background: var(--amber); }
-.health-fill.good { background: var(--green); }
+.health-fill.critical { background: var(--neg-el); }
+.health-fill.warning { background: var(--crit-el); }
+.health-fill.good { background: var(--pos-el); }
 
 /* FAUX LINKS */
 .faux-links { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--border2); padding-top: 14px; }
-.faux-link { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--radius-sm); cursor: pointer; transition: background .12s; -webkit-user-select: none; }
-.faux-link:active { background: #e8edf3; }
-.faux-link-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.faux-link-icon.aix { background: #ECFDF5; }
-.faux-link-icon.apm { background: #EFF6FF; }
-.faux-link-icon.fsm { background: #F0F4FF; }
+.faux-link { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--surface); border: 1px solid var(--sapButtonBorder); border-radius: var(--radius-sm); cursor: pointer; transition: background .12s; -webkit-user-select: none; }
+.faux-link:active { background: var(--sapHoverBackground); }
+.faux-link-icon { width: 28px; height: 28px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.faux-link-icon.aix { background: var(--pos-bg); }
+.faux-link-icon.apm { background: var(--info-bg); }
+.faux-link-icon.fsm { background: var(--info-bg); }
 .faux-link-text { flex: 1; }
-.faux-link-label { font-size: 12px; font-weight: 500; color: var(--blue-accent); }
-.faux-link-url { font-size: 10px; color: var(--text3); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px; }
+.faux-link-label { font-size: 13px; font-weight: 600; color: var(--sapHighlightColor); }
+.faux-link-url { font-size: 11px; color: var(--sapLabelColor); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px; }
 
 /* TOOLTIP */
-.tooltip-bar { display: none; background: #1a1a2e; color: #fff; font-size: 11px; padding: 8px 14px; border-radius: 8px; margin-top: 6px; line-height: 1.4; }
+.tooltip-bar { display: none; background: var(--sapToastBackground); color: #fff; font-size: 12px; padding: 8px 14px; border-radius: var(--radius-sm); margin-top: 6px; line-height: 1.4; }
 .tooltip-bar.show { display: block; }
 
-/* WORKFLOW STEPPER */
-.stepper-header { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: .06em; text-transform: uppercase; margin: 16px 0 12px; padding-top: 14px; border-top: 1px solid var(--border2); }
+/* WORKFLOW STEPPER — section label style as FSA Mobile ("Details") */
+.stepper-header { font-size: 14px; font-weight: 400; color: var(--sapLabelColor); letter-spacing: 0; text-transform: none; margin: 16px 0 12px; padding-top: 14px; border-top: 1px solid var(--border2); }
 .stepper { display: flex; flex-direction: column; gap: 0; }
 .step { display: flex; align-items: flex-start; gap: 12px; position: relative; }
-.step:not(:last-child)::after { content:''; position: absolute; left: 11px; top: 26px; bottom: -2px; width: 2px; background: var(--border2); }
+.step:not(:last-child)::after { content:''; position: absolute; left: 11px; top: 26px; bottom: -2px; width: 2px; background: var(--sapGroupBorder); }
 .step-circle { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; font-size: 10px; font-weight: 700; position: relative; z-index: 1; }
-.step-circle.done { background: var(--green); color: #fff; }
-.step-circle.current { background: var(--blue-accent); color: #fff; }
-.step-circle.upcoming { background: var(--border2); color: var(--text3); border: 1.5px solid var(--border); }
+.step-circle.done { background: var(--pos-el); color: #fff; }
+.step-circle.current { background: var(--sapBrandColor); color: #fff; }
+.step-circle.upcoming { background: var(--surface); color: var(--sapLabelColor); border: 1.5px solid var(--sapButtonBorder); }
 .step-content { flex: 1; padding-bottom: 14px; }
-.step-label { font-size: 13px; font-weight: 500; color: var(--text1); line-height: 1.3; }
-.step-label.done { color: var(--text3); font-weight: 400; }
-.step-label.upcoming { color: var(--text3); font-weight: 400; }
-.step-status { font-size: 10px; margin-top: 2px; }
-.step-status.done { color: var(--green-text); }
-.step-status.current { color: var(--blue-accent); font-weight: 500; }
+.step-label { font-size: 13px; font-weight: 600; color: var(--text1); line-height: 1.3; }
+.step-label.done { color: var(--sapLabelColor); font-weight: 400; }
+.step-label.upcoming { color: var(--sapLabelColor); font-weight: 400; }
+.step-status { font-size: 11px; margin-top: 2px; }
+.step-status.done { color: var(--pos-text); }
+.step-status.current { color: var(--sapHighlightColor); font-weight: 600; }
 
-/* SUBVIEW */
+/* SUBVIEW — light header like FSA Mobile detail screen */
 .subview { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 150; flex-direction: column; overflow-y: auto; }
 .subview.active { display: flex; }
-.subview-header { background: var(--blue-dark); padding: 52px 20px 14px; display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 10; }
-.back-btn { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500; cursor: pointer; -webkit-user-select: none; padding: 6px 0; }
-.subview-title { font-size: 16px; font-weight: 600; color: #fff; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.subview-header { background: var(--sapShellColor); border-bottom: 1px solid var(--sapGroupBorder); box-shadow: 0 2px 4px rgba(34,53,72,0.06); padding: 52px 20px 14px; display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 10; }
+.back-btn { display: flex; align-items: center; gap: 4px; color: var(--sapHighlightColor); font-size: 14px; font-weight: 600; cursor: pointer; -webkit-user-select: none; padding: 6px 8px 6px 2px; border-radius: var(--radius-sm); }
+.back-btn:active { background: var(--sapHoverBackground); }
+.subview-title { font-size: 17px; font-weight: 700; color: var(--text1); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .subview-meta { margin-left: auto; text-align: right; flex-shrink: 0; }
-.subview-zone { font-size: 11px; font-weight: 600; color: #fff; }
-.subview-datetime { font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 2px; }
-.subview-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; flex: 1; padding-bottom: 36px; }
-.subview-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-.sheet-close { margin-top: 18px; width: 100%; padding: 14px; background: var(--blue-dark); color: #fff; font-size: 14px; font-weight: 600; border: none; border-radius: var(--radius-md); cursor: pointer; transition: opacity .15s; }
-.sheet-close:active { opacity: 0.8; }
+.subview-zone { font-size: 12px; font-weight: 600; color: var(--text1); }
+.subview-datetime { font-size: 11px; color: var(--sapLabelColor); margin-top: 2px; }
+.subview-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; padding-bottom: 36px; }
+.subview-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+/* Emphasized button (FSA Mobile "LOTO AND SAFETY") */
+.sheet-close { margin-top: 18px; width: 100%; padding: 13px; background: var(--sapBrandColor); color: #fff; font-family: inherit; font-size: 14px; font-weight: 700; border: none; border-radius: var(--radius-sm); cursor: pointer; transition: background .15s; }
+.sheet-close:active { background: var(--sapHighlightColor); }
 
 /* ── Sub-equipment hierarchy (mirrors stepper style) ── */
-.hier-header { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: .06em; text-transform: uppercase; margin: 16px 0 10px; padding-top: 14px; border-top: 1px solid var(--border2); }
+.hier-header { font-size: 14px; font-weight: 400; color: var(--sapLabelColor); letter-spacing: 0; text-transform: none; margin: 16px 0 10px; padding-top: 14px; border-top: 1px solid var(--border2); }
 .hier-list { display: flex; flex-direction: column; gap: 0; }
 .hier-item { display: flex; align-items: flex-start; gap: 12px; position: relative; cursor: pointer; -webkit-user-select: none; }
-.hier-item:not(:last-child)::after { content:''; position: absolute; left: 11px; top: 26px; bottom: -2px; width: 2px; background: var(--border2); }
+.hier-item:not(:last-child)::after { content:''; position: absolute; left: 11px; top: 26px; bottom: -2px; width: 2px; background: var(--sapGroupBorder); }
 .hier-dot { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; font-size: 9px; font-weight: 700; position: relative; z-index: 1; }
-.hier-dot.red { background: var(--red); color: #fff; }
-.hier-dot.green { background: var(--green); color: #fff; }
-.hier-dot.purple { background: var(--purple); color: #fff; }
+.hier-dot.red { background: var(--neg-el); color: #fff; }
+.hier-dot.green { background: var(--pos-el); color: #fff; }
+.hier-dot.purple { background: var(--accent-purple); color: #fff; }
 .hier-content { flex: 1; padding-bottom: 14px; }
-.hier-id { font-size: 12px; font-weight: 600; color: var(--text1); margin-bottom: 2px; }
-.hier-type { font-size: 11px; color: var(--text3); margin-bottom: 3px; }
-.hier-status { font-size: 11px; }
-.hier-status.red { color: var(--red); font-weight: 500; }
-.hier-status.green { color: var(--green-text); }
-.hier-status.purple { color: var(--purple-text); }
-.hier-tap { font-size: 10px; color: var(--blue-accent); margin-top: 3px; }
+.hier-id { font-size: 13px; font-weight: 700; color: var(--text1); margin-bottom: 2px; }
+.hier-type { font-size: 12px; color: var(--sapLabelColor); margin-bottom: 3px; }
+.hier-status { font-size: 12px; }
+.hier-status.red { color: var(--neg-text); font-weight: 600; }
+.hier-status.green { color: var(--pos-text); }
+.hier-status.purple { color: var(--accent-purple); }
+.hier-tap { font-size: 11px; font-weight: 600; color: var(--sapHighlightColor); margin-top: 3px; }
 
-/* Inbox tile + refresh */
-.header-top-row { display:flex; align-items:center; justify-content:flex-end; gap:10px; }
-.inbox-tile { background:#fff; border-radius:20px; padding:6px 14px; display:flex; flex-direction:row; align-items:center; cursor:pointer; -webkit-user-select:none; transition:opacity .15s; box-shadow:0 1px 4px rgba(0,0,0,0.18); white-space:nowrap; }
-.inbox-tile:active { opacity:0.82; }
-.inbox-tile-label { font-size:11px; font-weight:600; color:var(--blue-dark); transition:opacity .22s; }
+/* Inbox button + refresh — Horizon default button + FSA count badge */
+.header-top-row { display:flex; align-items:center; justify-content:flex-end; gap:8px; }
+.inbox-tile { background:var(--surface); border:1px solid var(--sapButtonBorder); border-radius:var(--radius-sm); padding:7px 12px; display:flex; flex-direction:row; align-items:center; cursor:pointer; -webkit-user-select:none; transition:background .15s; white-space:nowrap; }
+.inbox-tile:active { background:var(--sapActiveBackground); }
+.inbox-tile-label { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:var(--sapHighlightColor); transition:opacity .22s; }
 .inbox-tile-count { display:none; }
-.refresh-btn { width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); display:flex; align-items:center; justify-content:center; cursor:pointer; -webkit-user-select:none; flex-shrink:0; }
-.refresh-btn:active { background:rgba(255,255,255,0.25); }
+.count-badge { display:inline-flex; align-items:center; justify-content:center; min-width:22px; height:20px; padding:0 7px; border-radius:10px; background:var(--sapBrandColor); color:#fff; font-size:12px; font-weight:700; font-variant-numeric:tabular-nums; }
+.refresh-btn { width:36px; height:36px; border-radius:var(--radius-sm); background:transparent; border:1px solid transparent; color:var(--text1); display:flex; align-items:center; justify-content:center; cursor:pointer; -webkit-user-select:none; flex-shrink:0; }
+.refresh-btn:active { background:var(--sapActiveBackground); }
 @keyframes spin360 { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 .refresh-btn.spinning svg { animation:spin360 0.9s linear; }
-.inbox-item { background:var(--surface); border:1px solid var(--border2); border-radius:var(--radius-md); padding:12px 14px; margin-bottom:10px; }
+/* Inbox items — FLP To-Do card */
+.inbox-item { background:var(--surface); border-radius:var(--radius-lg); padding:14px 16px; margin-bottom:12px; box-shadow:var(--shadow-sm); }
 .inbox-item-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:4px; }
-.inbox-sender { font-size:11px; font-weight:600; color:var(--text1); }
-.inbox-time { font-size:10px; color:var(--text3); }
-.inbox-subject { font-size:12px; color:var(--text1); line-height:1.45; margin-bottom:6px; }
-.inbox-badge { display:inline-block; font-size:9px; font-weight:600; padding:2px 7px; border-radius:20px; letter-spacing:.04em; text-transform:uppercase; }
-.inbox-badge.parts { background:var(--blue-light); color:var(--blue-dark); }
-.inbox-badge.message { background:#f0fdf4; color:#166534; }
-.inbox-badge.apm { background:#fef3c7; color:#92400e; }
-.inbox-badge.safety { background:#fee2e2; color:#991b1b; }
-.inbox-badge.telem { background:#fef3c7; color:#92400e; }
-.inbox-badge.newmsg { background:var(--blue-dark); color:#fff; }
-.inbox-badge.parts-return { background:#fdf2f8; color:#a21caf; }
+.inbox-sender { font-size:13px; font-weight:700; color:var(--text1); }
+.inbox-time { font-size:11px; color:var(--sapLabelColor); }
+.inbox-subject { font-size:13px; color:var(--text1); line-height:1.45; margin-bottom:8px; }
+.inbox-badge { display:inline-block; font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; letter-spacing:.03em; text-transform:uppercase; }
+.inbox-badge.parts { background:var(--blue-light); color:#0057D2; }
+.inbox-badge.message { background:var(--pos-bg); color:var(--pos-text); }
+.inbox-badge.apm { background:var(--crit-bg); color:var(--crit-text); }
+.inbox-badge.safety { background:var(--neg-bg); color:var(--neg-text); }
+.inbox-badge.telem { background:var(--crit-bg); color:var(--crit-text); }
+.inbox-badge.newmsg { background:var(--sapBrandColor); color:#fff; }
+.inbox-badge.parts-return { background:var(--accent-magenta-bg); color:var(--accent-magenta); }
 
-/* ── Inbox action buttons ── */
-.inbox-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border2); }
-.inbox-action-btn { font-size: 10px; font-weight: 600; padding: 5px 12px; border-radius: 16px; border: 1px solid var(--border2); background: var(--bg); color: var(--text2); cursor: pointer; -webkit-user-select: none; transition: background .15s, color .15s; letter-spacing: .03em; }
-.inbox-action-btn:active { background: var(--blue-accent); color: #fff; border-color: var(--blue-accent); }
-.inbox-action-btn.accept { border-color: var(--green); color: var(--green-text); }
-.inbox-action-btn.accept:active { background: var(--green); color: #fff; }
-.inbox-action-btn.decline { border-color: var(--red); color: var(--red); }
-.inbox-action-btn.decline:active { background: var(--red); color: #fff; }
+/* ── Inbox action buttons — Horizon Accept / Reject / Default ── */
+.inbox-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border2); }
+.inbox-action-btn { font-family: inherit; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: var(--radius-sm); border: 1px solid var(--sapButtonBorder); background: var(--surface); color: var(--sapHighlightColor); cursor: pointer; -webkit-user-select: none; transition: background .15s, color .15s; }
+.inbox-action-btn:active { background: var(--sapActiveBackground); }
+.inbox-action-btn.accept { background: var(--pos-bg); border-color: var(--pos-border); color: var(--pos-text); }
+.inbox-action-btn.accept:active { background: var(--pos-el); border-color: var(--pos-el); color: #fff; }
+.inbox-action-btn.decline { background: var(--neg-bg); border-color: var(--neg-border); color: var(--neg-text); }
+.inbox-action-btn.decline:active { background: var(--neg-text); border-color: var(--neg-text); color: #fff; }
 /* Orange Parts Ordering badge */
-.inbox-badge.parts-order { background: #fff7ed; color: #c2410c; }
+.inbox-badge.parts-order { background: var(--accent-orange-bg); color: var(--accent-orange-text); }
 
-/* ── Toaster notification ── */
+/* ── Toaster — Horizon message toast ── */
 .toaster {
   position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px);
-  background: var(--blue-dark); color: #fff;
-  padding: 11px 20px; border-radius: 24px;
-  font-size: 12px; font-weight: 500; letter-spacing: .02em;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.28);
+  background: var(--sapToastBackground); color: #fff;
+  padding: 11px 20px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 400; letter-spacing: 0;
+  box-shadow: var(--sapShadow2);
   opacity: 0; transition: opacity .25s, transform .25s;
   z-index: 999; white-space: nowrap; pointer-events: none;
 }
@@ -373,10 +420,10 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
       </div>
       <div class="header-top-row">
         <div class="inbox-tile" onclick="openInbox()">
-          <div class="inbox-tile-label" id="inbox-count">My Inbox &mdash; 6 messages</div>
+          <div class="inbox-tile-label" id="inbox-count">My Inbox <span class="count-badge">6</span></div>
         </div>
         <div class="refresh-btn" id="rfbtn" onclick="doRefresh()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="23 4 23 10 17 10"></polyline>
             <polyline points="1 20 1 14 7 14"></polyline>
             <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
@@ -398,11 +445,11 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
     <span class="zone-sep">|</span>
     <span class="live-dot"></span><span class="zone-val" id="zone-tool-count">12 tools</span>
     <span class="zone-sep">|</span>
-    <span class="zone-label">ECC</span><span class="zone-val" style="color:#22C55E">Live</span>
+    <span class="zone-label">ECC</span><span class="zone-val" style="color:var(--pos-text)">Live</span>
     <span class="zone-sep">|</span>
-    <span class="zone-label">CRM</span><span class="zone-val" style="color:#22C55E">Live</span>
+    <span class="zone-label">CRM</span><span class="zone-val" style="color:var(--pos-text)">Live</span>
     <span class="zone-sep">|</span>
-    <span class="zone-label">APM</span><span class="zone-val" style="color:#22C55E">Live</span>
+    <span class="zone-label">APM</span><span class="zone-val" style="color:var(--pos-text)">Live</span>
   </div>
 
   <!-- BODY -->
@@ -418,7 +465,7 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
         <div class="prio-title">10190551 CVD-204 · Process chamber pressure exceedance <span class="sla-pill">SLA at risk</span></div>
         <div class="prio-meta">Notification 10042817 · ECC PM · Alert age: 2h 31m · Response SLA: 4h · 1h 29m remaining</div>
       </div>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#AA0808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
     </div>
 
     <!-- PRIORITY BANNER — ALL CLEAR (Building 1) -->
@@ -477,7 +524,7 @@ html, body { font-family: -apple-system,'SF Pro Text','Helvetica Neue',sans-seri
           <div class="tool-id">10190551 CVD-204</div>
           <div class="tool-type">Applied Centura · CVD</div>
           <div class="tool-status"><span class="status-dot red"></span><span class="status-text">Out of service</span></div>
-          <div class="tool-tag alert">Pressure exceedance · P1</div>
+          <div class="tool-tag danger">Pressure exceedance · P1</div>
         <div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
         <div class="tool-card t-amber" onclick="openSheet('cvd208')">
           <div class="tool-id">10190562 CVD-208</div>
@@ -994,7 +1041,7 @@ function fauxLink(icon, iconClass, label, url, tooltip) {
   return '<div class="faux-link" onclick="showTooltip(this,\''+tooltip+'\')">'
     +'<div class="faux-link-icon '+iconClass+'">'+icon+'</div>'
     +'<div class="faux-link-text"><div class="faux-link-label">'+label+'</div><div class="faux-link-url">'+url+'</div></div>'
-    +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8a94a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
+    +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#758CA4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
     +'<div class="tooltip-bar" id="tt-'+Math.random().toString(36).substr(2,5)+'"></div>'
     +'</div>';
 }
@@ -1301,7 +1348,7 @@ function resetInbox() {
   if (el) {
     el.style.opacity = '0';
     setTimeout(function() {
-      el.innerHTML = 'My Inbox &mdash; 6 messages';
+      el.innerHTML = 'My Inbox <span class="count-badge">6</span>';
       el.style.opacity = '1';
     }, 200);
   }
@@ -1325,12 +1372,12 @@ function doRefresh(){
       inboxMsgs.unshift(msg6);
       var el=document.getElementById('inbox-count');
       el.style.opacity='0';
-      setTimeout(function(){el.innerHTML='My Inbox &mdash; 7 messages';el.style.opacity='1';},220);
+      setTimeout(function(){el.innerHTML='My Inbox <span class="count-badge">7</span>';el.style.opacity='1';},220);
     } else if(inboxRefreshCount===2){
       inboxMsgs.unshift(msg7);
       var el=document.getElementById('inbox-count');
       el.style.opacity='0';
-      setTimeout(function(){el.innerHTML='My Inbox &mdash; 8 messages';el.style.opacity='1';},220);
+      setTimeout(function(){el.innerHTML='My Inbox <span class="count-badge">8</span>';el.style.opacity='1';},220);
     }
   },900);
 }
@@ -1475,32 +1522,32 @@ var sheets = {
 
 'cvd204-alert': function(){return '<div class="sheet-title">10190551 CVD-204 — P1 Alert Detail</div>'
   +'<div class="sheet-sub">Notification 10042817 · ECC PM · Chamber A</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--red)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--neg-text)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
   +rows([['Parameter','Process chamber pressure'],['Current reading','0.00642 mbar','red'],['Spec range','0.00560 – 0.00613 mbar'],['Exceedance','+0.00002 mbar above limit','red'],['Trending','90 min continuous · +0.000003 mbar / 15 min'],['APM alert type','Threshold breach — critical'],['APM health impact','-35 points on composite score','red'],['Recommended action','Inspect and replace throttle valve · Chamber A'],['Prior occurrences','3 similar events — last 18 months'],['Last occurrence','14 Jan 2026 · throttle valve replacement']])
   +aixRow('AIx insight','Chamber pressure anomaly confirmed by AIx process model — probability of throttle valve degradation: 84%')
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190551 CVD-204/chamber-a/pressure','Live link to AIx telemetry — available in connected deployment')
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-204-0042','Live link to SAP APM alert — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#256F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190551 CVD-204/chamber-a/pressure','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-204-0042','Live link to SAP APM alert — available in connected deployment')
   +'</div>';},
 
 'telem204': function(){return '<div class="sheet-title">Telemetry Detail — 10190551 CVD-204</div>'
   +'<div class="sheet-sub">Chamber A · Process pressure · APM alert APM-ALT-204-0042</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--red)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--neg-text)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
   +rows([['Parameter','Process chamber pressure'],['Current reading','0.00642 mbar','red'],['Specification','0.00560 – 0.00613 mbar'],['Exceedance','+0.00002 mbar · 90 min trending','red'],['Rate of change','+0.000003 mbar per 15 min'],['APM alert type','Threshold breach — critical'],['APM health impact','-35 points (score: 42/100)','red'],['Recommended action','Inspect and replace throttle valve · Chamber A'],['Prior occurrences','3 events in last 18 months · last: 14 Jan 2025']])
   +aixRow('AIx insight','Pressure anomaly confirmed by AIx process model — throttle valve degradation probability: 84%')
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190551 CVD-204/chamber-a/pressure','Live link to AIx telemetry — available in connected deployment')
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-204-0042','Live link to SAP APM alert — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#256F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190551 CVD-204/chamber-a/pressure','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-204-0042','Live link to SAP APM alert — available in connected deployment')
   +'</div>';},
 
 'telem208': function(){return '<div class="sheet-title">Telemetry Detail — 10190562 CVD-208</div>'
   +'<div class="sheet-sub">Generator 1 · RF power delivery · APM alert APM-ALT-208-0031</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">71 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:71%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--crit-text)">71 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:71%"></div></div></div>'
   +rows([['Parameter','RF power delivery'],['Current reading','1,840 W','amber'],['Specification','≤ 1,750 W'],['Exceedance','+90 W · 25 min drift','amber'],['Rate of change','+12 W per 5 min'],['APM alert type','Anomaly detection — predictive'],['Predicted time to critical','~6 hours at current rate','amber'],['Recommended action','Check matching network · Generator 1'],['Recommended window','Before 14:00 to protect afternoon lot']])
   +aixRow('AIx insight','RF delivery pattern matches early-stage matching network degradation — AIx model confidence: 71%')
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190562 CVD-208/generator-1/rf-power','Live link to AIx telemetry — available in connected deployment')
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-208-0031','Live link to SAP APM alert — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#256F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190562 CVD-208/generator-1/rf-power','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-208-0031','Live link to SAP APM alert — available in connected deployment')
   +'</div>';},
 
 'telem201': function(){return '<div class="sheet-title">Telemetry Detail — 10190556 CVD-201</div>'
@@ -1509,39 +1556,39 @@ var sheets = {
   +rows([['Parameter','Deposition rate uniformity'],['Current reading','±1.8%','green'],['Specification','±2.5% · margin: 0.7%'],['APM alert type','Informational — baseline confirmation'],['Baseline purpose','Pre-PM performance capture · 10190556 CVD-201 quarterly'],['Baseline vs. prior','±1.8% vs. ±1.6% prior — within normal variance'],['Post-PM target','±1.2% or better following chamber kit'],['PM scheduled','09:00 today · Order 4000804']])
   +aixRow('AIx insight','Deposition uniformity within expected pre-PM range — no anomaly detected')
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190556 CVD-201/chamber/dep-rate-uniformity','Live link to AIx telemetry — available in connected deployment')
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-201-0009','Live link to SAP APM alert — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#256F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190556 CVD-201/chamber/dep-rate-uniformity','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-201-0009','Live link to SAP APM alert — available in connected deployment')
   +'</div>';},
 
 
 'telem152': function(){return '<div class="sheet-title">Telemetry Detail — 10190442 CVD-152</div>'
   +'<div class="sheet-sub">Generator 1 · RF power delivery · APM alert APM-ALT-152-0044</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">68 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:68%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--crit-text)">68 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:68%"></div></div></div>'
   +rows([['Parameter','RF power delivery'],['Current reading','1,815 W','amber'],['Specification','≤ 1,750 W'],['Exceedance','+65 W · 25 min drift','amber'],['Rate of change','+9 W per 5 min'],['APM alert type','Anomaly detection — predictive'],['Predicted time to critical','~8 hours at current rate — not critical today','amber'],['Recommended action','Check matching network · Generator 1'],['Recommended window','Before end of shift']])
   +aixRow('AIx insight','RF delivery pattern consistent with early-stage matching network wear — AIx model confidence: 66%')
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190442 CVD-152/generator-1/rf-power','Live link to AIx telemetry — available in connected deployment')
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-152-0044','Live link to SAP APM alert — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#256F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190442 CVD-152/generator-1/rf-power','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-152-0044','Live link to SAP APM alert — available in connected deployment')
   +'</div>';},
 
 'telem156': function(){return '<div class="sheet-title">Telemetry Detail — 10190446 CVD-156</div>'
   +'<div class="sheet-sub">Chamber A · Process chamber pressure · APM alert APM-ALT-156-0045</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">73 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:73%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--crit-text)">73 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:73%"></div></div></div>'
   +rows([['Parameter','Process chamber pressure'],['Current reading','0.00625 mbar','amber'],['Specification','0.00560 – 0.00613 mbar'],['Exceedance','+0.00012 mbar · 40 min trending','amber'],['Rate of change','+0.000002 mbar per 15 min'],['APM alert type','Anomaly detection — predictive'],['Predicted time to critical','~10 hours at current rate — not critical today','amber'],['Recommended action','Monitor pressure trend · schedule inspection if trend continues'],['Recommended window','Within next shift']])
   +aixRow('AIx insight','Chamber pressure trend consistent with gradual throttle valve wear — AIx model confidence: 58%')
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190446 CVD-156/chamber-a/pressure','Live link to AIx telemetry — available in connected deployment')
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-156-0045','Live link to SAP APM alert — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#256F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190446 CVD-156/chamber-a/pressure','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-156-0045','Live link to SAP APM alert — available in connected deployment')
   +'</div>';},
 
 'telem160': function(){return '<div class="sheet-title">Telemetry Detail — 10190450 CVD-160</div>'
   +'<div class="sheet-sub">Susceptor · Substrate temperature · APM alert APM-ALT-160-0046</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">65 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:65%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--crit-text)">65 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:65%"></div></div></div>'
   +rows([['Parameter','Substrate temperature'],['Current reading','214.8°C','amber'],['Specification','≤ 210°C'],['Exceedance','+4.8°C · 30 min drift','amber'],['Rate of change','+0.8°C per 5 min'],['APM alert type','Anomaly detection — predictive'],['Predicted time to critical','~5 hours at current rate — not critical today','amber'],['Recommended action','Inspect susceptor heater element'],['Recommended window','Before next lot start']])
   +aixRow('AIx insight','Substrate temperature drift consistent with early heater element degradation — AIx model confidence: 61%')
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190450 CVD-160/susceptor/temperature','Live link to AIx telemetry — available in connected deployment')
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-160-0046','Live link to SAP APM alert — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#256F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190450 CVD-160/susceptor/temperature','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-160-0046','Live link to SAP APM alert — available in connected deployment')
   +'</div>';},
 
 'telem150': function(){return '<div class="sheet-title">Telemetry Detail — 10190440 CVD-150</div>'
@@ -1550,13 +1597,13 @@ var sheets = {
   +rows([['Parameter','Deposition rate uniformity'],['Current reading','±1.6%','green'],['Specification','±2.5% · margin: 0.9%'],['APM alert type','Informational — baseline confirmation'],['Baseline purpose','Routine process baseline capture · 10190440 CVD-150'],['Baseline vs. prior','±1.6% vs. ±1.7% prior — within normal variance'],['Trend','Stable over past 24 hours'],['Next scheduled PM',pmDate(3,150)]])
   +aixRow('AIx insight','Deposition uniformity within expected steady-state range — no anomaly detected')
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190440 CVD-150/chamber/dep-rate-uniformity','Live link to AIx telemetry — available in connected deployment')
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-150-0047','Live link to SAP APM alert — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#256F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>','aix','View in AIx','https://aix.appliedmaterials.com/telemetry/10190440 CVD-150/chamber/dep-rate-uniformity','Live link to AIx telemetry — available in connected deployment')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>','apm','View in SAP APM','https://apm.yourtenant.hana.ondemand.com/alerts/APM-ALT-150-0047','Live link to SAP APM alert — available in connected deployment')
   +'</div>';},
 
 'cvd204cha': function(){return '<div class="sheet-title">10190552 CVD-204-CHA</div>'
   +'<div class="sheet-sub">Process Chamber A  |  Serial: SN-CHA-204-001  |  Superior: 10190551 CVD-204</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--red)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--neg-text)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
   +rows([['Equipment category','S — Customer equipment'],['Object type','AMAT-CVD-CHAMBER'],['Model','DxZ Process Chamber'],['User status','OOSV — Out of service','red'],['Active alert','Process pressure 0.00642 mbar — above alarm 0.00640','red'],['Warranty','Inherited via passdown — AMAT-CVD-WTY-001'],['FLOC','AMATUS-FAB-CUST1-BLDG4-CVD-204']]);},
 
 'cvd204chb': function(){return '<div class="sheet-title">10190553 CVD-204-CHB</div>'
@@ -1592,7 +1639,7 @@ var sheets = {
 
 'cvd204': function(){return '<div class="sheet-title">10190551 CVD-204 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--red)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--neg-text)">42 / 100 — Degraded</strong></div><div class="health-track"><div class="health-fill critical" style="width:42%"></div></div></div>'
   +rows([['Applied serial','SN-10190551 CVD-204-001'],['Customer tool ID','FAB-A-CVD-04'],['Platform','Applied Centura · CVD'],['Current status','Out of service','red'],['Open notifications','1 (P1) · SLA at risk'],['Last PM completed',pmDate(-3,204)],['Next scheduled PM',pmDate(3,204)+' — deferred pending corrective'],['Service contract','Applied Global Care — Platinum · Covered']])
   +'<div class="hier-header">Equipment hierarchy — sub-assemblies</div>'
   +hierList([
@@ -1604,7 +1651,7 @@ var sheets = {
 
 'cvd208': function(){return '<div class="sheet-title">10190562 CVD-208 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">71 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:71%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--crit-text)">71 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:71%"></div></div></div>'
   +rows([['Applied serial','SN-10190562 CVD-208-001'],['Customer tool ID','FAB-A-CVD-08'],['Platform','Applied Centura · CVD'],['Current status','Restricted — monitoring','amber'],['APM anomaly flag','RF power delivery drift · 25 min'],['Open notifications','1 (P2)'],['Last PM completed',pmDate(-3,208)],['Service contract','Applied Global Care — Gold · Covered']]);},
 
 'cvd201': function(){return '<div class="sheet-title">10190556 CVD-201 — Equipment Detail</div>'
@@ -1676,7 +1723,7 @@ var sheets = {
 
 'cvd152': function(){return '<div class="sheet-title">10190442 CVD-152 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">68 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:68%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--crit-text)">68 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:68%"></div></div></div>'
   +rows([['Applied serial','SN-10190442 CVD-152-001'],['Customer tool ID','FAB-A-CVD-52'],['Platform','Applied Centura · CVD'],['Current status','Restricted — monitoring','amber'],['APM anomaly flag','RF power delivery drift · 25 min'],['Open notifications','1 (P2)'],['Last PM completed',pmDate(-3,152)],['Service contract','Applied Global Care — Platinum · Covered']]);},
 
 'cvd153': function(){return '<div class="sheet-title">10190443 CVD-153 — Equipment Detail</div>'
@@ -1696,7 +1743,7 @@ var sheets = {
 
 'cvd156': function(){return '<div class="sheet-title">10190446 CVD-156 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">73 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:73%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--crit-text)">73 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:73%"></div></div></div>'
   +rows([['Applied serial','SN-10190446 CVD-156-001'],['Customer tool ID','FAB-A-CVD-56'],['Platform','Applied Centura · CVD'],['Current status','Restricted — monitoring','amber'],['APM anomaly flag','Chamber pressure trending · 40 min'],['Open notifications','1 (P2)'],['Last PM completed',pmDate(-3,156)],['Service contract','Applied Global Care — Platinum · Covered']]);},
 
 'cvd157': function(){return '<div class="sheet-title">10190447 CVD-157 — Equipment Detail</div>'
@@ -1716,7 +1763,7 @@ var sheets = {
 
 'cvd160': function(){return '<div class="sheet-title">10190450 CVD-160 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 1</div>'
-  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:#D97706">65 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:65%"></div></div></div>'
+  +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--crit-text)">65 / 100 — Declining</strong></div><div class="health-track"><div class="health-fill warning" style="width:65%"></div></div></div>'
   +rows([['Applied serial','SN-10190450 CVD-160-001'],['Customer tool ID','FAB-A-CVD-60'],['Platform','Applied Centura · CVD'],['Current status','Restricted — monitoring','amber'],['APM anomaly flag','Substrate temperature drift · 30 min'],['Open notifications','1 (P2)'],['Last PM completed',pmDate(-3,160)],['Service contract','Applied Global Care — Platinum · Covered']]);},
 
 'cvd161': function(){return '<div class="sheet-title">10190451 CVD-161 — Equipment Detail</div>'
@@ -1754,7 +1801,7 @@ var sheets = {
   +stepHtml
   +'<div class="hier-header">Equipment hierarchy — sub-assemblies</div>'+hierList([['cvd204cha','10190552','CVD-204-CHA','Process Chamber A · DxZ · SN-CHA-204-001','red','OOSV — Out of service · Pressure fault active','red'],['cvd204chb','10190553','CVD-204-CHB','Process Chamber B · DxZ · SN-CHB-204-001','green','INSV — In service · All parameters nominal','green'],['cvd204tm','10190554','CVD-204-TM','Transfer Module · Centura · SN-TM-204-001','green','INSV — In service','green'],['cvd204ll','10190555','CVD-204-LL','Loadlock · Centura · SN-LL-204-001','green','INSV — In service · Warranty override WTY-002','green']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000821','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000821','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'act2': function(){
@@ -1765,7 +1812,7 @@ var sheets = {
   +'<div class="stepper-header">Service workflow — Planned PM · Step 1 of 5</div>'
   +stepHtml
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000804','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000804','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'act3': function(){
@@ -1776,7 +1823,7 @@ var sheets = {
   +'<div class="stepper-header">Service workflow — Tool Installation · Step 3 of 6</div>'
   +stepHtml
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000835','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000835','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'act4': function(){
@@ -1787,7 +1834,7 @@ var sheets = {
   +'<div class="stepper-header">Service workflow — Remote Consult · Step 1 of 4</div>'
   +stepHtml
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48821','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48821','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'act5': function(){
@@ -1798,7 +1845,7 @@ var sheets = {
   +'<div class="stepper-header">Service workflow — PM Rescheduled · Step 1 of 5</div>'
   +stepHtml
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000817','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000817','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'unassign1': function(){
@@ -1806,7 +1853,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-48830 · Unassigned · Reported 06:40 today</div>'
   +rows([['Activity type','Corrective — unplanned'],['Priority','P3 — needs triage','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','2 hours'],['Tool','10190558 CVD-203 · Applied Centura CVD'],['Reported by','Operator — night shift'],['Fault description','Intermittent high-pitched noise from foreline vacuum pump'],['Entitlement','Applied Global Care — Gold · Covered'],['CRM ticket','SR-48830']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48830','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48830','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'unassign2': function(){
@@ -1814,7 +1861,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-48831 · Unassigned · Reported 07:55 today</div>'
   +rows([['Activity type','Remote diagnostic consult'],['Priority','P3 — process engineering request','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1 hour'],['Tool','10190560 CVD-206 · Applied Centura CVD'],['Requested by','Process Engineering — recipe drift observed on last 3 lots'],['Entitlement','Applied Global Care — Platinum · Covered'],['CRM ticket','SR-48831']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48831','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48831','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'unassign3': function(){
@@ -1822,7 +1869,7 @@ var sheets = {
   +'<div class="sheet-sub">Order 4000906 · Unassigned · Parts received today</div>'
   +rows([['Activity type','Parts installation — planned'],['Priority','P4 — routine'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(2)],['Planned finish',plannedDate(4)],['Estimated duration','1.5 hours'],['Tool','10190563 CVD-209 · Applied Centura CVD'],['Parts','Throttle valve kit — received in inventory today'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000906']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000906','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000906','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'unassign4': function(){
@@ -1830,7 +1877,7 @@ var sheets = {
   +'<div class="sheet-sub">Order 4000907 · Unassigned · Parts N/A · Requested this week</div>'
   +rows([['Activity type','Calibration verification — planned'],['Priority','P4 — routine'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(2)],['Planned finish',plannedDate(4)],['Estimated duration','2 hours'],['Tool','10190557 CVD-202 · Applied Centura CVD'],['Scope','Pressure transducer calibration verification — annual requirement'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000907']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000907','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000907','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'unassign5': function(){
@@ -1838,7 +1885,7 @@ var sheets = {
   +'<div class="sheet-sub">Order 4000908 · Unassigned · Release available now</div>'
   +rows([['Activity type','Software update — planned'],['Priority','P3 — recommended update'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1 hour'],['Tool','10190559 CVD-205 · Applied Centura CVD'],['Scope','Process controller firmware update — latest AMAT release'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000908']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000908','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000908','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'unassign6': function(){
@@ -1846,7 +1893,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-48832 · Unassigned · Reported this morning</div>'
   +rows([['Activity type','Corrective — customer reported'],['Priority','P3 — needs triage','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','1.5 hours'],['Tool','10190564 CVD-210 · Applied Centura CVD'],['Reported by','Customer — odor reported near enclosure'],['Entitlement','Applied Global Care — Platinum · Covered'],['CRM ticket','SR-48832']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48832','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48832','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'unassign7': function(){
@@ -1854,7 +1901,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-48833 · Unassigned · Flagged by AIx today</div>'
   +rows([['Activity type','Remote diagnostic consult'],['Priority','P3 — AIx flagged anomaly','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1 hour'],['Tool','10190565 CVD-211 · Applied Centura CVD'],['Fault description','Anomalous OEE dip flagged by AIx — no operator-reported issue'],['Entitlement','Applied Global Care — Gold · Covered'],['CRM ticket','SR-48833']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48833','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48833','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'b1unassign1': function(){
@@ -1862,7 +1909,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-49001 · Unassigned · Building 1</div>'
   +rows([['Activity type','Remote diagnostic consult'],['Priority','P3 — process engineering request','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','1 hour'],['Tool','10190442 CVD-152 · Applied Centura CVD · Building 1'],['Fault description','RF power delivery drift · 25 min trending — Generator 1'],['Entitlement','Applied Global Care — Platinum · Covered'],['CRM ticket','SR-49001']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-49001','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-49001','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'b1unassign2': function(){
@@ -1870,7 +1917,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-49002 · Unassigned · Building 1</div>'
   +rows([['Activity type','Corrective — on-site inspection'],['Priority','P3 — needs inspection','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1.5 hours'],['Tool','10190446 CVD-156 · Applied Centura CVD · Building 1'],['Fault description','Chamber pressure trending · 40 min — Chamber A'],['Entitlement','Applied Global Care — Gold · Covered'],['CRM ticket','SR-49002']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-49002','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-49002','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'b1unassign3': function(){
@@ -1878,7 +1925,7 @@ var sheets = {
   +'<div class="sheet-sub">Order 4000950 · Unassigned · Building 1</div>'
   +rows([['Activity type','Parts installation — planned'],['Priority','P2 — degrading component','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','2 hours'],['Tool','10190450 CVD-160 · Applied Centura CVD · Building 1'],['Parts','Susceptor heater element kit — received in inventory'],['Entitlement','Applied Global Care — Platinum · Covered'],['ECC order','4000950']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000950','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000950','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';},
 
 'b1unassign4': function(){
@@ -1886,7 +1933,7 @@ var sheets = {
   +'<div class="sheet-sub">Order 4000951 · Unassigned · Building 1</div>'
   +rows([['Activity type','Calibration verification — planned'],['Priority','P4 — routine'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(2)],['Planned finish',plannedDate(4)],['Estimated duration','2 hours'],['Tool','10190440 CVD-150 · Applied Centura CVD · Building 1'],['Scope','Process baseline calibration verification — annual requirement'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000951']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B6FE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000951','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000951','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';}
 };
 
