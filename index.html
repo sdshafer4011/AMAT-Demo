@@ -347,6 +347,8 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .hier-dot.red { background: var(--neg-el); color: #fff; }
 .hier-dot.green { background: var(--pos-el); color: #fff; }
 .hier-dot.purple { background: var(--accent-purple); color: #fff; }
+.hier-dot.amber { background: var(--crit-el); color: #fff; }
+.hier-dot.blue { background: var(--info-el); color: #fff; }
 .hier-content { flex: 1; padding-bottom: 14px; }
 .hier-id { font-size: 13px; font-weight: 700; color: var(--text1); margin-bottom: 2px; }
 .hier-type { font-size: 12px; color: var(--sapLabelColor); margin-bottom: 3px; }
@@ -354,6 +356,8 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .hier-status.red { color: var(--neg-text); font-weight: 600; }
 .hier-status.green { color: var(--pos-text); }
 .hier-status.purple { color: var(--accent-purple); }
+.hier-status.amber { color: var(--crit-text); font-weight: 600; }
+.hier-status.blue { color: var(--info-text); }
 .hier-tap { font-size: 11px; font-weight: 600; color: var(--sapHighlightColor); margin-top: 3px; }
 
 /* Inbox button + refresh — Horizon default button + FSA count badge */
@@ -1970,6 +1974,88 @@ var sheets = {
   +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000951','Direct activity link — available when running as FSM Mobile extension')
   +'</div>';}
 };
+
+// ── Building 4 equipment hierarchies — same model as CVD-204 (CHA / CHB / TM / LL) ──
+// Equipment numbers continue +1 per sub-assembly from the first free number after the
+// numbers already in use (parent tools 10190551–10190566, CVD-213 subs 10190567–10190570,
+// CVD-214 = 10190571 in the FSA tenant). Change B4_SUBEQ_START to renumber all 40 at once.
+var B4_SUBEQ_START = 10190572;
+var B4_TOOLS = [
+  // tool, parent equipment no., parent APM health, chamber status ('ok' | 'pm' | 'rstr'), status note
+  {t:201, eq:'10190556', h:83, ch:'pm',   note:'Quarterly chamber kit PM · 09:00 today'},
+  {t:202, eq:'10190557', h:91, ch:'ok'},
+  {t:203, eq:'10190558', h:88, ch:'ok'},
+  {t:205, eq:'10190559', h:94, ch:'ok'},
+  {t:206, eq:'10190560', h:89, ch:'ok'},
+  {t:207, eq:'10190561', h:79, ch:'pm',   note:'PM rescheduled to 15:00 · FSM P&S'},
+  {t:208, eq:'10190562', h:71, ch:'rstr', note:'RF power drift · Generator 1'},
+  {t:209, eq:'10190563', h:92, ch:'ok'},
+  {t:210, eq:'10190564', h:86, ch:'ok'},
+  {t:211, eq:'10190565', h:90, ch:'ok'}
+];
+var B4_PARTS = [
+  {code:'CHA', name:'Process Chamber A', short:'DxZ',     objType:'AMAT-CVD-CHAMBER', model:'DxZ Process Chamber',     chamber:true},
+  {code:'CHB', name:'Process Chamber B', short:'DxZ',     objType:'AMAT-CVD-CHAMBER', model:'DxZ Process Chamber',     chamber:true},
+  {code:'TM',  name:'Transfer Module',   short:'Centura', objType:'AMAT-CVD-TM',      model:'Centura Transfer Module', chamber:false},
+  {code:'LL',  name:'Loadlock',          short:'Centura', objType:'AMAT-CVD-LL',      model:'Centura Loadlock',        chamber:false}
+];
+function healthBlock(score){
+  var lvl = score >= 75 ? ['Good','good','var(--pos-text)'] : score >= 60 ? ['Declining','warning','var(--crit-text)'] : ['Degraded','critical','var(--neg-text)'];
+  return '<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:'+lvl[2]+'">'+score+' / 100 — '+lvl[0]+'</strong></div>'
+    +'<div class="health-track"><div class="health-fill '+lvl[1]+'" style="width:'+score+'%"></div></div></div>';
+}
+(function buildB4Hierarchies(){
+  var next = B4_SUBEQ_START;
+  B4_TOOLS.forEach(function(tool, ti){
+    var toolName = 'CVD-'+tool.t;
+    var items = [];
+    B4_PARTS.forEach(function(part, pi){
+      var eqNo = String(next++);
+      var key = 'cvd'+tool.t+part.code.toLowerCase();
+      var subName = toolName+'-'+part.code;
+      var serial = 'SN-'+part.code+'-'+tool.t+'-001';
+      // health: chambers sit just around the parent tool, TM / LL slightly healthier
+      var health = Math.min(98, tool.h + [-2, 1, 3, 4][pi]);
+      // status: the PM / restriction applies to the chambers; TM and LL stay in service
+      var st = {user:'INSV — In service', cls:'green', dot:'green', list:'INSV — In service', alert:null};
+      if (part.chamber && tool.ch === 'pm'){
+        st = {user:'INSV — In service', cls:'green', dot:'blue', list:'INSV — In service · '+tool.note, alert:null};
+      }
+      if (part.chamber && tool.ch === 'rstr' && part.code === 'CHA'){
+        health = 64;
+        st = {user:'RSTR — Restricted · monitoring', cls:'amber', dot:'amber', list:'RSTR — Restricted · '+tool.note, alert:'RF power delivery 1,840 W — above ≤ 1,750 W specification'};
+      }
+      if (part.chamber && st.list === 'INSV — In service') st.list = 'INSV — In service · All parameters nominal';
+      items.push([key, eqNo, subName, part.name+' · '+part.short+' · '+serial, st.dot, st.list, st.cls]);
+
+      sheets[key] = (function(eqNo, subName, serial, part, health, st){
+        return function(){
+          var r = [['Equipment category','S — Customer equipment'],['Object type',part.objType],['Model',part.model],['User status',st.user,st.cls]];
+          if (part.chamber){
+            if (st.alert) r.push(['Active alert', st.alert, 'amber']);
+            else {
+              // stable in-spec pressure reading per chamber (spec 0.00560 – 0.00613 mbar)
+              var p = (0.00578 + ((tool.t * 7 + pi * 5) % 18) * 0.00001).toFixed(5);
+              r.push(['Process pressure', p+' mbar — within specification', 'green']);
+            }
+          }
+          if (!st.alert) r.push(['Active alerts', part.chamber && tool.ch === 'pm' ? 'None · '+tool.note : 'None']);
+          r.push(['Warranty','Inherited via passdown — AMAT-CVD-WTY-001']);
+          r.push(['FLOC','AMATUS-FAB-CUST1-BLDG4-'+toolName]);
+          return '<div class="sheet-title">'+eqNo+' '+subName+'</div>'
+            +'<div class="sheet-sub">'+part.name+'  |  Serial: '+serial+'  |  Superior: '+tool.eq+' '+toolName+'</div>'
+            +healthBlock(health)
+            +rows(r);
+        };
+      })(eqNo, subName, serial, part, health, st);
+    });
+    // append the hierarchy to the existing tool detail sheet
+    var base = sheets['cvd'+tool.t];
+    sheets['cvd'+tool.t] = function(){
+      return base() + '<div class="hier-header">Equipment hierarchy — sub-assemblies</div>' + hierList(items);
+    };
+  });
+})();
 
 // ── Sheet navigation ──
 // openSheet: opens a sheet fresh (from the page, a card, a list row).
