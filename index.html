@@ -521,6 +521,9 @@ body.prof-junior .activity-select, body.prof-junior #assign-to-me-btn { display:
 .ip-ph-n { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--text1); margin-top: 7px; }
 .ip-phase.upcoming .ip-ph-n { color: var(--sapLabelColor); }
 .ip-ok { width: 16px; height: 16px; border-radius: 50%; background: var(--pos-el); color: #fff; display: inline-flex; align-items: center; justify-content: center; }
+.ip-ph-d { font-size: 11px; color: var(--sapLabelColor); margin-top: 2px; }
+button.ip-phase { display: block; width: 100%; padding: 0; border: 0; background: none; font-family: inherit; text-align: left; cursor: pointer; border-radius: var(--radius-sm); }
+button.ip-phase:active { background: var(--sapHoverBackground); }
 .ip-ph-t { font-size: 12px; color: var(--sapLabelColor); margin-top: 2px; }
 .ip-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .ip-col-h { display: flex; align-items: baseline; justify-content: space-between; font-size: 13px; font-weight: 700; color: var(--text1); padding-bottom: 6px; border-bottom: 1px solid var(--sapListBorder); }
@@ -597,6 +600,10 @@ body.prof-junior .activity-select, body.prof-junior #assign-to-me-btn { display:
   .ip-cols, .ip-phases { grid-template-columns: 1fr; }
   .ip-top { flex-direction: column; align-items: flex-start; }
 }
+
+/* multi-day activities */
+.act-time.span { min-width: 48px; font-size: 13px; font-weight: 700; color: var(--accent-purple); text-align: center; line-height: 1.1; white-space: nowrap; }
+.act-time-of { display: block; font-size: 10px; font-weight: 600; color: var(--sapLabelColor); }
 /* ── Panel filters ── */
 .sub-out, .crit-out { display: none !important; }
 .lp-chip { display: flex; align-items: center; gap: 6px; margin: -2px 0 10px; padding: 6px 6px 6px 10px; width: fit-content; max-width: 100%; background: var(--info-bg); color: var(--info-text); border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; }
@@ -1073,7 +1080,7 @@ body.prof-junior .activity-select, body.prof-junior #assign-to-me-btn { display:
           <div class="act-time">14:30</div>
           <div class="act-dot amber"></div>
           <div class="act-main">
-            <div class="act-title">10190566 CVD-213 · Phase 2 facilities sign-off walkdown</div>
+            <div class="act-title">10190566 CVD-213 · Phase 2 facilities walkdown — gas &amp; exhaust hookup</div>
             <div class="act-sub">Order 4000835 · With AMAT facilities · WBS AMAT-INSTALL-2026-0042 · Est. 1.5h</div>
           </div>
           <div class="act-priority medium">Medium</div>
@@ -1093,7 +1100,7 @@ body.prof-junior .activity-select, body.prof-junior #assign-to-me-btn { display:
           <div class="act-time">10:00</div>
           <div class="act-dot purple"></div>
           <div class="act-main">
-            <div class="act-title">10190566 CVD-213 · Phase 3 commissioning readiness review</div>
+            <div class="act-title">10190566 CVD-213 · Phase 3 commissioning planning review</div>
             <div class="act-sub">Order 4000835 · Teams meeting with AMAT install PM · Est. 1h</div>
           </div>
           <div class="act-priority medium">Medium</div>
@@ -1118,6 +1125,36 @@ body.prof-junior .activity-select, body.prof-junior #assign-to-me-btn { display:
           </div>
           <div class="act-priority low">Low</div>
           <div class="act-badge pm">Planned PM</div>
+        </div>
+      <div class="activity-item" onclick="openSheet('act12')" data-duration-min="510" data-span="p2">
+          <div class="act-time span">&nbsp;</div>
+          <div class="act-dot amber"></div>
+          <div class="act-main">
+            <div class="act-title">10190566 CVD-213 · Tool installation — Phase 2: electrical &amp; facilities hookup</div>
+            <div class="act-sub">Order 4000835 · Phase 2 of 3 · <span class="span-note"></span> · Daily 07:00 – 15:30</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge install">Installation</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act13')" data-duration-min="120" data-day-at="p2end">
+          <div class="act-time">15:00</div>
+          <div class="act-dot amber"></div>
+          <div class="act-main">
+            <div class="act-title">10190566 CVD-213 · Phase 2 facilities sign-off &amp; handover to commissioning</div>
+            <div class="act-sub">Order 4000835 · With AMAT facilities and Customer EHS · Est. 2h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge install">Installation</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act14')" data-duration-min="510" data-span="p3">
+          <div class="act-time span">&nbsp;</div>
+          <div class="act-dot amber"></div>
+          <div class="act-main">
+            <div class="act-title">10190566 CVD-213 · Tool installation — Phase 3: commissioning &amp; qualification</div>
+            <div class="act-sub">Order 4000835 · Phase 3 of 3 · <span class="span-note"></span> · Daily 07:00 – 15:30</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge install">Installation</div>
         </div>
       </div>
       <div class="activity-list" id="activity-list-unassigned-b4" style="display:none">
@@ -2132,7 +2169,7 @@ var sheets = {
 
 'cvd213': function(){return '<div class="sheet-title">10190566 CVD-213 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · New installation · Fab A · Building 4</div>'
-  +rows([['Applied serial','SN-10190566 CVD-213-001'],['Customer tool ID','FAB-A-CVD-13 (pending commissioning)'],['Platform','Applied Centura · CVD'],['Current status','Under installation — Phase 2 of 3'],['Installation phase','Electrical and facilities hookup'],['PS WBS element','AMAT-INSTALL-2026-0042-01-02'],['CS order','4000835'],['Overall progress','Phase 1 complete · Phase 2 in progress · Phase 3 pending'],['Install contract','New installation — covered'],['Est. commissioning',plannedDate(57)]])
+  +rows([['Applied serial','SN-10190566 CVD-213-001'],['Customer tool ID','FAB-A-CVD-13 (pending commissioning)'],['Platform','Applied Centura · CVD'],['Current status','Under installation — Phase 2 of 3'],['Installation phase','Electrical and facilities hookup'],['PS WBS element','AMAT-INSTALL-2026-0042-01-02'],['CS order','4000835'],['Overall progress','Phase 1 complete · Phase 2 in progress · Phase 3 pending'],['Install contract','New installation — covered'],['Est. commissioning',plannedDate(INSTALL_PLAN.commission)]])
   +'<div class="hier-header">Equipment hierarchy — sub-assemblies</div>'
   +hierList([
     ['cvd213cha','10190567','CVD-213-CHA','Process Chamber A · DxZ · SN-CHA-213-001','purple','INST — Under installation · Phase 2 active','purple'],
@@ -2450,6 +2487,18 @@ function healthBlock(score){
   });
 })();
 
+// ── CVD-213 installation timeline — the single source for every installation date on the page ──
+// Day offsets from today. Each phase runs 3–4 weeks, with a few days between phases for crew changeover.
+var INSTALL_PLAN = {
+  p1: [-40, -13],      // Phase 1 · Mechanical installation (complete)
+  p2: [-9, 15],        // Phase 2 · Electrical & facilities hookup (in progress)
+  p3: [20, 45],        // Phase 3 · Commissioning & qualification
+  p2pct: 40,           // Phase 2 work complete (%)
+  commission: 45       // commissioning complete = end of Phase 3
+};
+function installDayOf(ph, d){ return d - ph[0] + 1; }
+function installLen(ph){ return ph[1] - ph[0] + 1; }
+
 // ── Upcoming activity detail sheets (days relative to today) ──
 (function addUpcomingActivitySheets(){
   var FSM_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>';
@@ -2457,15 +2506,24 @@ function healthBlock(score){
     act6:  {day:1, time:'10:30', title:'10190551 CVD-204 · Throttle Valve Replacement — Chamber A', ref:'Order 4000821 · Follow-up operation', type:'Corrective — planned repair', prio:['P1 follow-up — tool down','red'], dur:'3 hours', tool:'10190552 CVD-204-CHA · Process Chamber A',
             extra:[['Parts','AMAT-THROT-VALVE — confirmed available, shipped today'],['Root cause','Throttle valve degradation — AIx probability 84%'],['Entitlement','Applied Global Care — Platinum · Covered']],
             steps:['Accept and review task list','Lockout / tagout — Chamber A','Remove and replace throttle valve','Leak check and pump-down','Pressure verification against spec','Labor capture and closure'], link:'4000821'},
-    act7:  {day:1, time:'14:30', title:'10190566 CVD-213 · Phase 2 Facilities Sign-off Walkdown', ref:'Order 4000835 · With AMAT facilities', type:'Tool installation — milestone sign-off', prio:['P2 — scheduled installation'], dur:'1.5 hours', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
+    act7:  {day:1, time:'14:30', title:'10190566 CVD-213 · Phase 2 Facilities Walkdown — Gas & Exhaust Hookup', ref:'Order 4000835 · With AMAT facilities', type:'Tool installation — progress walkdown', prio:['P2 — scheduled installation'], dur:'1.5 hours', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
             extra:[['Installation phase','Phase 2 — electrical and facilities hookup'],['PS WBS element','AMAT-INSTALL-2026-0042-01-02'],['Attendees','AMAT facilities lead · Customer EHS']],
-            steps:['Walkdown checklist review','Electrical hookup inspection','Facilities (gas, water, exhaust) inspection','Punch list capture','Customer sign-off'], link:'4000835'},
+            steps:['Walkdown checklist review','Gas line hookup inspection','Exhaust hookup inspection','Punch list capture','Agree next actions with facilities'], link:'4000835'},
     act8:  {day:2, time:'08:00', title:'10190562 CVD-208 · RF Matching Network Inspection — Generator 1', ref:'Notification 10042831 · Follow-up to SR-48821', type:'Corrective — inspection', prio:['P2 — restricted tool','amber'], dur:'2 hours', tool:'10190596 CVD-208-CHA · Process Chamber A',
             extra:[['Trigger','RF power delivery drift · 1,840 W vs ≤ 1,750 W spec'],['Prior step','Remote review with L3 specialist (today)'],['Entitlement','Applied Global Care — Gold · Covered']],
             steps:['Accept and review findings from remote review','Lockout / tagout — RF generator','Inspect matching network and cabling','Replace components if required','RF power verification'], link:'4000831'},
-    act9:  {day:3, time:'10:00', title:'10190566 CVD-213 · Phase 3 Commissioning Readiness Review', ref:'Order 4000835 · Teams meeting', type:'Remote consult — installation planning', prio:['P3 — scheduled'], dur:'1 hour', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
-            extra:[['Attendees','AMAT install PM · Customer fab engineering'],['Agenda','Phase 2 punch list closure · Phase 3 qualification plan'],['Est. commissioning',null]],
-            steps:['Review Phase 2 punch list','Confirm Phase 3 qualification plan','Agree commissioning date'], link:'4000835'},
+    act9:  {day:3, time:'10:00', title:'10190566 CVD-213 · Phase 3 Commissioning Planning Review', ref:'Order 4000835 · Teams meeting', type:'Remote consult — installation planning', prio:['P3 — scheduled'], dur:'1 hour', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
+            extra:[['Attendees','AMAT install PM · Customer fab engineering'],['Agenda','Phase 3 crew and schedule · qualification plan · Phase 2 punch list status'],['Est. commissioning',null]],
+            steps:['Confirm Phase 3 crew and start date','Review qualification plan','Review Phase 2 punch list status','Agree commissioning date'], link:'4000835'},
+    act12: {span:'p2', time:'07:00 – 15:30 daily', title:'10190566 CVD-213 · Tool Installation — Phase 2: Electrical & Facilities Hookup', ref:'Order 4000835 · Phase 2 of 3', type:'Tool installation — multi-day phase', prio:['P2 — scheduled installation'], dur:'25 days · daily 07:00 – 15:30', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
+            extra:[['PS WBS element','AMAT-INSTALL-2026-0042-01-02'],['Crew','Install CE lead · electrical contractor (2) · AMAT facilities'],['Work complete','40%']],
+            steps:['Power distribution and main breaker hookup','Chamber and RF electrical hookup','Process gas and N\u2082 purge lines','Process cooling water and exhaust','Interlock and EMO checks','Facilities sign-off and handover'], stepAt:2, link:'4000835'},
+    act13: {day:'p2end', time:'15:00', title:'10190566 CVD-213 · Phase 2 Facilities Sign-off & Handover to Commissioning', ref:'Order 4000835 · With AMAT facilities and Customer EHS', type:'Tool installation — phase sign-off', prio:['P2 — scheduled installation'], dur:'2 hours', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
+            extra:[['Installation phase','Phase 2 — electrical and facilities hookup'],['Exit criteria','Punch list closed · interlocks verified · EHS sign-off'],['Hands over to','Phase 3 commissioning crew']],
+            steps:['Confirm punch list closed','Interlock and EMO verification','Customer EHS sign-off','Handover to commissioning crew'], link:'4000835'},
+    act14: {span:'p3', time:'07:00 – 15:30 daily', title:'10190566 CVD-213 · Tool Installation — Phase 3: Commissioning & Qualification', ref:'Order 4000835 · Phase 3 of 3', type:'Tool installation — multi-day phase', prio:['P2 — scheduled installation'], dur:'26 days · daily 07:00 – 15:30', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
+            extra:[['PS WBS element','AMAT-INSTALL-2026-0042-01-03'],['Crew','Install CE lead · process qualification engineer'],['Measuring points','Created at start of Phase 3']],
+            steps:['Initial power-on and system check','Process chamber bring-up','Recipe qualification wafers','Customer acceptance test','Warranty activation and handover to service'], link:'4000835'},
     act10: {day:4, time:'13:00', title:'10190551 CVD-204 · Post-repair Verification — Chamber A Pressure Baseline', ref:'Order 4000821 · Verification operation', type:'Planned verification', prio:['P3 — scheduled'], dur:'1 hour', tool:'10190552 CVD-204-CHA · Process Chamber A',
             extra:[['Target','Process pressure within 0.00560 – 0.00613 mbar'],['Measuring point','Chamber A process pressure · APM-linked']],
             steps:['Capture baseline readings','Compare against APM trend','Close verification operation'], link:'4000821'},
@@ -2476,15 +2534,29 @@ function healthBlock(score){
   Object.keys(UP).forEach(function(key){
     var a = UP[key];
     sheets[key] = function(){
-      var when = (a.day === 1 ? 'Tomorrow' : DATE_LONG(a.day)) + ' · ' + a.time;
-      var r = [['Activity type', a.type], ['Priority', a.prio[0]].concat(a.prio[1] ? [a.prio[1]] : []), ['Assigned to','Philip White · CE Level Principal'],
-               ['Planned start', plannedDate(a.day)+' · '+a.time], ['Estimated duration', a.dur], ['Tool', a.tool]];
-      a.extra.forEach(function(x){ r.push([x[0], x[1] === null ? plannedDate(57) : x[1]]); });
+      var ph = a.span ? INSTALL_PLAN[a.span] : null;
+      var day = a.day === 'p2end' ? INSTALL_PLAN.p2[1] : a.day;
+      var r = [['Activity type', a.type], ['Priority', a.prio[0]].concat(a.prio[1] ? [a.prio[1]] : []), ['Assigned to','Philip White · CE Level Principal']];
+      var sub, stepHead = 'Service workflow · Not started', at = -1;
+      if (ph){                                   // multi-day activity (installation phase)
+        var started = ph[0] <= 0, doneDays = Math.max(0, Math.min(installLen(ph), installDayOf(ph, 0)));
+        r.push(['Planned start', plannedDate(ph[0])], ['Planned finish', plannedDate(ph[1])], ['Duration', a.dur]);
+        if (started) r.push(['Today', 'Day '+installDayOf(ph, 0)+' of '+installLen(ph)]);
+        else r.push(['Starts', 'In '+ph[0]+' days']);
+        sub = a.ref+' · '+(started ? 'In progress' : 'Scheduled')+' · '+afShortDate(ph[0])+' – '+afShortDate(ph[1]);
+        if (started && a.stepAt !== undefined){ at = a.stepAt; stepHead = 'Phase work · Step '+(at+1)+' of '+a.steps.length; }
+      } else {
+        var when = (day === 1 ? 'Tomorrow' : DATE_LONG(day)) + ' · ' + a.time;
+        r.push(['Planned start', plannedDate(day)+' · '+a.time], ['Estimated duration', a.dur]);
+        sub = a.ref+' · Scheduled · '+when;
+      }
+      r.push(['Tool', a.tool]);
+      a.extra.forEach(function(x){ r.push([x[0], x[1] === null ? plannedDate(INSTALL_PLAN.commission) : x[1]]); });
       return '<div class="sheet-title">'+a.title+'</div>'
-        +'<div class="sheet-sub">'+a.ref+' · Scheduled · '+when+'</div>'
+        +'<div class="sheet-sub">'+sub+'</div>'
         +rows(r)
-        +'<div class="stepper-header">Service workflow · Not started</div>'
-        +stepper(a.steps, -1)
+        +'<div class="stepper-header">'+stepHead+'</div>'
+        +stepper(a.steps, at)
         +'<div class="faux-links">'+fauxLink(FSM_ICON,'fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/'+a.link,'Direct activity link — available when running as FSM Mobile extension')+'</div>';
     };
   });
@@ -2543,20 +2615,39 @@ function afActiveListId(){
   var t = document.getElementById('tab-unassigned');
   return (t && t.classList.contains('active')) ? getActiveUnassignedListId() : 'activity-list-myact';
 }
+// installation-phase activities take their dates from INSTALL_PLAN
+function installSyncItems(){
+  Array.prototype.forEach.call(document.querySelectorAll('#activity-list-myact [data-span]'), function(it){
+    var ph = INSTALL_PLAN[it.getAttribute('data-span')];
+    it.setAttribute('data-day', ph[0]); it.setAttribute('data-day-end', ph[1]);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('#activity-list-myact [data-day-at="p2end"]'), function(it){
+    it.setAttribute('data-day', INSTALL_PLAN.p2[1]);
+  });
+}
 function afRows(listId, r){
   var list = document.getElementById(listId); if (!list) return [];
   var items = Array.prototype.slice.call(list.querySelectorAll('.activity-item'));
   items.forEach(function(it, i){ if (!it.hasAttribute('data-ord')) it.setAttribute('data-ord', i); });
   return items.map(function(it){
     var d0 = parseInt(it.getAttribute('data-day'), 10) || 0;
-    var d1 = it.hasAttribute('data-day-end') && listId !== 'activity-list-myact' ? parseInt(it.getAttribute('data-day-end'), 10) : d0;
+    // multi-day: an assigned activity marked data-span (an installation phase) covers every day d0..d1;
+    // unassigned items keep their planned window for filtering but are listed on their start day
+    var span = listId === 'activity-list-myact' && it.hasAttribute('data-span');
+    var d1 = it.hasAttribute('data-day-end') && (span || listId !== 'activity-list-myact') ? parseInt(it.getAttribute('data-day-end'), 10) : d0;
     var mine = listId !== 'activity-list-myact' || personaOwns(it);      // My activities = this persona's work only
     it.classList.toggle('persona-out', !mine);
-    return {el: it, day: Math.max(d0, r.from), t: afTimeKey(it), ord: +it.getAttribute('data-ord'), on: mine && d0 <= r.to && d1 >= r.from};
+    return {el: it, d0: d0, d1: d1, span: span, day: Math.max(d0, r.from), t: afTimeKey(it), ord: +it.getAttribute('data-ord'), on: mine && d0 <= r.to && d1 >= r.from};
   });
 }
 function afDayCounts(listId, r){
-  var c = {}; afRows(listId, r).forEach(function(x){ if (x.on) c[x.day] = (c[x.day] || 0) + 1; }); return c;
+  var c = {};
+  afRows(listId, r).forEach(function(x){
+    if (!x.on) return;
+    if (x.span){ for (var d = Math.max(x.d0, r.from); d <= Math.min(x.d1, r.to); d++) c[d] = (c[d] || 0) + 1; }
+    else c[x.day] = (c[x.day] || 0) + 1;
+  });
+  return c;
 }
 function afDefaultDay(r){
   if (0 >= r.from && 0 <= r.to) return 0;                      // today, when it's in the range
@@ -2565,6 +2656,7 @@ function afDefaultDay(r){
   return r.from;
 }
 function afApply(){
+  installSyncItems();
   var r = afGet(), multi = r.to > r.from;
   if (!multi) afDay = null;
   else if (afDay === null || (afDay !== 'all' && (afDay < r.from || afDay > r.to))) afDay = afDefaultDay(r);
@@ -2577,21 +2669,30 @@ function afApply(){
     var list = document.getElementById(listId); if (!list) return;
     Array.prototype.forEach.call(list.querySelectorAll('.act-day-head, .act-empty'), function(e){ e.remove(); });
     var rows = afRows(listId, r);
-    rows.sort(function(a, b){ return (a.day - b.day) || (a.t - b.t) || (a.ord - b.ord); });
-    var lastDay = null, shownAny = false;
+    // multi-day activities first (they run through the whole view), then by day and time
+    rows.sort(function(a, b){ return (b.span - a.span) || (a.day - b.day) || (a.t - b.t) || (a.ord - b.ord); });
+    var lastKey = null, shownAny = false;
+    var refDay = showAll ? (multi ? null : r.from) : afDay;      // the day a multi-day item is shown 'as of'
     rows.forEach(function(row){
-      var shown = row.on && (showAll || row.day === afDay);
+      var shown = row.on && (showAll || (row.span ? (afDay >= row.d0 && afDay <= row.d1) : row.day === afDay));
       row.el.classList.toggle('af-out', !row.on);
       row.el.classList.toggle('af-day-out', row.on && !shown);
       if (!shown){ var cb = row.el.querySelector('.activity-select'); if (cb && cb.checked){ cb.checked = false; selectedUnassigned[cb.getAttribute('data-id')] = false; } }
       if (shown) shownAny = true;
-      if (multi && showAll && row.on && row.day !== lastDay){
-        var n = rows.filter(function(x){ return x.on && x.day === row.day; }).length;
+      if (row.span){                                              // 'Day 10/25' counter + date span
+        var len = row.d1 - row.d0 + 1, tEl = row.el.querySelector('.act-time'), note = row.el.querySelector('.span-note');
+        var idx = refDay === null ? null : refDay - row.d0 + 1;
+        if (tEl) tEl.innerHTML = idx === null ? 'Ongoing' : 'Day ' + idx + '<span class="act-time-of">of ' + len + '</span>';
+        if (note) note.textContent = (idx === null || idx < 1 ? '' : 'Day ' + idx + ' of ' + len + ' · ') + afShortDate(row.d0) + ' – ' + afShortDate(row.d1);
+      }
+      var key = row.span ? 'span' : row.day;
+      if (multi && showAll && row.on && key !== lastKey){
+        var n = rows.filter(function(x){ return x.on && (row.span ? x.span : (!x.span && x.day === row.day)); }).length;
         var h = document.createElement('div');
         h.className = 'act-day-head';
-        h.innerHTML = '<span>'+afDayHeading(row.day)+'</span><span class="act-day-count">'+n+' '+(n === 1 ? 'activity' : 'activities')+'</span>';
+        h.innerHTML = '<span>'+(row.span ? 'Ongoing \u00b7 multi-day work' : afDayHeading(row.day))+'</span><span class="act-day-count">'+n+' '+(n === 1 ? 'activity' : 'activities')+'</span>';
         list.appendChild(h);
-        lastDay = row.day;
+        lastKey = key;
       }
       list.appendChild(row.el);
     });
@@ -2602,8 +2703,9 @@ function afApply(){
         e.innerHTML = 'No activities '+noun(listId)+' for '+(r.id === 'custom' ? afSpan(r) : afRangeName(r).toLowerCase())+'.'
           + (r.id !== 'next7' ? ' <button type="button" onclick="afSetRange(afPreset(\'next7\'))">Show next 7 days</button>' : '');
       } else {
-        var later = rows.filter(function(x){ return x.on && x.day > afDay; }).map(function(x){ return x.day; });
-        var earlier = rows.filter(function(x){ return x.on && x.day < afDay; }).map(function(x){ return x.day; });
+        var busy = Object.keys(afDayCounts(listId, r)).map(Number);
+        var later = busy.filter(function(d){ return d > afDay; });
+        var earlier = busy.filter(function(d){ return d < afDay; });
         var jump = later.length ? Math.min.apply(null, later) : Math.max.apply(null, earlier);
         e.innerHTML = 'No activities '+noun(listId)+' on '+afDayHeading(afDay).replace(/^(Today|Tomorrow|Yesterday) · /, '')+'.'
           + ' <button type="button" onclick="afSelectDay('+jump+')">'+(later.length ? 'Next' : 'Previous')+' day with activities: '+afWeekday(jump)+' '+afShortDate(jump)+' ›</button>';
@@ -2638,7 +2740,8 @@ function afRenderDays(r, multi){
   var box = document.getElementById('af-days'); if (!box) return;
   if (!multi){ box.hidden = true; box.innerHTML = ''; return; }
   box.hidden = false;
-  var c = afDayCounts(afActiveListId(), r), total = 0; for (var k in c) total += c[k];
+  var c = afDayCounts(afActiveListId(), r);
+  var total = afRows(afActiveListId(), r).filter(function(x){ return x.on; }).length;   // each activity once (multi-day work counts once)
   var pages = Math.floor((r.to - r.from) / AF_PAGE);
   var start = r.from + afPage * AF_PAGE, end = Math.min(r.to, start + AF_PAGE - 1);
   var LEFT = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>';
@@ -2732,7 +2835,7 @@ var PERSONAS = [
    preset:{order:['priority','overview','tools','telemetry','activities'], hidden:[], collapsed:[], options:{range:'today', tab:'myact', zone:'b4'}}},
   {id:'install', name:'Maria Santos', initials:'MS', type:'Install Customer Engineer', short:'Install CE', ce:true, prof:'senior',
    color:['#DDCCF0','#6C32A9'], shift:'Fab A — CVD Bay · Shift start 07:00',
-   acts:['act3','act7','act9'], panels:['install'],
+   acts:['act12','act3','act7','act9','act13','act14'], panels:['install'],
    preset:{order:['priority','install','activities','overview','tools','telemetry'], hidden:['telemetry'], collapsed:['overview'], options:{range:'next7', tab:'myact', zone:'b4'}}},
   {id:'process', name:'Daniel Kim', initials:'DK', type:'Process Support Engineer', short:'Process SE', ce:false, prof:'principal',
    color:['#C2FCEE','#046C7A'], shift:'Fab A — Process Engineering · Shift start 08:00',
@@ -2803,7 +2906,9 @@ function personaAfterApply(){
   if (!el) return;
   if (p.id === 'philip'){ el.textContent = (document.getElementById('zone-select').value === 'b1') ? '3' : '5'; return; }
   var n = Array.prototype.filter.call(document.querySelectorAll('#activity-list-myact .activity-item'), function(it){
-    return personaOwns(it) && (parseInt(it.getAttribute('data-day'), 10) || 0) === 0;
+    var d0 = parseInt(it.getAttribute('data-day'), 10) || 0;
+    var d1 = it.hasAttribute('data-span') ? parseInt(it.getAttribute('data-day-end'), 10) : d0;
+    return personaOwns(it) && d0 <= 0 && d1 >= 0;
   }).length;
   el.textContent = String(n);
 }
@@ -2873,17 +2978,19 @@ function renderPersonaPicker(){
 // ── Installation progress panel (Install CE) ──
 function ipRender(){
   var el = document.getElementById('ip-card'); if (!el) return;
-  var COMMISSION = 57;
+  var P = INSTALL_PLAN, COMMISSION = P.commission;
+  var span = function(ph){ return afShortDate(ph[0]) + ' – ' + afShortDate(ph[1]); };
   var when = function(d, t){ return (d === 0 ? 'Today' : d === 1 ? 'Tomorrow' : afWeekday(d) + ' ' + afShortDate(d)) + (t ? ' · ' + t : ''); };
   var phases = [
-    {n:'Phase 1', t:'Mechanical installation', s:'done', pct:100, lbl:'Complete'},
-    {n:'Phase 2', t:'Electrical & facilities hookup', s:'current', pct:65, lbl:'In progress · 65%'},
-    {n:'Phase 3', t:'Commissioning & qualification', s:'upcoming', pct:0, lbl:'Not started'}
+    {n:'Phase 1', t:'Mechanical installation', s:'done', pct:100, lbl:'Complete', dates:span(P.p1) + ' · ' + installLen(P.p1) + ' days', key:null},
+    {n:'Phase 2', t:'Electrical & facilities hookup', s:'current', pct:P.p2pct, lbl:'In progress · ' + P.p2pct + '%', dates:span(P.p2) + ' · day ' + installDayOf(P.p2, 0) + ' of ' + installLen(P.p2), key:'act12'},
+    {n:'Phase 3', t:'Commissioning & qualification', s:'upcoming', pct:0, lbl:'Starts in ' + P.p3[0] + ' days', dates:span(P.p3) + ' · ' + installLen(P.p3) + ' days', key:'act14'}
   ];
   var miles = [
-    {t:'Facilities sign-off walkdown', d:1, time:'14:30', key:'act7'},
-    {t:'Phase 3 commissioning readiness review', d:3, time:'10:00', key:'act9'},
-    {t:'Phase 2 complete — target', d:9},
+    {t:'Phase 2 facilities walkdown — gas & exhaust', d:1, time:'14:30', key:'act7'},
+    {t:'Phase 3 commissioning planning review', d:3, time:'10:00', key:'act9'},
+    {t:'Phase 2 sign-off & handover to commissioning', d:P.p2[1], time:'15:00', key:'act13'},
+    {t:'Phase 3 starts — commissioning crew on site', d:P.p3[0], key:'act14'},
     {t:'Commissioning complete — target', d:COMMISSION}
   ];
   var punch = [
@@ -2903,9 +3010,11 @@ function ipRender(){
     +   '<span class="ip-count"><span class="ip-count-n">' + COMMISSION + '</span><span class="ip-count-l">days to commissioning<br>target ' + plannedDate(COMMISSION) + '</span></span>'
     + '</button>'
     + '<div class="ip-phases">' + phases.map(function(ph){
-        return '<div class="ip-phase ' + ph.s + '"><div class="ip-bar"><span style="width:' + ph.pct + '%"></span></div>'
+        var inner = '<div class="ip-bar"><span style="width:' + ph.pct + '%"></span></div>'
           + '<div class="ip-ph-n">' + (ph.s === 'done' ? '<span class="ip-ok">' + CHECK + '</span>' : '') + ph.n + ' · ' + ph.lbl + '</div>'
-          + '<div class="ip-ph-t">' + ph.t + '</div></div>';
+          + '<div class="ip-ph-t">' + ph.t + '</div><div class="ip-ph-d">' + ph.dates + '</div>';
+        return ph.key ? '<button type="button" class="ip-phase ' + ph.s + '" onclick="openSheet(\'' + ph.key + '\')">' + inner + '</button>'
+                      : '<div class="ip-phase ' + ph.s + '">' + inner + '</div>';
       }).join('') + '</div>'
     + '<div class="ip-cols">'
     +   '<div class="ip-col"><div class="ip-col-h">Upcoming milestones</div>' + miles.map(function(m){
@@ -3191,7 +3300,7 @@ function lpUpdateSummaries(){
   var m = (txt('tab-myact').match(/\((\d+)\)/) || [])[1], u = (txt('tab-unassigned').match(/\((\d+)\)/) || [])[1];
   var rg = (typeof afGet === 'function') ? (afGet().id === 'custom' ? afSpan(afGet()) : afRangeName().toLowerCase()) : 'today';
   set('activities', (m || 0)+' assigned · '+(u || 0)+' unassigned · '+rg);
-  set('install', 'Phase 2 of 3 · 4 punch items open · commissioning in 57 days');
+  set('install', 'Phase 2 of 3 · day ' + installDayOf(INSTALL_PLAN.p2, 0) + ' of ' + installLen(INSTALL_PLAN.p2) + ' · commissioning in ' + INSTALL_PLAN.commission + ' days');
   set('process', '1 out of control · 1 drifting · 2 tools outside matching band');
 }
 // keep summaries current when the zone changes
