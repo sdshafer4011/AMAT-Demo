@@ -472,6 +472,131 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .af-day-arrow:disabled { color: var(--sapGroupBorder); cursor: default; }
 .af-page-note { flex-basis: 100%; text-align: right; font-size: 11px; color: var(--sapLabelColor); margin-top: -2px; }
 @media (max-width: 600px) { .af-days { flex-wrap: nowrap; } .af-day { flex: 0 0 66px; } .af-page-note { display: none; } }
+
+/* ── Personas ── */
+.avatar-btn { position: relative; border: 0; padding: 0; font-family: inherit; cursor: pointer; transition: box-shadow .15s; }
+.avatar-btn:active { box-shadow: 0 0 0 3px var(--sapActiveBackground); }
+.avatar-swap { position: absolute; right: -3px; bottom: -3px; width: 18px; height: 18px; border-radius: 50%; background: var(--surface); color: var(--sapHighlightColor); box-shadow: var(--sapShadow0); display: flex; align-items: center; justify-content: center; }
+.ps-dialog { max-width: 520px; }
+.ps-body { padding: 14px 16px 16px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.ps-return { display: flex; align-items: center; gap: 8px; width: 100%; margin-bottom: 12px; padding: 12px 14px; font-family: inherit; font-size: 14px; font-weight: 700; color: var(--sapHighlightColor); background: var(--info-bg); border: 1px solid #B8DCFF; border-radius: var(--radius-md); cursor: pointer; text-align: left; }
+.ps-return-sub { margin-left: auto; font-size: 12px; font-weight: 400; color: var(--sapLabelColor); }
+.ps-list { display: flex; flex-direction: column; gap: 8px; }
+.ps-card { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; font-family: inherit; text-align: left; background: var(--surface); border: 1px solid var(--sapListBorder); border-radius: var(--radius-md); cursor: pointer; }
+.ps-card:active { background: var(--sapHoverBackground); }
+.ps-card.on { border-color: var(--sapBrandColor); box-shadow: 0 0 0 1px var(--sapBrandColor); }
+.ps-av { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; flex-shrink: 0; }
+.ps-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ps-name { font-size: 15px; font-weight: 700; color: var(--text1); }
+.ps-type { font-size: 12px; color: var(--sapLabelColor); }
+.ps-adds { font-size: 12px; font-weight: 600; color: var(--accent-purple); }
+.ps-adds-muted { color: var(--sapIconMuted); font-weight: 400; }
+.ps-check { width: 20px; color: var(--sapBrandColor); flex-shrink: 0; }
+.ps-prof { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--sapListBorder); }
+.ps-prof-title { font-size: 13px; font-weight: 700; color: var(--text1); margin-bottom: 8px; }
+.ps-seg { display: flex; width: 100%; }
+.ps-seg button { flex: 1; padding: 8px 4px; }
+.ps-prof-note { font-size: 12px; color: var(--sapLabelColor); margin-top: 8px; line-height: 1.4; }
+.lp-role-tag { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 700; color: var(--accent-purple); background: var(--accent-purple-bg); padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+.lp-panel.lp-unavail, .persona-out { display: none !important; }
+/* proficiency rules */
+body.prof-junior #tab-unassigned, body.prof-junior #auto-schedule-btn { display: none !important; }
+body.prof-intermediate .activity-select, body.prof-intermediate #assign-to-me-btn,
+body.prof-junior .activity-select, body.prof-junior #assign-to-me-btn { display: none !important; }
+
+/* ── Installation progress (Install CE) ── */
+.ip-card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 16px; }
+.ip-top { display: flex; align-items: center; gap: 16px; width: 100%; padding: 0; background: none; border: 0; font-family: inherit; text-align: left; cursor: pointer; }
+.ip-top-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.ip-tool { font-size: 15px; font-weight: 700; color: var(--text1); }
+.ip-meta { font-size: 12px; color: var(--sapLabelColor); }
+.ip-count { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.ip-count-n { font-size: 30px; font-weight: 400; color: var(--accent-purple); line-height: 1; }
+.ip-count-l { font-size: 11px; color: var(--sapLabelColor); line-height: 1.35; }
+.ip-phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.ip-bar { height: 8px; border-radius: 4px; background: var(--sapNeutralBackground); overflow: hidden; }
+.ip-bar span { display: block; height: 100%; border-radius: 4px; }
+.ip-phase.done .ip-bar span { background: var(--pos-el); }
+.ip-phase.current .ip-bar span { background: var(--accent-purple); }
+.ip-ph-n { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--text1); margin-top: 7px; }
+.ip-phase.upcoming .ip-ph-n { color: var(--sapLabelColor); }
+.ip-ok { width: 16px; height: 16px; border-radius: 50%; background: var(--pos-el); color: #fff; display: inline-flex; align-items: center; justify-content: center; }
+.ip-ph-t { font-size: 12px; color: var(--sapLabelColor); margin-top: 2px; }
+.ip-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ip-col-h { display: flex; align-items: baseline; justify-content: space-between; font-size: 13px; font-weight: 700; color: var(--text1); padding-bottom: 6px; border-bottom: 1px solid var(--sapListBorder); }
+.ip-col-sub { font-size: 12px; font-weight: 400; color: var(--sapLabelColor); }
+.ip-row { display: flex; align-items: flex-start; gap: 10px; width: 100%; padding: 9px 0; border-bottom: 1px solid var(--sapListBorder); background: none; border-left: 0; border-right: 0; border-top: 0; font-family: inherit; text-align: left; }
+.ip-link { cursor: pointer; color: var(--sapHighlightColor); align-items: center; }
+.ip-link:active { background: var(--sapHoverBackground); }
+.ip-when { flex: 0 0 auto; min-width: 104px; font-size: 12px; font-weight: 700; color: var(--text1); }
+.ip-what { flex: 1; min-width: 0; font-size: 13px; color: var(--text1); line-height: 1.35; }
+.ip-owner { display: block; font-size: 11px; color: var(--sapLabelColor); margin-top: 2px; }
+.ip-sev { flex: 0 0 66px; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--text1); padding-top: 1px; }
+.ip-sev-dot { width: 8px; height: 8px; border-radius: 50%; }
+.ip-sev.neg .ip-sev-dot { background: var(--neg-el); } .ip-sev.crit .ip-sev-dot { background: var(--crit-el); } .ip-sev.info .ip-sev-dot { background: var(--info-el); }
+.ip-subs { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ip-subs-l { font-size: 12px; font-weight: 700; color: var(--sapLabelColor); margin-right: 2px; }
+.ip-sub { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; padding: 6px 10px; font-family: inherit; background: var(--accent-purple-bg); border: 0; border-radius: var(--radius-sm); cursor: pointer; text-align: left; }
+.ip-sub-id { font-size: 12px; font-weight: 700; color: var(--text1); }
+.ip-sub-st { font-size: 11px; color: var(--accent-purple); }
+
+/* ── Process performance (Process Support Engineer) ── */
+.pp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.pp-card { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px 10px; font-family: inherit; text-align: left; background: var(--surface); border: 0; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); cursor: pointer; min-width: 0; }
+.pp-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.pp-titles { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pp-param { font-size: 13px; font-weight: 700; color: var(--text1); }
+.pp-src { font-size: 11px; color: var(--sapLabelColor); }
+.pp-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.pp-val { font-size: 15px; font-weight: 700; color: var(--text1); white-space: nowrap; }
+.pp-status { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
+.pp-status.neg { background: var(--neg-bg); color: var(--neg-text); }
+.pp-status.crit { background: var(--crit-bg); color: var(--crit-text); }
+.pp-status.pos { background: var(--pos-bg); color: var(--pos-text); }
+.pp-chart { position: relative; display: block; height: 84px; touch-action: pan-y; }
+.pp-chart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.pp-band { fill: var(--pos-el); opacity: .10; }
+.pp-lim { stroke: var(--sapGroupBorder); stroke-width: 1; }
+.pp-line { fill: none; stroke: var(--sapBrandColor); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.pp-limlabel { position: absolute; left: 0; transform: translateY(-115%); font-size: 10px; color: var(--sapLabelColor); background: rgba(255,255,255,.85); padding: 0 3px; border-radius: 3px; pointer-events: none; }
+.pp-dot, .pp-hdot { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; box-shadow: 0 0 0 2px #fff; pointer-events: none; }
+.pp-dot.neg { background: var(--neg-el); } .pp-dot.crit { background: var(--crit-el); } .pp-dot.pos { background: var(--pos-el); }
+.pp-hdot { background: var(--sapBrandColor); display: none; }
+.pp-cross { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--sapLabelColor); opacity: .5; display: none; pointer-events: none; }
+.pp-tip { position: absolute; top: -6px; transform: translate(-50%, -100%); background: var(--sapToastBackground); color: #fff; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 6px; white-space: nowrap; display: none; pointer-events: none; z-index: 2; }
+.pp-chart.scrub .pp-cross, .pp-chart.scrub .pp-hdot, .pp-chart.scrub .pp-tip { display: block; }
+.pp-x { display: flex; justify-content: space-between; font-size: 10px; color: var(--sapLabelColor); }
+.pp-aix { font-size: 11px; color: var(--sapLabelColor); padding-top: 6px; border-top: 1px solid var(--sapListBorder); }
+.pm-card { margin-top: 12px; background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 12px 14px 12px; }
+.pm-head { display: flex; flex-direction: column; gap: 2px; margin-bottom: 10px; }
+.pm-plot { display: flex; height: 150px; }
+.pm-yaxis { flex: 0 0 34px; display: flex; flex-direction: column; justify-content: space-between; font-size: 10px; color: var(--sapLabelColor); text-align: right; padding-right: 6px; font-variant-numeric: tabular-nums; }
+.pm-yaxis span { line-height: 1; transform: translateY(-1px); }
+.pm-area { position: relative; flex: 1; }
+.pm-band { position: absolute; left: 0; right: 0; background: var(--pos-el); opacity: .10; }
+.pm-zero { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--sapGroupBorder); }
+.pm-cols { position: absolute; inset: 0; display: flex; }
+.pm-col { position: relative; flex: 1; border: 0; background: none; padding: 0; cursor: pointer; font-family: inherit; }
+.pm-col:active { background: rgba(34,53,72,0.05); }
+.pm-bar { position: absolute; left: 50%; width: min(24px, 46%); transform: translateX(-50%); background: var(--sapBrandColor); }
+.pm-bar.up { bottom: 50%; border-radius: 4px 4px 0 0; }
+.pm-bar.dn { top: 50%; border-radius: 0 0 4px 4px; }
+.pm-col.out .pm-bar { background: var(--crit-el); }
+.pm-flag { position: absolute; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 700; color: var(--crit-text); white-space: nowrap; }
+.pm-down { cursor: default; }
+.pm-down-l { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 10px; font-weight: 700; color: var(--neg-text); background: var(--neg-bg); padding: 1px 5px; border-radius: 4px; }
+.pm-tip { position: absolute; top: 0; transform: translate(-50%, -110%); background: var(--sapToastBackground); color: #fff; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 6px; white-space: nowrap; display: none; pointer-events: none; z-index: 2; }
+.pm-area.tip .pm-tip { display: block; }
+.pm-xaxis { display: flex; font-size: 11px; color: var(--sapLabelColor); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.pm-xaxis span { flex: 1; text-align: center; }
+.pm-xaxis .pm-xpad { flex: 0 0 34px; }
+.pm-note { font-size: 11px; color: var(--sapLabelColor); margin-top: 6px; }
+.pp-foot { font-size: 11px; color: var(--sapLabelColor); margin-top: 8px; padding: 0 2px; }
+@media (max-width: 700px) {
+  .pp-grid { grid-template-columns: 1fr; }
+  .ip-cols, .ip-phases { grid-template-columns: 1fr; }
+  .ip-top { flex-direction: column; align-items: flex-start; }
+}
 /* ── Panel filters ── */
 .sub-out, .crit-out { display: none !important; }
 .lp-chip { display: flex; align-items: center; gap: 6px; margin: -2px 0 10px; padding: 6px 6px 6px 10px; width: fit-content; max-width: 100%; background: var(--info-bg); color: var(--info-text); border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; }
@@ -580,7 +705,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     <!-- Row 3: Name LEFT | Inbox tile + Refresh RIGHT -->
     <div class="header-row" style="margin-top:4px">
       <div class="header-left">
-        <div class="avatar">PW</div>
+        <button type="button" class="avatar avatar-btn" id="persona-btn" onclick="openPersonaPicker()" aria-label="Switch persona"><span class="avatar-initials">PW</span><span class="avatar-swap" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span></button>
         <div class="header-name" id="header-name" onclick="handleNameClick()" style="cursor:default;-webkit-user-select:none">Philip White</div>
       </div>
       <div class="header-top-row">
@@ -600,7 +725,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
       </div>
     </div>
     <!-- Row 4: Role LEFT justified -->
-    <div class="header-role">CE Level Principal &nbsp;·&nbsp; Fab A — CVD Bay &nbsp;·&nbsp; Shift start 07:00</div>
+    <div class="header-role" id="header-role">Service Customer Engineer &nbsp;·&nbsp; CE Level Principal &nbsp;·&nbsp; Fab A — CVD Bay &nbsp;·&nbsp; Shift start 07:00</div>
   </div>
 
   <!-- ZONE BAR -->
@@ -1111,6 +1236,18 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
       </div>
     </div>
 
+    <!-- INSTALLATION PROGRESS — Install CE persona -->
+    <div class="lp-panel lp-unavail" data-panel="install">
+      <button type="button" class="lp-head" onclick="lpToggleCollapse('install')" aria-expanded="true"><span class="section-label">Installation progress — 10190566 CVD-213</span><svg class="lp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lp-summary" id="lp-sum-install"></span></button>
+      <div class="ip-card" id="ip-card"></div>
+    </div>
+
+    <!-- PROCESS PERFORMANCE — Process Support Engineer persona -->
+    <div class="lp-panel lp-unavail" data-panel="process">
+      <button type="button" class="lp-head" onclick="lpToggleCollapse('process')" aria-expanded="true"><span class="section-label">Process performance — CVD Bay · last 24 hours</span><svg class="lp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lp-summary" id="lp-sum-process"></span></button>
+      <div id="pp-wrap"></div>
+    </div>
+
     <!-- EMPTY STATE — shown only when every panel is hidden -->
     <div class="lp-empty" id="lp-empty">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/></svg>
@@ -1121,7 +1258,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 
     <!-- FOOTER -->
     <div class="footer-bar">
-      <div class="footer-src">Dashboard data sources — SAP FSM &nbsp;·&nbsp; SAP ECC &nbsp;·&nbsp; SAP CRM 7.0 &nbsp;·&nbsp; SAP APM &nbsp;·&nbsp; AIx Telematics</div>
+      <div class="footer-src">Landing Page data sources — SAP FSM &nbsp;·&nbsp; SAP ECC &nbsp;·&nbsp; SAP CRM 7.0 &nbsp;·&nbsp; SAP APM &nbsp;·&nbsp; AIx Telematics</div>
       <div class="footer-live"><span class="live-dot" style="margin-right:0"></span>All systems connected</div>
     </div>
     <div class="footer-spacer"></div>
@@ -1379,6 +1516,7 @@ function runAutoSchedule(){
 
   var items = Array.prototype.slice.call(listMyAct.querySelectorAll('.activity-item')).filter(function(item){
     var t = item.querySelector('.act-time');
+    if (item.classList.contains('persona-out')) return false;          // only this persona's day
     var unscheduled = !t || t.classList.contains('tbd') || t.classList.contains('nocap');
     return unscheduled || (parseInt(item.getAttribute('data-day'), 10) || 0) === 0;
   });
@@ -1460,6 +1598,7 @@ function assignSelectedToMe(){
 
     var cb = item.querySelector('.activity-select');
     if(cb) cb.remove();
+    item.setAttribute('data-owner', personaState.current);
 
     var timeEl = document.createElement('div');
     timeEl.className = 'act-time tbd';
@@ -1593,7 +1732,7 @@ function buildStartingInbox(){
 }
 // Refresh 1 — STO parts transfer; scheduled arrival = tomorrow
 function makeMsg6(){
-  return {sender:'SAP ERP Workflow Message',subject:'Part — AMAT Loadlock — has been issued from — General Warehouse — and shipping to — Philip White — at — Customer 0001 World Communications Dr., 7350, 68122, Omaha, US. Scheduled arrival '+longDate(1)+' approx 10:00 AM EST',date:inboxDate(0),time:'12:21 PM',badge:'parts-order',bl:'Parts Ordering'};
+  return {sender:'SAP ERP Workflow Message',subject:'Part — AMAT Loadlock — has been issued from — General Warehouse — and shipping to — '+personaCur().name+' — at — Customer 0001 World Communications Dr., 7350, 68122, Omaha, US. Scheduled arrival '+longDate(1)+' approx 10:00 AM EST',date:inboxDate(0),time:'12:21 PM',badge:'parts-order',bl:'Parts Ordering'};
 }
 // Refresh 2 — parts return received
 function makeMsg7(){
@@ -2411,7 +2550,9 @@ function afRows(listId, r){
   return items.map(function(it){
     var d0 = parseInt(it.getAttribute('data-day'), 10) || 0;
     var d1 = it.hasAttribute('data-day-end') && listId !== 'activity-list-myact' ? parseInt(it.getAttribute('data-day-end'), 10) : d0;
-    return {el: it, day: Math.max(d0, r.from), t: afTimeKey(it), ord: +it.getAttribute('data-ord'), on: d0 <= r.to && d1 >= r.from};
+    var mine = listId !== 'activity-list-myact' || personaOwns(it);      // My activities = this persona's work only
+    it.classList.toggle('persona-out', !mine);
+    return {el: it, day: Math.max(d0, r.from), t: afTimeKey(it), ord: +it.getAttribute('data-ord'), on: mine && d0 <= r.to && d1 >= r.from};
   });
 }
 function afDayCounts(listId, r){
@@ -2477,6 +2618,7 @@ function afApply(){
   updateActivityCounts();
   updateAutoScheduleButtonVisibility();
   if (typeof lpUpdateSummaries === 'function') lpUpdateSummaries();
+  if (typeof personaAfterApply === 'function') personaAfterApply();
 }
 function afSetRange(r){ afRange = r; afDay = null; afClosePopover(); afApply(); }
 function afSelectDay(d){ afDay = d; afApply(); }
@@ -2580,13 +2722,333 @@ function afApplyCustom(){
 document.addEventListener('click', function(){ afClosePopover(); });
 document.addEventListener('keydown', function(e){ if (e.key === 'Escape') afClosePopover(); });
 
+// ── Personas (AMAT engineer roles) ──
+// Persona names are placeholders — change them here. Each persona keeps its own saved layout;
+// 'preset' is that persona's default layout (what "Reset to default" returns to).
+var PERSONAS = [
+  {id:'philip', name:'Philip White', initials:'PW', type:'Service Customer Engineer', short:'Service CE', ce:true, prof:'principal',
+   color:['#D1EFFF','#0057D2'], shift:'Fab A — CVD Bay · Shift start 07:00',
+   acts:['act1','act2','act3','act4','act5','act6','act7','act8','act9','act10','act11'], panels:[],
+   preset:{order:['priority','overview','tools','telemetry','activities'], hidden:[], collapsed:[], options:{range:'today', tab:'myact', zone:'b4'}}},
+  {id:'install', name:'Maria Santos', initials:'MS', type:'Install Customer Engineer', short:'Install CE', ce:true, prof:'senior',
+   color:['#DDCCF0','#6C32A9'], shift:'Fab A — CVD Bay · Shift start 07:00',
+   acts:['act3','act7','act9'], panels:['install'],
+   preset:{order:['priority','install','activities','overview','tools','telemetry'], hidden:['telemetry'], collapsed:['overview'], options:{range:'next7', tab:'myact', zone:'b4'}}},
+  {id:'process', name:'Daniel Kim', initials:'DK', type:'Process Support Engineer', short:'Process SE', ce:false, prof:'principal',
+   color:['#C2FCEE','#046C7A'], shift:'Fab A — Process Engineering · Shift start 08:00',
+   acts:['act4','act10','act11'], panels:['process'],
+   preset:{order:['priority','process','telemetry','overview','activities','tools'], hidden:['tools'], collapsed:['activities'], options:{range:'next7', tab:'myact', zone:'b4'}}}
+];
+// Proficiency only adjusts a few defaults (not a layout per level)
+var PROF_LEVELS = [
+  {id:'junior',       name:'Junior',       note:'Works dispatcher-assigned activities only — no Unassigned list or Auto-schedule.'},
+  {id:'intermediate', name:'Intermediate', note:'Sees unassigned work but can’t self-assign. Can Auto-schedule their day.'},
+  {id:'senior',       name:'Senior',       note:'Full access — self-assigns unassigned work and Auto-schedules.'},
+  {id:'principal',    name:'Principal',    note:'Full access — self-assigns unassigned work and Auto-schedules.'}
+];
+var PERSONA_KEY = 'amatCePersona.v1';
+function personaGet(id){ for (var i=0;i<PERSONAS.length;i++) if (PERSONAS[i].id===id) return PERSONAS[i]; return null; }
+var personaState = (function(){
+  try { var s = JSON.parse(localStorage.getItem(PERSONA_KEY) || 'null'); if (s && personaGet(s.current)) { s.prof = s.prof || {}; return s; } } catch(e){}
+  return {current:'philip', prof:{}};
+})();
+function personaCur(){ return personaGet(personaState.current) || PERSONAS[0]; }
+function personaProf(p){
+  p = p || personaCur();
+  var v = personaState.prof[p.id];
+  return PROF_LEVELS.some(function(l){ return l.id === v; }) ? v : p.prof;
+}
+function personaLevelLabel(p){
+  p = p || personaCur();
+  var lvl = PROF_LEVELS.filter(function(l){ return l.id === personaProf(p); })[0].name;
+  return (p.ce ? 'CE Level ' : 'Level ') + lvl;
+}
+function personaAssignLabel(){ var p = personaCur(); return p.name + ' · ' + personaLevelLabel(p); }
+function personaSave(){ try { localStorage.setItem(PERSONA_KEY, JSON.stringify(personaState)); } catch(e){} }
+// whose activity is this? (assigned via 'Assign to me' → data-owner; otherwise the persona's activity list)
+function personaOwns(item){
+  var o = item.getAttribute('data-owner'); if (o) return o === personaState.current;
+  var m = (item.getAttribute('onclick') || '').match(/openSheet\('(act\d+)'\)/);
+  return !m || personaCur().acts.indexOf(m[1]) > -1;
+}
+function personaRenderHeader(){
+  var p = personaCur();
+  var av = document.getElementById('persona-btn');
+  if (av){
+    av.querySelector('.avatar-initials').textContent = p.initials;
+    av.style.background = p.color[0]; av.style.color = p.color[1];
+    av.setAttribute('aria-label', 'Switch persona (now: ' + p.name + ')');
+  }
+  var nm = document.getElementById('header-name'); if (nm) nm.textContent = p.name;
+  var rl = document.getElementById('header-role');
+  if (rl) rl.innerHTML = p.type + ' &nbsp;·&nbsp; ' + personaLevelLabel(p) + ' &nbsp;·&nbsp; ' + p.shift.replace(' · ', ' &nbsp;·&nbsp; ');
+  ['junior','intermediate','senior','principal'].forEach(function(l){ document.body.classList.remove('prof-' + l); });
+  document.body.classList.add('prof-' + personaProf(p));
+}
+function personaApplyProfRules(){
+  var prof = personaProf();
+  if (prof === 'junior'){
+    var t = document.getElementById('tab-unassigned');
+    if (t && t.classList.contains('active')) switchActivityTab('myact');
+  }
+  if (prof === 'junior' || prof === 'intermediate'){
+    Array.prototype.forEach.call(document.querySelectorAll('.activity-select'), function(c){ c.checked = false; });
+    selectedUnassigned = {};
+    var ab = document.getElementById('assign-to-me-btn'); if (ab) ab.style.display = 'none';
+  }
+}
+// runs at the end of every activity refresh
+function personaAfterApply(){
+  var p = personaCur(), el = document.getElementById('stat-val-activities');
+  if (!el) return;
+  if (p.id === 'philip'){ el.textContent = (document.getElementById('zone-select').value === 'b1') ? '3' : '5'; return; }
+  var n = Array.prototype.filter.call(document.querySelectorAll('#activity-list-myact .activity-item'), function(it){
+    return personaOwns(it) && (parseInt(it.getAttribute('data-day'), 10) || 0) === 0;
+  }).length;
+  el.textContent = String(n);
+}
+function personaSwitch(id, silent){
+  var p = personaGet(id); if (!p) return;
+  personaState.current = id; personaSave();
+  personaRenderHeader();
+  closeSheet(); afClosePopover();
+  Array.prototype.forEach.call(document.querySelectorAll('.subview.active'), function(s){ s.classList.remove('active'); });
+  document.body.style.overflow = '';
+  var cfg = lpLoad();
+  applyLayout(cfg);
+  afDay = null;
+  lpApplyOptions(cfg, null);
+  personaApplyProfRules();
+  afApply();
+  ipRender(); ppRender();
+  window.scrollTo(0, 0);
+  if (!silent) showToaster('Now viewing as ' + p.name + ' · ' + p.short);
+}
+function personaSetProf(level){
+  personaState.prof[personaState.current] = level; personaSave();
+  personaRenderHeader(); personaApplyProfRules(); afApply(); renderPersonaPicker();
+  showToaster(personaCur().name + ' · ' + personaLevelLabel());
+}
+
+// ── Persona picker (tap the avatar) ──
+function openPersonaPicker(){
+  renderPersonaPicker();
+  document.getElementById('ps-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closePersonaPicker(){
+  document.getElementById('ps-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function pickPersona(id){ closePersonaPicker(); if (id !== personaState.current) personaSwitch(id); }
+function renderPersonaPicker(){
+  var cur = personaCur(), html = '';
+  if (cur.id !== 'philip'){
+    var ph = personaGet('philip');
+    html += '<button type="button" class="ps-return" onclick="pickPersona(\'philip\')">'
+      + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>'
+      + '<span>Return to ' + ph.name + '</span><span class="ps-return-sub">' + ph.short + ' · your own layout</span></button>';
+  }
+  html += '<div class="ps-list">' + PERSONAS.map(function(p){
+    var on = p.id === cur.id;
+    var adds = p.panels.map(function(id){ return lpPanel(id).name; });
+    return '<button type="button" class="ps-card' + (on ? ' on' : '') + '" onclick="pickPersona(\'' + p.id + '\')" aria-pressed="' + on + '">'
+      + '<span class="ps-av" style="background:' + p.color[0] + ';color:' + p.color[1] + '">' + p.initials + '</span>'
+      + '<span class="ps-text"><span class="ps-name">' + p.name + '</span>'
+      + '<span class="ps-type">' + p.type + ' · ' + personaLevelLabel(p) + '</span>'
+      + (adds.length ? '<span class="ps-adds">+ ' + adds.join(', ') + '</span>' : '<span class="ps-adds ps-adds-muted">Standard landing page</span>')
+      + '</span>'
+      + '<span class="ps-check">' + (on ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : '') + '</span>'
+      + '</button>';
+  }).join('') + '</div>';
+  var prof = personaProf(cur);
+  html += '<div class="ps-prof"><div class="ps-prof-title">Proficiency — ' + cur.name + '</div>'
+    + '<div class="lp-seg ps-seg" role="group" aria-label="Proficiency">' + PROF_LEVELS.map(function(l){
+        return '<button type="button" class="' + (l.id === prof ? 'on' : '') + '" onclick="personaSetProf(\'' + l.id + '\')">' + l.name + '</button>';
+      }).join('') + '</div>'
+    + '<div class="ps-prof-note">' + PROF_LEVELS.filter(function(l){ return l.id === prof; })[0].note + '</div></div>';
+  document.getElementById('ps-body').innerHTML = html;
+}
+
+// ── Installation progress panel (Install CE) ──
+function ipRender(){
+  var el = document.getElementById('ip-card'); if (!el) return;
+  var COMMISSION = 57;
+  var when = function(d, t){ return (d === 0 ? 'Today' : d === 1 ? 'Tomorrow' : afWeekday(d) + ' ' + afShortDate(d)) + (t ? ' · ' + t : ''); };
+  var phases = [
+    {n:'Phase 1', t:'Mechanical installation', s:'done', pct:100, lbl:'Complete'},
+    {n:'Phase 2', t:'Electrical & facilities hookup', s:'current', pct:65, lbl:'In progress · 65%'},
+    {n:'Phase 3', t:'Commissioning & qualification', s:'upcoming', pct:0, lbl:'Not started'}
+  ];
+  var miles = [
+    {t:'Facilities sign-off walkdown', d:1, time:'14:30', key:'act7'},
+    {t:'Phase 3 commissioning readiness review', d:3, time:'10:00', key:'act9'},
+    {t:'Phase 2 complete — target', d:9},
+    {t:'Commissioning complete — target', d:COMMISSION}
+  ];
+  var punch = [
+    {t:'Process cooling water flow below spec at Chamber B (3.2 vs 3.5 L/min)', o:'AMAT facilities', d:2, sev:'high'},
+    {t:'N₂ purge line leak-check record outstanding', o:'Install CE', d:2, sev:'medium'},
+    {t:'Seismic anchor torque certificate pending', o:'Customer EHS', d:5, sev:'medium'},
+    {t:'Exhaust duct labels missing at gas cabinet', o:'AMAT facilities', d:1, sev:'low'}
+  ];
+  var SEV = {high:['neg','High'], medium:['crit','Medium'], low:['info','Low']};
+  var subs = [['cvd213cha','10190567','CVD-213-CHA','Phase 2 active'],['cvd213chb','10190568','CVD-213-CHB','Installed'],['cvd213tm','10190569','CVD-213-TM','Installed'],['cvd213ll','10190570','CVD-213-LL','Installed']];
+  var CHEV = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
+  var CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  el.innerHTML =
+      '<button type="button" class="ip-top" onclick="openSheet(\'cvd213\')">'
+    +   '<span class="ip-top-text"><span class="ip-tool">10190566 CVD-213 · Applied Centura CVD — new unit</span>'
+    +   '<span class="ip-meta">WBS AMAT-INSTALL-2026-0042 · CS order 4000835 · Fab A, Building 4</span></span>'
+    +   '<span class="ip-count"><span class="ip-count-n">' + COMMISSION + '</span><span class="ip-count-l">days to commissioning<br>target ' + plannedDate(COMMISSION) + '</span></span>'
+    + '</button>'
+    + '<div class="ip-phases">' + phases.map(function(ph){
+        return '<div class="ip-phase ' + ph.s + '"><div class="ip-bar"><span style="width:' + ph.pct + '%"></span></div>'
+          + '<div class="ip-ph-n">' + (ph.s === 'done' ? '<span class="ip-ok">' + CHECK + '</span>' : '') + ph.n + ' · ' + ph.lbl + '</div>'
+          + '<div class="ip-ph-t">' + ph.t + '</div></div>';
+      }).join('') + '</div>'
+    + '<div class="ip-cols">'
+    +   '<div class="ip-col"><div class="ip-col-h">Upcoming milestones</div>' + miles.map(function(m){
+          var inner = '<span class="ip-when">' + when(m.d, m.time) + '</span><span class="ip-what">' + m.t + '</span>';
+          return m.key ? '<button type="button" class="ip-row ip-link" onclick="openSheet(\'' + m.key + '\')">' + inner + CHEV + '</button>'
+                       : '<div class="ip-row">' + inner + '</div>';
+        }).join('') + '</div>'
+    +   '<div class="ip-col"><div class="ip-col-h">Punch list <span class="ip-col-sub">' + punch.length + ' open · 6 closed</span></div>' + punch.map(function(x){
+          return '<div class="ip-row ip-punch"><span class="ip-sev ' + SEV[x.sev][0] + '"><span class="ip-sev-dot"></span>' + SEV[x.sev][1] + '</span>'
+            + '<span class="ip-what">' + x.t + '<span class="ip-owner">' + x.o + ' · due ' + when(x.d) + '</span></span></div>';
+        }).join('') + '</div>'
+    + '</div>'
+    + '<div class="ip-subs"><span class="ip-subs-l">Sub-assemblies</span>' + subs.map(function(s){
+        return '<button type="button" class="ip-sub" onclick="openSheet(\'' + s[0] + '\')"><span class="ip-sub-id">' + s[1] + ' ' + s[2] + '</span><span class="ip-sub-st">INST · ' + s[3] + '</span></button>';
+      }).join('') + '</div>';
+}
+
+// ── Process performance panel (Process Support Engineer) ──
+// Deterministic last-24-hour series (hourly) that match the telemetry already on the page.
+function ppSeries(){
+  function wobble(i, a, b){ return Math.sin(i * 1.7 + a) * b + Math.sin(i * 0.53 + a * 2) * b * 0.6; }
+  var pres = [], rf = [], uni = [];
+  for (var i = 0; i < 24; i++){
+    pres.push(i < 17 ? 0.00588 + wobble(i, 1, 0.000006) : 0.00588 + (i - 16) * (0.00054 / 7));
+    rf.push(i < 19 ? 1702 + wobble(i, 2, 9) : 1702 + (i - 18) * (138 / 5));
+    uni.push(1.72 + wobble(i, 3, 0.07));
+  }
+  pres[23] = 0.00642; rf[23] = 1840; uni[23] = 1.8;
+  return [
+    {key:'telem204', param:'Chamber pressure', src:'CVD-204 · Chamber A', unit:'mbar', dec:5, data:pres,
+     lo:0.00560, hi:0.00613, limLabel:'Upper spec 0.00613', status:['neg','Out of control'], aix:'AIx: throttle valve degradation · 84% confidence'},
+    {key:'telem208', param:'RF power delivery', src:'CVD-208 · Generator 1', unit:'W', dec:0, data:rf,
+     lo:1650, hi:1750, limLabel:'Upper spec 1,750 W', status:['crit','Drifting'], aix:'AIx: matching network degradation · 71% confidence'},
+    {key:'telem201', param:'Deposition uniformity', src:'CVD-201 · Pre-PM baseline', unit:'%', dec:1, data:uni, prefix:'±',
+     lo:0, hi:2.5, limLabel:'Spec ±2.5%', status:['pos','In control'], aix:'AIx: no anomaly detected'}
+  ];
+}
+var PP_MATCH = [[201,409],[202,414],[203,411],[204,null],[205,416],[206,421],[207,410],[208,398],[209,413],[210,408],[211,405]];
+function ppFmt(v, s){ return (s.prefix || '') + (s.dec ? v.toFixed(s.dec) : Math.round(v).toLocaleString('en-US')) + (s.unit === '%' ? '%' : ' ' + s.unit); }
+function ppRender(){
+  var wrap = document.getElementById('pp-wrap'); if (!wrap) return;
+  var S = ppSeries(), W = 300, H = 84, PAD = 6;
+  var ICON = {
+    neg:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    pos:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+  };
+  ICON.crit = ICON.neg;
+  var cards = S.map(function(s, si){
+    var lo = Math.min.apply(null, s.data.concat([s.lo])), hi = Math.max.apply(null, s.data.concat([s.hi]));
+    var span = hi - lo; lo -= span * 0.12; hi += span * 0.12;
+    var y = function(v){ return PAD + (H - 2 * PAD) * (1 - (v - lo) / (hi - lo)); };
+    var x = function(i){ return (i / (s.data.length - 1)) * W; };
+    var path = s.data.map(function(v, i){ return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1); }).join(' ');
+    var last = s.data[s.data.length - 1];
+    return '<button type="button" class="pp-card" onclick="openSheet(\'' + s.key + '\')">'
+      + '<span class="pp-head"><span class="pp-titles"><span class="pp-param">' + s.param + '</span><span class="pp-src">' + s.src + '</span></span>'
+      + '<span class="pp-right"><span class="pp-val">' + ppFmt(last, s) + '</span>'
+      + '<span class="pp-status ' + s.status[0] + '">' + ICON[s.status[0]] + s.status[1] + '</span></span></span>'
+      + '<span class="pp-chart" data-s="' + si + '" role="img" aria-label="' + s.param + ', last 24 hours, latest ' + ppFmt(last, s) + ', ' + s.status[1] + '">'
+      +   '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">'
+      +     '<rect class="pp-band" x="0" y="' + y(s.hi).toFixed(1) + '" width="' + W + '" height="' + (y(s.lo) - y(s.hi)).toFixed(1) + '"/>'
+      +     '<line class="pp-lim" x1="0" x2="' + W + '" y1="' + y(s.hi).toFixed(1) + '" y2="' + y(s.hi).toFixed(1) + '" vector-effect="non-scaling-stroke"/>'
+      +     '<path class="pp-line" d="' + path + '" vector-effect="non-scaling-stroke"/>'
+      +   '</svg>'
+      +   '<span class="pp-limlabel" style="top:' + (y(s.hi) / H * 100).toFixed(1) + '%">' + s.limLabel + '</span>'
+      +   '<span class="pp-dot ' + s.status[0] + '" style="left:100%;top:' + (y(last) / H * 100).toFixed(1) + '%"></span>'
+      +   '<span class="pp-cross"></span><span class="pp-hdot"></span><span class="pp-tip"></span>'
+      + '</span>'
+      + '<span class="pp-x"><span>24 h ago</span><span>12 h ago</span><span>Now</span></span>'
+      + '<span class="pp-aix">' + s.aix + '</span>'
+      + '</button>';
+  }).join('');
+  // chamber matching: deviation of each tool's deposition rate from the bay mean
+  var vals = PP_MATCH.filter(function(m){ return m[1] !== null; }).map(function(m){ return m[1]; });
+  var mean = vals.reduce(function(a, b){ return a + b; }, 0) / vals.length, LIM = 2, MAX = 4;
+  var cols = PP_MATCH.map(function(m){
+    if (m[1] === null) return '<div class="pm-col pm-down" title="CVD-' + m[0] + ' is out of service"><span class="pm-down-l">down</span></div>';
+    var dev = (m[1] - mean) / mean * 100, out = Math.abs(dev) > LIM, h = Math.min(Math.abs(dev), MAX) / MAX * 50;
+    var tip = 'CVD-' + m[0] + ' · ' + m[1] + ' nm/min · ' + (dev >= 0 ? '+' : '−') + Math.abs(dev).toFixed(1) + '% vs bay mean';
+    return '<button type="button" class="pm-col' + (out ? ' out' : '') + '" onclick="openSheet(\'cvd' + m[0] + '\')" data-tip="' + tip + '" aria-label="' + tip + '">'
+      + '<span class="pm-bar ' + (dev >= 0 ? 'up' : 'dn') + '" style="height:' + h.toFixed(1) + '%"></span>'
+      + (out ? '<span class="pm-flag ' + (dev >= 0 ? 'up' : 'dn') + '" style="' + (dev >= 0 ? 'bottom' : 'top') + ':calc(' + (50 + h).toFixed(1) + '% + 4px)">' + ICON.neg + (dev >= 0 ? '+' : '−') + Math.abs(dev).toFixed(1) + '%</span>' : '')
+      + '</button>';
+  }).join('');
+  var outN = PP_MATCH.filter(function(m){ return m[1] !== null && Math.abs((m[1] - mean) / mean * 100) > LIM; }).length;
+  wrap.innerHTML = '<div class="pp-grid">' + cards + '</div>'
+    + '<div class="pm-card"><div class="pm-head"><span class="pp-param">Chamber matching — deposition rate vs bay mean</span>'
+    + '<span class="pp-src">Bay mean ' + mean.toFixed(1) + ' nm/min · matching band ±' + LIM + '% · ' + outN + ' tools outside</span></div>'
+    + '<div class="pm-plot"><div class="pm-yaxis"><span>+4%</span><span>+2%</span><span>0</span><span>−2%</span><span>−4%</span></div>'
+    + '<div class="pm-area"><div class="pm-band" style="top:' + (50 - LIM / MAX * 50) + '%;bottom:' + (50 - LIM / MAX * 50) + '%"></div><div class="pm-zero"></div>'
+    + '<div class="pm-cols">' + cols + '</div><span class="pm-tip"></span></div></div>'
+    + '<div class="pm-xaxis"><span class="pm-xpad"></span>' + PP_MATCH.map(function(m){ return '<span>' + m[0] + '</span>'; }).join('') + '</div>'
+    + '<div class="pm-note">CVD-213 excluded (under installation) · tap a column for the tool</div></div>'
+    + '<div class="pp-foot">Sources: SAP APM health monitoring · AIx process models · hourly, last 24 hours</div>';
+  ppBindScrub(S);
+}
+// hover / touch-drag crosshair with a value tooltip on each trend; per-column tooltip on matching chart
+function ppBindScrub(S){
+  Array.prototype.forEach.call(document.querySelectorAll('#pp-wrap .pp-chart'), function(ch){
+    var s = S[+ch.getAttribute('data-s')], cross = ch.querySelector('.pp-cross'), dot = ch.querySelector('.pp-hdot'), tip = ch.querySelector('.pp-tip');
+    var lo = Math.min.apply(null, s.data.concat([s.lo])), hi = Math.max.apply(null, s.data.concat([s.hi])), span = hi - lo; lo -= span * 0.12; hi += span * 0.12;
+    function show(e){
+      var r = ch.getBoundingClientRect(), f = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      var i = Math.round(f * (s.data.length - 1)), v = s.data[i], px = i / (s.data.length - 1) * 100;
+      var py = (6 + (84 - 12) * (1 - (v - lo) / (hi - lo))) / 84 * 100;
+      var hr = new Date(); hr.setMinutes(0, 0, 0); hr.setHours(hr.getHours() - (s.data.length - 1 - i));
+      cross.style.left = dot.style.left = px + '%'; dot.style.top = py + '%';
+      tip.textContent = (i === s.data.length - 1 ? 'Now' : String(hr.getHours()).padStart(2, '0') + ':00') + ' · ' + ppFmt(v, s);
+      tip.style.left = Math.max(14, Math.min(86, px)) + '%';
+      ch.classList.add('scrub');
+    }
+    ch.addEventListener('pointermove', show);
+    ch.addEventListener('pointerdown', show);
+    ch.addEventListener('pointerleave', function(){ ch.classList.remove('scrub'); });
+    ch.addEventListener('pointercancel', function(){ ch.classList.remove('scrub'); });
+  });
+  var area = document.querySelector('#pp-wrap .pm-area'); if (!area) return;
+  var mt = area.querySelector('.pm-tip');
+  Array.prototype.forEach.call(area.querySelectorAll('.pm-col[data-tip]'), function(c){
+    c.addEventListener('pointerenter', function(){
+      var ar = area.getBoundingClientRect(), cr = c.getBoundingClientRect();
+      mt.textContent = c.getAttribute('data-tip');
+      mt.style.left = Math.max(18, Math.min(82, (cr.left + cr.width / 2 - ar.left) / ar.width * 100)) + '%';
+      area.classList.add('tip');
+    });
+    c.addEventListener('pointerleave', function(){ area.classList.remove('tip'); });
+  });
+}
+
+
+personaRenderHeader();
+ipRender();
+ppRender();
+
 // ── Landing page personalization (level 1: show / hide + reorder panels) ──
 var LP_PANELS = [
   {id:'priority',   name:'Priority alert',        desc:'P1 alerts and SLA status for your zone'},
   {id:'overview',   name:'Zone overview',         desc:'Tools in zone, out of service, at-risk and today’s activities'},
   {id:'tools',      name:'Tool status',           desc:'Status cards for every tool in the CVD Bay'},
   {id:'telemetry',  name:'Tool telemetry alerts', desc:'SAP APM / AIx readings outside specification'},
-  {id:'activities', name:'Activities',            desc:'Assigned and unassigned activities, filtered by date'}
+  {id:'activities', name:'Activities',            desc:'Assigned and unassigned activities, filtered by date'},
+  {id:'install',    name:'Installation progress', desc:'CVD-213 phases, milestones and punch list', persona:'install'},
+  {id:'process',    name:'Process performance',   desc:'Trends against spec limits, with AIx drift flags', persona:'process'}
 ];
 // Administrator policy: a locked panel is always shown and pinned to the top.
 // (Mirrors company / policy-group settings — set locked:false to give users full control.)
@@ -2594,10 +3056,13 @@ var LP_POLICY = { priority: {locked: true} };
 var LP_STORE_KEY = 'amatCeLandingLayout.v1';
 var lpDraft = null;
 
-function lpIds(){ return LP_PANELS.map(function(p){ return p.id; }); }
+// panels this persona can use: the standard five + its own role panels
+function lpIds(){ return LP_PANELS.filter(function(p){ return !p.persona || personaCur().panels.indexOf(p.id) > -1; }).map(function(p){ return p.id; }); }
+function lpKey(){ return LP_STORE_KEY + (personaState.current === 'philip' ? '' : '.' + personaState.current); }
 function lpPanel(id){ for (var i=0;i<LP_PANELS.length;i++) if (LP_PANELS[i].id===id) return LP_PANELS[i]; return null; }
 function lpLocked(id){ return !!(LP_POLICY[id] && LP_POLICY[id].locked); }
 function lpNormalize(cfg){
+  if (!cfg) cfg = JSON.parse(JSON.stringify(personaCur().preset));   // no saved layout → persona preset
   var ids = lpIds(), order = [], hidden = [];
   if (cfg && Array.isArray(cfg.order)) cfg.order.forEach(function(id){ if (ids.indexOf(id)>-1 && order.indexOf(id)<0) order.push(id); });
   ids.forEach(function(id){ if (order.indexOf(id)<0) order.push(id); });       // new / missing panels go to the end
@@ -2632,6 +3097,7 @@ function lpApplyOptions(cfg, prev){
   if (first || prev.tab !== o.tab) switchActivityTab(o.tab);
   if (first || prev.range !== o.range) afRange = afPreset(o.range);
   afApply();
+  if (typeof personaApplyProfRules === 'function') personaApplyProfRules();   // proficiency limits win over defaults
 }
 function lpApplyToolFilter(on){
   ['tool-grid-b4','tool-grid-b1'].forEach(function(id){
@@ -2671,13 +3137,16 @@ handleToolSubscribeToggle = function(cb){
 // a panel can collapse if it has a heading and isn't locked by the administrator
 function lpCollapsible(id){ return !lpLocked(id) && !!document.querySelector('.lp-panel[data-panel="'+id+'"] > .lp-head'); }
 function lpLoad(){
-  try { var raw = localStorage.getItem(LP_STORE_KEY); return lpNormalize(raw ? JSON.parse(raw) : null); }
+  try { var raw = localStorage.getItem(lpKey()); return lpNormalize(raw ? JSON.parse(raw) : null); }
   catch(e){ return lpNormalize(null); }
 }
 function lpStore(cfg){
-  try { localStorage.setItem(LP_STORE_KEY, JSON.stringify(cfg)); return true; } catch(e){ return false; }
+  try { localStorage.setItem(lpKey(), JSON.stringify(cfg)); return true; } catch(e){ return false; }
 }
 function applyLayout(cfg){
+  Array.prototype.forEach.call(document.querySelectorAll('.lp-panel'), function(el){
+    el.classList.toggle('lp-unavail', cfg.order.indexOf(el.getAttribute('data-panel')) < 0);
+  });
   cfg.order.forEach(function(id, i){
     var el = document.querySelector('.lp-panel[data-panel="'+id+'"]');
     if (!el) return;
@@ -2722,6 +3191,8 @@ function lpUpdateSummaries(){
   var m = (txt('tab-myact').match(/\((\d+)\)/) || [])[1], u = (txt('tab-unassigned').match(/\((\d+)\)/) || [])[1];
   var rg = (typeof afGet === 'function') ? (afGet().id === 'custom' ? afSpan(afGet()) : afRangeName().toLowerCase()) : 'today';
   set('activities', (m || 0)+' assigned · '+(u || 0)+' unassigned · '+rg);
+  set('install', 'Phase 2 of 3 · 4 punch items open · commissioning in 57 days');
+  set('process', '1 out of control · 1 drifting · 2 tools outside matching band');
 }
 // keep summaries current when the zone changes
 var _lpZoneChange = handleZoneChange;
@@ -2827,7 +3298,7 @@ function renderLpList(){
       + '<div class="lp-pos">'+(i+1)+'</div>'
       + (locked ? '<div class="lp-handle disabled" title="Pinned by your administrator">'+LP_LOCK+'</div>'
                 : '<div class="lp-handle" data-drag="'+id+'" aria-label="Drag to reorder '+p.name+'">'+LP_GRIP+'</div>')
-      + '<div class="lp-row-text"><div class="lp-row-name">'+p.name+((lpDraft.collapsed||[]).indexOf(id)>-1?'<span class="lp-collapsed-tag">Collapsed</span>':'')+'</div><div class="lp-row-desc">'+p.desc+'</div>'
+      + '<div class="lp-row-text"><div class="lp-row-name">'+p.name+(p.persona?'<span class="lp-role-tag">'+personaGet(p.persona).short+' panel</span>':'')+((lpDraft.collapsed||[]).indexOf(id)>-1?'<span class="lp-collapsed-tag">Collapsed</span>':'')+'</div><div class="lp-row-desc">'+p.desc+'</div>'
       + (locked ? '<div class="lp-lock-note">'+LP_LOCK.replace('width="16" height="16"','width="11" height="11"')+' Required by your administrator · always shown first</div>' : '')
       + '</div>'
       + '<div class="lp-arrows">'
@@ -2924,7 +3395,7 @@ function renderSheet(key, scrollTo){
       + '<span class="sheet-back-parent">'+sheetTitleText(parent)+'</span></div>';
   }
   currentSheetKey = key;
-  document.getElementById('sheet-content').innerHTML = back + fn();
+  document.getElementById('sheet-content').innerHTML = back + fn().split('Philip White · CE Level Principal').join(personaAssignLabel());
   document.getElementById('sheet').scrollTop = scrollTo || 0;
   activeTooltip = null;
   return true;
@@ -3020,6 +3491,23 @@ function closeSubview(key) {
           <button class="lp-btn lp-btn-emph" type="button" onclick="saveLayoutSettings()">Save</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- PERSONA PICKER -->
+  <div class="lp-overlay" id="ps-overlay" onclick="if(event.target===this)closePersonaPicker()">
+    <div class="lp-dialog ps-dialog" role="dialog" aria-modal="true" aria-labelledby="ps-title">
+      <div class="lp-dialog-head">
+        <div>
+          <div class="lp-title" id="ps-title">Switch persona</div>
+          <div class="lp-subtitle">See the landing page as another AMAT engineer</div>
+        </div>
+        <button class="lp-close" type="button" onclick="closePersonaPicker()" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="ps-body" id="ps-body"></div>
+      <div class="lp-dialog-foot"><span></span><button class="lp-btn lp-btn-emph" type="button" onclick="closePersonaPicker()">Done</button></div>
     </div>
   </div>
 
