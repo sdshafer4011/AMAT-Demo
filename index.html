@@ -1126,7 +1126,17 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
           <div class="act-priority low">Low</div>
           <div class="act-badge pm">Planned PM</div>
         </div>
-      <div class="activity-item" onclick="openSheet('act12')" data-duration-min="510" data-span="p2">
+      <div class="activity-item act-done" onclick="openSheet('act15')" data-duration-min="510" data-span="p1">
+          <div class="act-time span">&nbsp;</div>
+          <div class="act-dot green"></div>
+          <div class="act-main">
+            <div class="act-title">10190566 CVD-213 · Tool installation — Phase 1: mechanical installation</div>
+            <div class="act-sub">Order 4000835 · Phase 1 of 3 · <span class="span-note"></span> · Signed off</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge pm">Completed</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act12')" data-duration-min="510" data-span="p2">
           <div class="act-time span">&nbsp;</div>
           <div class="act-dot amber"></div>
           <div class="act-main">
@@ -2501,6 +2511,7 @@ function installLen(ph){ return ph[1] - ph[0] + 1; }
 
 // ── Upcoming activity detail sheets (days relative to today) ──
 (function addUpcomingActivitySheets(){
+  var DOC_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>';
   var FSM_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>';
   var UP = {
     act6:  {day:1, time:'10:30', title:'10190551 CVD-204 · Throttle Valve Replacement — Chamber A', ref:'Order 4000821 · Follow-up operation', type:'Corrective — planned repair', prio:['P1 follow-up — tool down','red'], dur:'3 hours', tool:'10190552 CVD-204-CHA · Process Chamber A',
@@ -2515,6 +2526,15 @@ function installLen(ph){ return ph[1] - ph[0] + 1; }
     act9:  {day:3, time:'10:00', title:'10190566 CVD-213 · Phase 3 Commissioning Planning Review', ref:'Order 4000835 · Teams meeting', type:'Remote consult — installation planning', prio:['P3 — scheduled'], dur:'1 hour', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
             extra:[['Attendees','AMAT install PM · Customer fab engineering'],['Agenda','Phase 3 crew and schedule · qualification plan · Phase 2 punch list status'],['Est. commissioning',null]],
             steps:['Confirm Phase 3 crew and start date','Review qualification plan','Review Phase 2 punch list status','Agree commissioning date'], link:'4000835'},
+    act15: {span:'p1', time:'07:00 – 15:30 daily', title:'10190566 CVD-213 · Tool Installation — Phase 1: Mechanical Installation', ref:'Order 4000835 · Phase 1 of 3', type:'Tool installation — multi-day phase', prio:['P2 — scheduled installation'], dur:'28 days · daily 07:00 – 15:30', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
+            extra:[['PS WBS element','AMAT-INSTALL-2026-0042-01-01'],
+                   ['Crew','Install CE lead · AMAT rigging contractor (4) · mechanical technicians (2)'],
+                   ['Labor confirmed','612 h · posted to order 4000835, operation 0010'],
+                   ['Punch items','6 raised · 6 closed'],
+                   ['Signed off by','SIGNOFF'],
+                   ['Completion documents','Phase 1 completion certificate · set-in-place photo set · leveling report']],
+            steps:['Site readiness and floor-load check','Uncrating and incoming inspection','Rigging and set-in-place','Leveling and seismic anchoring','Mainframe and chamber mechanical assembly','Phase 1 sign-off'], link:'4000835',
+            doc:'Phase 1 completion certificate (PDF)'},
     act12: {span:'p2', time:'07:00 – 15:30 daily', title:'10190566 CVD-213 · Tool Installation — Phase 2: Electrical & Facilities Hookup', ref:'Order 4000835 · Phase 2 of 3', type:'Tool installation — multi-day phase', prio:['P2 — scheduled installation'], dur:'25 days · daily 07:00 – 15:30', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
             extra:[['PS WBS element','AMAT-INSTALL-2026-0042-01-02'],['Crew','Install CE lead · electrical contractor (2) · AMAT facilities'],['Work complete','40%']],
             steps:['Power distribution and main breaker hookup','Chamber and RF electrical hookup','Process gas and N\u2082 purge lines','Process cooling water and exhaust','Interlock and EMO checks','Facilities sign-off and handover'], stepAt:2, link:'4000835'},
@@ -2538,8 +2558,14 @@ function installLen(ph){ return ph[1] - ph[0] + 1; }
       var day = a.day === 'p2end' ? INSTALL_PLAN.p2[1] : a.day;
       var r = [['Activity type', a.type], ['Priority', a.prio[0]].concat(a.prio[1] ? [a.prio[1]] : []), ['Assigned to','Philip White · CE Level Principal']];
       var sub, stepHead = 'Service workflow · Not started', at = -1;
-      if (ph){                                   // multi-day activity (installation phase)
-        var started = ph[0] <= 0, doneDays = Math.max(0, Math.min(installLen(ph), installDayOf(ph, 0)));
+      var completed = ph && ph[1] < 0;
+      if (completed){                            // finished installation phase — completion record
+        r.push(['Status', 'Completed', 'green'], ['Actual start', plannedDate(ph[0])], ['Actual finish', plannedDate(ph[1])],
+               ['Duration', installLen(ph) + ' days \u00b7 completed on schedule']);
+        sub = a.ref+' · Completed · '+afShortDate(ph[0])+' – '+afShortDate(ph[1]);
+        at = a.steps.length; stepHead = 'Phase work · All '+a.steps.length+' steps completed';
+      } else if (ph){                            // multi-day activity (installation phase)
+        var started = ph[0] <= 0;
         r.push(['Planned start', plannedDate(ph[0])], ['Planned finish', plannedDate(ph[1])], ['Duration', a.dur]);
         if (started) r.push(['Today', 'Day '+installDayOf(ph, 0)+' of '+installLen(ph)]);
         else r.push(['Starts', 'In '+ph[0]+' days']);
@@ -2551,13 +2577,20 @@ function installLen(ph){ return ph[1] - ph[0] + 1; }
         sub = a.ref+' · Scheduled · '+when;
       }
       r.push(['Tool', a.tool]);
-      a.extra.forEach(function(x){ r.push([x[0], x[1] === null ? plannedDate(INSTALL_PLAN.commission) : x[1]]); });
+      a.extra.forEach(function(x){
+        var v = x[1] === null ? plannedDate(INSTALL_PLAN.commission)
+              : x[1] === 'SIGNOFF' ? personaGet('install').name + ' (Install CE) \u00b7 Customer fab facilities \u00b7 ' + plannedDate(ph[1])
+              : x[1];
+        r.push([x[0], v]);
+      });
       return '<div class="sheet-title">'+a.title+'</div>'
         +'<div class="sheet-sub">'+sub+'</div>'
         +rows(r)
         +'<div class="stepper-header">'+stepHead+'</div>'
         +stepper(a.steps, at)
-        +'<div class="faux-links">'+fauxLink(FSM_ICON,'fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/'+a.link,'Direct activity link — available when running as FSM Mobile extension')+'</div>';
+        +'<div class="faux-links">'
+        +(a.doc ? fauxLink(DOC_ICON,'fsm',a.doc,'https://fsm.yourtenant.com/attachments/'+a.link+'/phase1-completion.pdf','Attachment on the FSM activity — available in connected deployment') : '')
+        +fauxLink(FSM_ICON,'fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/'+a.link,'Direct activity link — available when running as FSM Mobile extension')+'</div>';
     };
   });
   function DATE_LONG(n){ var d = dayFromToday(n); return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]+' '+d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; }
@@ -2682,7 +2715,7 @@ function afApply(){
       if (row.span){                                              // 'Day 10/25' counter + date span
         var len = row.d1 - row.d0 + 1, tEl = row.el.querySelector('.act-time'), note = row.el.querySelector('.span-note');
         var idx = refDay === null ? null : refDay - row.d0 + 1;
-        if (tEl) tEl.innerHTML = idx === null ? 'Ongoing' : 'Day ' + idx + '<span class="act-time-of">of ' + len + '</span>';
+        if (tEl) tEl.innerHTML = idx === null ? (row.d1 < 0 ? 'Done' : 'Ongoing') : 'Day ' + idx + '<span class="act-time-of">of ' + len + '</span>';
         if (note) note.textContent = (idx === null || idx < 1 ? '' : 'Day ' + idx + ' of ' + len + ' · ') + afShortDate(row.d0) + ' – ' + afShortDate(row.d1);
       }
       var key = row.span ? 'span' : row.day;
@@ -2690,7 +2723,7 @@ function afApply(){
         var n = rows.filter(function(x){ return x.on && (row.span ? x.span : (!x.span && x.day === row.day)); }).length;
         var h = document.createElement('div');
         h.className = 'act-day-head';
-        h.innerHTML = '<span>'+(row.span ? 'Ongoing \u00b7 multi-day work' : afDayHeading(row.day))+'</span><span class="act-day-count">'+n+' '+(n === 1 ? 'activity' : 'activities')+'</span>';
+        h.innerHTML = '<span>'+(row.span ? 'Multi-day work' : afDayHeading(row.day))+'</span><span class="act-day-count">'+n+' '+(n === 1 ? 'activity' : 'activities')+'</span>';
         list.appendChild(h);
         lastKey = key;
       }
@@ -2835,7 +2868,7 @@ var PERSONAS = [
    preset:{order:['priority','overview','tools','telemetry','activities'], hidden:[], collapsed:[], options:{range:'today', tab:'myact', zone:'b4'}}},
   {id:'install', name:'Maria Santos', initials:'MS', type:'Install Customer Engineer', short:'Install CE', ce:true, prof:'senior',
    color:['#DDCCF0','#6C32A9'], shift:'Fab A — CVD Bay · Shift start 07:00',
-   acts:['act12','act3','act7','act9','act13','act14'], panels:['install'],
+   acts:['act15','act12','act3','act7','act9','act13','act14'], panels:['install'],
    preset:{order:['priority','install','activities','overview','tools','telemetry'], hidden:['telemetry'], collapsed:['overview'], options:{range:'next7', tab:'myact', zone:'b4'}}},
   {id:'process', name:'Daniel Kim', initials:'DK', type:'Process Support Engineer', short:'Process SE', ce:false, prof:'principal',
    color:['#C2FCEE','#046C7A'], shift:'Fab A — Process Engineering · Shift start 08:00',
@@ -2982,7 +3015,7 @@ function ipRender(){
   var span = function(ph){ return afShortDate(ph[0]) + ' – ' + afShortDate(ph[1]); };
   var when = function(d, t){ return (d === 0 ? 'Today' : d === 1 ? 'Tomorrow' : afWeekday(d) + ' ' + afShortDate(d)) + (t ? ' · ' + t : ''); };
   var phases = [
-    {n:'Phase 1', t:'Mechanical installation', s:'done', pct:100, lbl:'Complete', dates:span(P.p1) + ' · ' + installLen(P.p1) + ' days', key:null},
+    {n:'Phase 1', t:'Mechanical installation', s:'done', pct:100, lbl:'Complete', dates:span(P.p1) + ' · ' + installLen(P.p1) + ' days', key:'act15'},
     {n:'Phase 2', t:'Electrical & facilities hookup', s:'current', pct:P.p2pct, lbl:'In progress · ' + P.p2pct + '%', dates:span(P.p2) + ' · day ' + installDayOf(P.p2, 0) + ' of ' + installLen(P.p2), key:'act12'},
     {n:'Phase 3', t:'Commissioning & qualification', s:'upcoming', pct:0, lbl:'Starts in ' + P.p3[0] + ' days', dates:span(P.p3) + ' · ' + installLen(P.p3) + ' days', key:'act14'}
   ];
