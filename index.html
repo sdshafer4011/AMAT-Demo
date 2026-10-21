@@ -420,6 +420,62 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .lp-panel.collapsed .lp-chev { transform: rotate(-90deg); }
 .lp-panel.collapsed .lp-summary { display: inline; }
 .lp-collapsed-tag { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 700; color: var(--sapLabelColor); background: var(--sapNeutralBackground); padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+
+/* ── Activity date filter ── */
+.activity-tabs { flex-wrap: wrap; row-gap: 6px; }
+.af-wrap { position: relative; }
+.af-btn { display: inline-flex; align-items: center; gap: 6px; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--sapHighlightColor); background: var(--surface); border: 1px solid var(--sapButtonBorder); border-radius: var(--radius-sm); padding: 6px 10px; cursor: pointer; white-space: nowrap; }
+.af-btn:active, .af-btn[aria-expanded="true"] { background: var(--sapActiveBackground); }
+.af-btn .af-label { font-size: 13px; font-weight: 600; color: var(--sapHighlightColor); letter-spacing: 0; text-transform: none; }
+.af-chev { flex-shrink: 0; }
+.af-pop { display: none; position: absolute; right: 0; top: calc(100% + 6px); width: 300px; max-width: calc(100vw - 32px); background: var(--surface); border-radius: var(--radius-md); box-shadow: var(--sapShadow2); z-index: 60; padding: 8px; text-align: left; }
+.af-pop.open { display: block; animation: lpIn .15s ease-out; }
+.af-pop-title { font-size: 12px; font-weight: 700; color: var(--sapLabelColor); padding: 6px 8px 4px; }
+.af-opt { display: flex; align-items: center; gap: 8px; width: 100%; padding: 10px 8px; border: 0; background: none; border-radius: var(--radius-sm); font-family: inherit; text-align: left; cursor: pointer; }
+.af-opt:active { background: var(--sapActiveBackground); }
+.af-opt.on { background: var(--info-bg); }
+.af-opt-name { font-size: 14px; font-weight: 600; color: var(--text1); }
+.af-opt-span { font-size: 12px; color: var(--sapLabelColor); margin-left: auto; }
+.af-opt-check { width: 18px; color: var(--sapHighlightColor); display: flex; justify-content: flex-end; }
+.af-custom { border-top: 1px solid var(--sapListBorder); margin-top: 6px; padding: 10px 8px 4px; }
+.af-custom-title { font-size: 12px; font-weight: 700; color: var(--sapLabelColor); margin-bottom: 8px; }
+.af-dates { display: flex; gap: 8px; }
+.af-dates label { flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--sapLabelColor); }
+.af-dates input { font-family: inherit; font-size: 14px; color: var(--text1); padding: 7px 8px; border: 1px solid var(--sapButtonBorder); border-radius: var(--radius-sm); background: #fff; min-width: 0; width: 100%; }
+.af-err { min-height: 16px; font-size: 12px; color: var(--neg-text); margin: 6px 0 4px; }
+.af-apply { width: 100%; }
+.af-out { display: none !important; }
+.act-day-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 10px 4px 2px; font-size: 13px; font-weight: 700; color: var(--text1); }
+.act-day-head:first-child { padding-top: 0; }
+.act-day-count { font-size: 12px; font-weight: 400; color: var(--sapLabelColor); }
+.act-empty { background: var(--surface); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 18px 16px; font-size: 13px; color: var(--sapLabelColor); text-align: center; }
+.act-empty button { font-family: inherit; font-size: 13px; font-weight: 600; color: var(--sapHighlightColor); background: none; border: 0; padding: 0 0 0 4px; cursor: pointer; }
+
+/* ── Panel filters ── */
+.sub-out, .crit-out { display: none !important; }
+.lp-chip { display: flex; align-items: center; gap: 6px; margin: -2px 0 10px; padding: 6px 6px 6px 10px; width: fit-content; max-width: 100%; background: var(--info-bg); color: var(--info-text); border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; }
+.lp-chip button { font-family: inherit; font-size: 12px; font-weight: 700; color: var(--sapHighlightColor); background: var(--surface); border: 1px solid var(--sapButtonBorder); border-radius: 6px; padding: 3px 8px; margin-left: 4px; cursor: pointer; }
+.grid-empty { grid-column: 1 / -1; background: var(--surface); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 18px; text-align: center; font-size: 13px; color: var(--sapLabelColor); }
+
+/* ── Settings dialog: scrollable body + options ── */
+.lp-scroll { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.lp-list { overflow: visible; }
+.lp-options { padding: 0 12px 14px; }
+.lp-section-label { font-size: 13px; font-weight: 700; color: var(--text1); padding: 10px 8px 8px; border-top: 1px solid var(--sapListBorder); margin-top: 4px; }
+.lp-opt-group { border: 1px solid var(--sapListBorder); border-radius: var(--radius-md); margin-bottom: 8px; overflow: hidden; }
+.lp-opt-head { font-size: 12px; font-weight: 700; color: var(--sapLabelColor); background: var(--sapBackgroundColor); padding: 7px 12px; }
+.lp-opt { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-top: 1px solid var(--sapListBorder); }
+.lp-opt-head + .lp-opt { border-top: 0; }
+.lp-opt-text { flex: 1; min-width: 0; }
+.lp-opt-name { font-size: 14px; font-weight: 600; color: var(--text1); }
+.lp-opt-desc { font-size: 12px; color: var(--sapLabelColor); margin-top: 2px; }
+.lp-select { font-family: inherit; font-size: 14px; color: var(--text1); background: #fff; border: 1px solid var(--sapButtonBorder); border-radius: var(--radius-sm); padding: 7px 28px 7px 10px; -webkit-appearance: none; appearance: none; max-width: 52%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%230064D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>'); background-repeat: no-repeat; background-position: right 9px center; background-size: 12px 12px; }
+.lp-seg { display: inline-flex; border: 1px solid var(--sapButtonBorder); border-radius: var(--radius-sm); overflow: hidden; flex-shrink: 0; }
+.lp-seg button { font-family: inherit; font-size: 13px; font-weight: 600; color: var(--sapHighlightColor); background: var(--surface); border: 0; padding: 7px 12px; cursor: pointer; }
+.lp-seg button + button { border-left: 1px solid var(--sapButtonBorder); }
+.lp-seg button.on { background: var(--sapBrandColor); color: #fff; }
+@media (max-width: 480px) { .lp-opt { flex-wrap: wrap; } .lp-select { max-width: 100%; } }
 /* Horizon dialog */
 .lp-overlay { display: none; position: fixed; inset: 0; background: rgba(19,30,41,0.45); z-index: 300; align-items: center; justify-content: center; padding: 16px; }
 .lp-overlay.active { display: flex; }
@@ -594,6 +650,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     <!-- TOOL STATUS -->
     <div class="lp-panel" data-panel="tools">
       <button type="button" class="lp-head" onclick="lpToggleCollapse('tools')" aria-expanded="true"><span class="section-label">Tool status — CVD Bay</span><svg class="lp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lp-summary" id="lp-sum-tools"></span></button>
+      <div class="lp-chip" id="chip-tools" style="display:none"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg><span>Showing subscribed tools only</span><button type="button" onclick="lpQuickOption('subscribedOnly', false)">Show all</button></div>
       <div class="legend" style="margin-bottom:8px;padding:0 2px">
         <div class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>Out of service</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span>Restricted</div>
@@ -681,6 +738,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
     <!-- TELEMETRY -->
     <div class="lp-panel" data-panel="telemetry">
       <button type="button" class="lp-head" onclick="lpToggleCollapse('telemetry')" aria-expanded="true"><span class="section-label">Tool telemetry alerts — via SAP APM with integration to AIx</span><svg class="lp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lp-summary" id="lp-sum-telemetry"></span></button>
+      <div class="lp-chip" id="chip-telemetry" style="display:none"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg><span>Showing critical alerts only</span><button type="button" onclick="lpQuickOption('criticalOnly', false)">Show all</button></div>
       <div class="telemetry-card" id="telemetry-card-b4">
         <div class="telem-row" onclick="openSheet('cvd204-alert')">
           <div class="telem-left">
@@ -766,7 +824,26 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
         <div class="activity-tabs-right">
           <button class="activity-action-btn" id="auto-schedule-btn" onclick="runAutoSchedule()">Auto-schedule</button>
           <button class="activity-action-btn" id="assign-to-me-btn" onclick="assignSelectedToMe()">Assign to me</button>
-          <div class="activity-tabs-date" id="activity-tabs-date">&nbsp;</div>
+          <div class="af-wrap">
+            <button type="button" class="af-btn" id="af-btn" onclick="afTogglePopover(event)" aria-haspopup="true" aria-expanded="false">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span class="activity-tabs-date af-label" id="activity-tabs-date">&nbsp;</span>
+              <svg class="af-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="af-pop" id="af-pop" onclick="event.stopPropagation()">
+              <div class="af-pop-title">Show activities for</div>
+              <div id="af-presets"></div>
+              <div class="af-custom">
+                <div class="af-custom-title">Custom range</div>
+                <div class="af-dates">
+                  <label>From<input type="date" id="af-from"></label>
+                  <label>To<input type="date" id="af-to"></label>
+                </div>
+                <div class="af-err" id="af-err"></div>
+                <button type="button" class="lp-btn lp-btn-emph af-apply" onclick="afApplyCustom()">Apply range</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="legend" style="margin-bottom:8px;padding:0 2px">
@@ -777,7 +854,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
         <div class="legend-item"><span class="legend-dot" style="background:var(--blue-accent)"></span>PM — rescheduled</div>
       </div>
       <div class="activity-list" id="activity-list-myact">
-        <div class="activity-item" onclick="openSheet('act1')" data-duration-min="150">
+        <div class="activity-item" onclick="openSheet('act1')" data-duration-min="150" data-day="0">
           <div class="act-time">07:15</div>
           <div class="act-dot red"></div>
           <div class="act-main">
@@ -787,7 +864,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
           <div class="act-priority escalated">Escalated</div>
           <div class="act-badge corrective">Corrective</div>
         </div>
-        <div class="activity-item" onclick="openSheet('act2')" data-duration-min="180">
+        <div class="activity-item" onclick="openSheet('act2')" data-duration-min="180" data-day="0">
           <div class="act-time">09:00</div>
           <div class="act-dot green"></div>
           <div class="act-main">
@@ -797,7 +874,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
           <div class="act-priority low">Low</div>
           <div class="act-badge pm">Planned PM</div>
         </div>
-        <div class="activity-item" onclick="openSheet('act3')" data-duration-min="60">
+        <div class="activity-item" onclick="openSheet('act3')" data-duration-min="60" data-day="0">
           <div class="act-time">12:00</div>
           <div class="act-dot amber"></div>
           <div class="act-main">
@@ -807,7 +884,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
           <div class="act-priority medium">Medium</div>
           <div class="act-badge install">Installation</div>
         </div>
-        <div class="activity-item" onclick="openSheet('act4')" data-duration-min="60">
+        <div class="activity-item" onclick="openSheet('act4')" data-duration-min="60" data-day="0">
           <div class="act-time">13:30</div>
           <div class="act-dot purple"></div>
           <div class="act-main">
@@ -817,7 +894,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
           <div class="act-priority high">High</div>
           <div class="act-badge remote">Remote</div>
         </div>
-        <div class="activity-item" onclick="openSheet('act5')" data-duration-min="120">
+        <div class="activity-item" onclick="openSheet('act5')" data-duration-min="120" data-day="0">
           <div class="act-time">15:00</div>
           <div class="act-dot blue"></div>
           <div class="act-main">
@@ -826,6 +903,66 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
           </div>
           <div class="act-priority medium">Medium</div>
           <div class="act-badge pm-re">PM — rescheduled</div>
+        </div>
+      <div class="activity-item" onclick="openSheet('act6')" data-duration-min="180" data-day="1">
+          <div class="act-time">10:30</div>
+          <div class="act-dot red"></div>
+          <div class="act-main">
+            <div class="act-title">10190551 CVD-204 · Throttle valve replacement — Chamber A</div>
+            <div class="act-sub">Order 4000821 · Follow-up operation · Parts confirmed: AMAT-THROT-VALVE · Est. 3h</div>
+          </div>
+          <div class="act-priority high">High</div>
+          <div class="act-badge corrective">Corrective</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act7')" data-duration-min="90" data-day="1">
+          <div class="act-time">14:30</div>
+          <div class="act-dot amber"></div>
+          <div class="act-main">
+            <div class="act-title">10190566 CVD-213 · Phase 2 facilities sign-off walkdown</div>
+            <div class="act-sub">Order 4000835 · With AMAT facilities · WBS AMAT-INSTALL-2026-0042 · Est. 1.5h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge install">Installation</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act8')" data-duration-min="120" data-day="2">
+          <div class="act-time">08:00</div>
+          <div class="act-dot red"></div>
+          <div class="act-main">
+            <div class="act-title">10190562 CVD-208 · RF matching network inspection — Generator 1</div>
+            <div class="act-sub">Notification 10042831 · Follow-up to SR-48821 remote review · Est. 2h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge corrective">Corrective</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act9')" data-duration-min="60" data-day="3">
+          <div class="act-time">10:00</div>
+          <div class="act-dot purple"></div>
+          <div class="act-main">
+            <div class="act-title">10190566 CVD-213 · Phase 3 commissioning readiness review</div>
+            <div class="act-sub">Order 4000835 · Teams meeting with AMAT install PM · Est. 1h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge remote">Remote</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act10')" data-duration-min="60" data-day="4">
+          <div class="act-time">13:00</div>
+          <div class="act-dot green"></div>
+          <div class="act-main">
+            <div class="act-title">10190551 CVD-204 · Post-repair verification — Chamber A pressure baseline</div>
+            <div class="act-sub">Order 4000821 · Verification operation · Est. 1h</div>
+          </div>
+          <div class="act-priority low">Low</div>
+          <div class="act-badge pm">Planned PM</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act11')" data-duration-min="90" data-day="6">
+          <div class="act-time">08:00</div>
+          <div class="act-dot green"></div>
+          <div class="act-main">
+            <div class="act-title">10190556 CVD-201 · Post-PM deposition uniformity check — ±1.2% target</div>
+            <div class="act-sub">Order 4000804 · Follow-up measurement · Est. 1.5h</div>
+          </div>
+          <div class="act-priority low">Low</div>
+          <div class="act-badge pm">Planned PM</div>
         </div>
       </div>
       <div class="activity-list" id="activity-list-unassigned-b4" style="display:none">
@@ -1164,7 +1301,8 @@ function updateHeaderTime(){
   for(var i=0;i<subEls.length;i++){ subEls[i].innerHTML = stamp; }
 
   var tabsDate = document.getElementById('activity-tabs-date');
-  if(tabsDate){ tabsDate.textContent = map.weekday+' '+map.day+' '+map.month+' '+map.year; }
+  // (the range picker initializes later in the script; until then it renders its own label)
+  if(tabsDate && window.AF_PRESETS){ afRenderLabel(); }
 }
 
 function getActiveUnassignedListId(){
@@ -1178,11 +1316,11 @@ function updateActivityCounts(){
   var tabMyAct = document.getElementById('tab-myact');
   var tabUnassigned = document.getElementById('tab-unassigned');
   if(listMyAct && tabMyAct){
-    var n = listMyAct.querySelectorAll('.activity-item').length;
-    tabMyAct.textContent = 'My activities today ('+n+')';
+    var n = listMyAct.querySelectorAll('.activity-item:not(.af-out)').length;
+    tabMyAct.textContent = 'My activities ('+n+')';
   }
   if(listUnassigned && tabUnassigned){
-    var m = listUnassigned.querySelectorAll('.activity-item').length;
+    var m = listUnassigned.querySelectorAll('.activity-item:not(.af-out)').length;
     tabUnassigned.textContent = 'Unassigned activities ('+m+')';
   }
 }
@@ -1209,7 +1347,11 @@ function runAutoSchedule(){
   var listMyAct = document.getElementById('activity-list-myact');
   if(!listMyAct) return;
 
-  var items = Array.prototype.slice.call(listMyAct.querySelectorAll('.activity-item'));
+  var items = Array.prototype.slice.call(listMyAct.querySelectorAll('.activity-item')).filter(function(item){
+    var t = item.querySelector('.act-time');
+    var unscheduled = !t || t.classList.contains('tbd') || t.classList.contains('nocap');
+    return unscheduled || (parseInt(item.getAttribute('data-day'), 10) || 0) === 0;
+  });
   var data = items.map(function(item){
     var prioEl = item.querySelector('.act-priority');
     var badgeEl = item.querySelector('.act-badge');
@@ -1248,6 +1390,7 @@ function runAutoSchedule(){
       timeEl = document.createElement('div');
       a.el.insertBefore(timeEl, a.el.firstChild);
     }
+    a.el.setAttribute('data-day', '0');   // scheduled into today's shift
     if(a.newTime){
       timeEl.className = 'act-time';
       timeEl.textContent = a.newTime;
@@ -1258,7 +1401,7 @@ function runAutoSchedule(){
     listMyAct.appendChild(a.el);
   });
 
-  updateActivityCounts();
+  if (typeof afApply === 'function') afApply(); else updateActivityCounts();
   updateAutoScheduleButtonVisibility();
 }
 
@@ -1304,7 +1447,7 @@ function assignSelectedToMe(){
   selectedUnassigned = {};
   var btn = document.getElementById('assign-to-me-btn');
   if(btn) btn.style.display = 'none';
-  updateActivityCounts();
+  if (typeof afApply === 'function') afApply(); else updateActivityCounts();
   updateAutoScheduleButtonVisibility();
 }
 
@@ -1632,6 +1775,8 @@ function updateUnassignedPlannedDates(){
     var f = document.getElementById('plan-finish-'+k);
     if(s) s.textContent = plannedDate(plans[k][0]);
     if(f) f.textContent = plannedDate(plans[k][1]);
+    var item = s && s.closest('.activity-item');
+    if(item){ item.setAttribute('data-day', plans[k][0]); item.setAttribute('data-day-end', plans[k][1]); }
   }
 }
 
@@ -2136,13 +2281,188 @@ function healthBlock(score){
   });
 })();
 
+// ── Upcoming activity detail sheets (days relative to today) ──
+(function addUpcomingActivitySheets(){
+  var FSM_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>';
+  var UP = {
+    act6:  {day:1, time:'10:30', title:'10190551 CVD-204 · Throttle Valve Replacement — Chamber A', ref:'Order 4000821 · Follow-up operation', type:'Corrective — planned repair', prio:['P1 follow-up — tool down','red'], dur:'3 hours', tool:'10190552 CVD-204-CHA · Process Chamber A',
+            extra:[['Parts','AMAT-THROT-VALVE — confirmed available, shipped today'],['Root cause','Throttle valve degradation — AIx probability 84%'],['Entitlement','Applied Global Care — Platinum · Covered']],
+            steps:['Accept and review task list','Lockout / tagout — Chamber A','Remove and replace throttle valve','Leak check and pump-down','Pressure verification against spec','Labor capture and closure'], link:'4000821'},
+    act7:  {day:1, time:'14:30', title:'10190566 CVD-213 · Phase 2 Facilities Sign-off Walkdown', ref:'Order 4000835 · With AMAT facilities', type:'Tool installation — milestone sign-off', prio:['P2 — scheduled installation'], dur:'1.5 hours', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
+            extra:[['Installation phase','Phase 2 — electrical and facilities hookup'],['PS WBS element','AMAT-INSTALL-2026-0042-01-02'],['Attendees','AMAT facilities lead · Customer EHS']],
+            steps:['Walkdown checklist review','Electrical hookup inspection','Facilities (gas, water, exhaust) inspection','Punch list capture','Customer sign-off'], link:'4000835'},
+    act8:  {day:2, time:'08:00', title:'10190562 CVD-208 · RF Matching Network Inspection — Generator 1', ref:'Notification 10042831 · Follow-up to SR-48821', type:'Corrective — inspection', prio:['P2 — restricted tool','amber'], dur:'2 hours', tool:'10190596 CVD-208-CHA · Process Chamber A',
+            extra:[['Trigger','RF power delivery drift · 1,840 W vs ≤ 1,750 W spec'],['Prior step','Remote review with L3 specialist (today)'],['Entitlement','Applied Global Care — Gold · Covered']],
+            steps:['Accept and review findings from remote review','Lockout / tagout — RF generator','Inspect matching network and cabling','Replace components if required','RF power verification'], link:'4000831'},
+    act9:  {day:3, time:'10:00', title:'10190566 CVD-213 · Phase 3 Commissioning Readiness Review', ref:'Order 4000835 · Teams meeting', type:'Remote consult — installation planning', prio:['P3 — scheduled'], dur:'1 hour', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
+            extra:[['Attendees','AMAT install PM · Customer fab engineering'],['Agenda','Phase 2 punch list closure · Phase 3 qualification plan'],['Est. commissioning',null]],
+            steps:['Review Phase 2 punch list','Confirm Phase 3 qualification plan','Agree commissioning date'], link:'4000835'},
+    act10: {day:4, time:'13:00', title:'10190551 CVD-204 · Post-repair Verification — Chamber A Pressure Baseline', ref:'Order 4000821 · Verification operation', type:'Planned verification', prio:['P3 — scheduled'], dur:'1 hour', tool:'10190552 CVD-204-CHA · Process Chamber A',
+            extra:[['Target','Process pressure within 0.00560 – 0.00613 mbar'],['Measuring point','Chamber A process pressure · APM-linked']],
+            steps:['Capture baseline readings','Compare against APM trend','Close verification operation'], link:'4000821'},
+    act11: {day:6, time:'08:00', title:'10190556 CVD-201 · Post-PM Deposition Uniformity Check', ref:'Order 4000804 · Follow-up measurement', type:'Planned verification', prio:['P3 — scheduled'], dur:'1.5 hours', tool:'10190556 CVD-201',
+            extra:[['Target','±1.2% or better following chamber kit'],['Pre-PM baseline','±1.8% (captured before quarterly PM)']],
+            steps:['Run qualification wafer','Capture uniformity measurement','Compare to pre-PM baseline','Close follow-up'], link:'4000804'}
+  };
+  Object.keys(UP).forEach(function(key){
+    var a = UP[key];
+    sheets[key] = function(){
+      var when = (a.day === 1 ? 'Tomorrow' : DATE_LONG(a.day)) + ' · ' + a.time;
+      var r = [['Activity type', a.type], ['Priority', a.prio[0]].concat(a.prio[1] ? [a.prio[1]] : []), ['Assigned to','Philip White · CE Level Principal'],
+               ['Planned start', plannedDate(a.day)+' · '+a.time], ['Estimated duration', a.dur], ['Tool', a.tool]];
+      a.extra.forEach(function(x){ r.push([x[0], x[1] === null ? plannedDate(57) : x[1]]); });
+      return '<div class="sheet-title">'+a.title+'</div>'
+        +'<div class="sheet-sub">'+a.ref+' · Scheduled · '+when+'</div>'
+        +rows(r)
+        +'<div class="stepper-header">Service workflow · Not started</div>'
+        +stepper(a.steps, -1)
+        +'<div class="faux-links">'+fauxLink(FSM_ICON,'fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/'+a.link,'Direct activity link — available when running as FSM Mobile extension')+'</div>';
+    };
+  });
+  function DATE_LONG(n){ var d = dayFromToday(n); return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]+' '+d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; }
+})();
+
+// ── Activity date-range filter (drives both My activities and Unassigned) ──
+var AF_PRESETS = [
+  {id:'today',    name:'Today',       from:0, to:0},
+  {id:'tomorrow', name:'Tomorrow',    from:1, to:1},
+  {id:'next3',    name:'Next 3 days', from:0, to:2},
+  {id:'next7',    name:'Next 7 days', from:0, to:6}
+];
+var afRange;   // {id, from, to} as day offsets from today; set from Settings default at load
+function afPreset(id){ for (var i=0;i<AF_PRESETS.length;i++) if (AF_PRESETS[i].id===id) return {id:id, from:AF_PRESETS[i].from, to:AF_PRESETS[i].to}; return {id:'today', from:0, to:0}; }
+function afGet(){ return afRange || afPreset('today'); }
+function afShortDate(n){ var d = dayFromToday(n); return d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; }
+function afWeekday(n){ return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][dayFromToday(n).getDay()]; }
+function afSpan(r){
+  if (r.from === r.to) return afWeekday(r.from)+' '+afShortDate(r.from);
+  var a = dayFromToday(r.from), b = dayFromToday(r.to);
+  return (a.getMonth() === b.getMonth() ? a.getDate() : afShortDate(r.from)) + ' – ' + afShortDate(r.to);
+}
+function afRangeName(r){
+  r = r || afGet();
+  var p = AF_PRESETS.filter(function(x){ return x.id === r.id; })[0];
+  return p ? p.name : 'Custom';
+}
+function afRenderLabel(){
+  var el = document.getElementById('activity-tabs-date'); if (!el) return;
+  var r = afGet();
+  el.textContent = (r.id === 'custom' ? '' : afRangeName(r)+' · ') + afSpan(r);
+}
+function afDayHeading(d){
+  var label = afWeekday(d)+' '+afShortDate(d);
+  if (d === 0) return 'Today · '+label;
+  if (d === 1) return 'Tomorrow · '+label;
+  if (d === -1) return 'Yesterday · '+label;
+  return label;
+}
+function afTimeKey(item){
+  var t = item.querySelector('.act-time');
+  if (!t) return 1400;
+  if (t.classList.contains('tbd')) return 1500;
+  if (t.classList.contains('nocap')) return 1600;
+  var m = t.textContent.match(/(\d{1,2}):(\d{2})/);
+  return m ? (+m[1])*60 + (+m[2]) : 1400;
+}
+// Filter, order and group every activity list for the selected range
+function afApply(){
+  var r = afGet(), multi = r.to > r.from;
+  ['activity-list-myact','activity-list-unassigned-b4','activity-list-unassigned-b1'].forEach(function(listId){
+    var list = document.getElementById(listId); if (!list) return;
+    Array.prototype.forEach.call(list.querySelectorAll('.act-day-head, .act-empty'), function(e){ e.remove(); });
+    var items = Array.prototype.slice.call(list.querySelectorAll('.activity-item'));
+    items.forEach(function(it, i){ if (!it.hasAttribute('data-ord')) it.setAttribute('data-ord', i); });
+    var rows = items.map(function(it){
+      var d0 = parseInt(it.getAttribute('data-day'), 10) || 0;
+      var d1 = it.hasAttribute('data-day-end') && listId !== 'activity-list-myact' ? parseInt(it.getAttribute('data-day-end'), 10) : d0;
+      var inRange = d0 <= r.to && d1 >= r.from;
+      it.classList.toggle('af-out', !inRange);
+      if (!inRange){ var cb = it.querySelector('.activity-select'); if (cb && cb.checked){ cb.checked = false; selectedUnassigned[cb.getAttribute('data-id')] = false; } }
+      return {el: it, day: Math.max(d0, r.from), t: afTimeKey(it), ord: +it.getAttribute('data-ord'), on: inRange};
+    });
+    rows.sort(function(a, b){ return (a.day - b.day) || (a.t - b.t) || (a.ord - b.ord); });
+    var lastDay = null;
+    rows.forEach(function(row){
+      if (multi && row.on && row.day !== lastDay){
+        var n = rows.filter(function(x){ return x.on && x.day === row.day; }).length;
+        var h = document.createElement('div');
+        h.className = 'act-day-head';
+        h.innerHTML = '<span>'+afDayHeading(row.day)+'</span><span class="act-day-count">'+n+' '+(n === 1 ? 'activity' : 'activities')+'</span>';
+        list.appendChild(h);
+        lastDay = row.day;
+      }
+      list.appendChild(row.el);
+    });
+    if (!rows.some(function(x){ return x.on; })){
+      var e = document.createElement('div');
+      e.className = 'act-empty';
+      e.innerHTML = 'No activities '+(listId === 'activity-list-myact' ? 'assigned to you' : 'unassigned')+' for '+(r.id === 'custom' ? afSpan(r) : afRangeName(r).toLowerCase())+'.'
+        + (r.id !== 'next7' ? ' <button type="button" onclick="afSetRange(afPreset(\'next7\'))">Show next 7 days</button>' : '');
+      list.appendChild(e);
+    }
+  });
+  // hide Assign-to-me if nothing visible stays selected
+  var any = false; for (var k in selectedUnassigned) if (selectedUnassigned[k]) any = true;
+  var ab = document.getElementById('assign-to-me-btn'); if (ab && !any) ab.style.display = 'none';
+  afRenderLabel();
+  updateActivityCounts();
+  updateAutoScheduleButtonVisibility();
+  if (typeof lpUpdateSummaries === 'function') lpUpdateSummaries();
+}
+function afSetRange(r){ afRange = r; afClosePopover(); afApply(); }
+
+// ── Range picker popover ──
+var AF_CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+function afIso(n){ var d = dayFromToday(n); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function afOffset(iso){
+  var p = (iso || '').split('-'); if (p.length !== 3) return null;
+  var d = new Date(+p[0], +p[1]-1, +p[2], 12, 0, 0, 0);
+  return Math.round((d - dayFromToday(0)) / 86400000);
+}
+function afRenderPopover(){
+  var r = afGet();
+  document.getElementById('af-presets').innerHTML = AF_PRESETS.map(function(p){
+    var on = r.id === p.id;
+    return '<button type="button" class="af-opt'+(on?' on':'')+'" onclick="afSetRange(afPreset(\''+p.id+'\'))">'
+      + '<span class="af-opt-name">'+p.name+'</span><span class="af-opt-span">'+afSpan(p)+'</span>'
+      + '<span class="af-opt-check">'+(on ? AF_CHECK : '')+'</span></button>';
+  }).join('');
+  document.getElementById('af-from').value = afIso(r.from);
+  document.getElementById('af-to').value = afIso(r.to);
+  document.getElementById('af-err').textContent = '';
+}
+function afTogglePopover(e){
+  if (e) e.stopPropagation();
+  var pop = document.getElementById('af-pop');
+  if (pop.classList.contains('open')) { afClosePopover(); return; }
+  afRenderPopover();
+  pop.classList.add('open');
+  document.getElementById('af-btn').setAttribute('aria-expanded', 'true');
+}
+function afClosePopover(){
+  var pop = document.getElementById('af-pop'); if (!pop) return;
+  pop.classList.remove('open');
+  document.getElementById('af-btn').setAttribute('aria-expanded', 'false');
+}
+function afApplyCustom(){
+  var f = afOffset(document.getElementById('af-from').value), t = afOffset(document.getElementById('af-to').value);
+  var err = document.getElementById('af-err');
+  if (f === null || t === null) { err.textContent = 'Choose both a start and an end date.'; return; }
+  if (t < f) { err.textContent = 'The end date must be on or after the start date.'; return; }
+  if (t - f > 30) { err.textContent = 'Choose a range of 31 days or fewer.'; return; }
+  var match = AF_PRESETS.filter(function(p){ return p.from === f && p.to === t; })[0];
+  afSetRange(match ? afPreset(match.id) : {id:'custom', from:f, to:t});
+}
+document.addEventListener('click', function(){ afClosePopover(); });
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') afClosePopover(); });
+
 // ── Landing page personalization (level 1: show / hide + reorder panels) ──
 var LP_PANELS = [
   {id:'priority',   name:'Priority alert',        desc:'P1 alerts and SLA status for your zone'},
   {id:'overview',   name:'Zone overview',         desc:'Tools in zone, out of service, at-risk and today’s activities'},
   {id:'tools',      name:'Tool status',           desc:'Status cards for every tool in the CVD Bay'},
   {id:'telemetry',  name:'Tool telemetry alerts', desc:'SAP APM / AIx readings outside specification'},
-  {id:'activities', name:'My activities',         desc:'Today’s assigned and unassigned activities'}
+  {id:'activities', name:'Activities',            desc:'Assigned and unassigned activities, filtered by date'}
 ];
 // Administrator policy: a locked panel is always shown and pinned to the top.
 // (Mirrors company / policy-group settings — set locked:false to give users full control.)
@@ -2164,8 +2484,66 @@ function lpNormalize(cfg){
   order = locked.concat(order.filter(function(id){ return !lpLocked(id); }));
   hidden = hidden.filter(function(id){ return !lpLocked(id); });
   collapsed = collapsed.filter(function(id){ return !lpLocked(id); });
-  return {order: order, hidden: hidden, collapsed: collapsed};
+  return {order: order, hidden: hidden, collapsed: collapsed, options: lpNormalizeOptions(cfg && cfg.options)};
 }
+// Per-panel options (defaults apply when the page opens, or when changed in Settings)
+function lpNormalizeOptions(o){
+  o = o || {};
+  return {
+    range:          ['today','tomorrow','next3','next7'].indexOf(o.range) > -1 ? o.range : 'today',
+    tab:            o.tab === 'unassigned' ? 'unassigned' : 'myact',
+    subscribedOnly: o.subscribedOnly === true,
+    criticalOnly:   o.criticalOnly === true,
+    zone:           o.zone === 'b1' ? 'b1' : 'b4'
+  };
+}
+function lpApplyOptions(cfg, prev){
+  var o = cfg.options, first = !prev;
+  lpApplyToolFilter(o.subscribedOnly);
+  lpApplyTelemFilter(o.criticalOnly);
+  if (first || prev.zone !== o.zone){
+    var sel = document.getElementById('zone-select');
+    if (sel && sel.value !== o.zone){ sel.value = o.zone; handleZoneChange(); }
+  }
+  if (first || prev.tab !== o.tab) switchActivityTab(o.tab);
+  if (first || prev.range !== o.range) afRange = afPreset(o.range);
+  afApply();
+}
+function lpApplyToolFilter(on){
+  ['tool-grid-b4','tool-grid-b1'].forEach(function(id){
+    var g = document.getElementById(id); if (!g) return;
+    var shown = 0;
+    Array.prototype.forEach.call(g.querySelectorAll('.tool-card'), function(c){
+      var cb = c.querySelector('.tool-sub-check'), out = !!(on && cb && !cb.checked);
+      c.classList.toggle('sub-out', out); if (!out) shown++;
+    });
+    var e = g.querySelector('.grid-empty');
+    if (on && !shown){ if (!e){ e = document.createElement('div'); e.className = 'grid-empty'; e.textContent = 'You are not subscribed to any tools in this zone.'; g.appendChild(e); } }
+    else if (e) e.remove();
+  });
+  var chip = document.getElementById('chip-tools'); if (chip) chip.style.display = on ? 'flex' : 'none';
+}
+function lpApplyTelemFilter(on){
+  Array.prototype.forEach.call(document.querySelectorAll('[data-panel="telemetry"] .telem-row'), function(r){
+    r.classList.toggle('crit-out', !!on && !!r.querySelector('.telem-val.ok'));
+  });
+  var chip = document.getElementById('chip-telemetry'); if (chip) chip.style.display = on ? 'flex' : 'none';
+}
+// "Show all" on a filter chip — turns the option off and remembers it
+function lpQuickOption(key, val){
+  var cfg = lpLoad(), prev = JSON.parse(JSON.stringify(cfg.options));
+  cfg.options[key] = val;
+  lpStore(cfg);
+  lpApplyOptions(cfg, prev);
+  showToaster(key === 'subscribedOnly' ? 'Showing all tools' : 'Showing all telemetry readings');
+}
+// with "subscribed only" on, unsubscribing a tool removes its card (after the toast)
+var _lpSubToggle = handleToolSubscribeToggle;
+handleToolSubscribeToggle = function(cb){
+  var r = _lpSubToggle.apply(this, arguments);
+  if (lpLoad().options.subscribedOnly) setTimeout(function(){ lpApplyToolFilter(true); lpUpdateSummaries(); }, 700);
+  return r;
+};
 // a panel can collapse if it has a heading and isn't locked by the administrator
 function lpCollapsible(id){ return !lpLocked(id) && !!document.querySelector('.lp-panel[data-panel="'+id+'"] > .lp-head'); }
 function lpLoad(){
@@ -2218,18 +2596,22 @@ function lpUpdateSummaries(){
     set('telemetry', r+' readings · '+(a ? a+' outside spec' : 'all within spec'));
   }
   var m = (txt('tab-myact').match(/\((\d+)\)/) || [])[1], u = (txt('tab-unassigned').match(/\((\d+)\)/) || [])[1];
-  set('activities', (m || 0)+' assigned today · '+(u || 0)+' unassigned');
+  var rg = (typeof afGet === 'function') ? (afGet().id === 'custom' ? afSpan(afGet()) : afRangeName().toLowerCase()) : 'today';
+  set('activities', (m || 0)+' assigned · '+(u || 0)+' unassigned · '+rg);
 }
 // keep summaries current when the zone changes
 var _lpZoneChange = handleZoneChange;
 handleZoneChange = function(){ var r = _lpZoneChange.apply(this, arguments); lpUpdateSummaries(); return r; };
-applyLayout(lpLoad());
+var lpInitialCfg = lpLoad();
+applyLayout(lpInitialCfg);
+lpApplyOptions(lpInitialCfg, null);
 
 // ── Settings dialog ──
-function lpCloneCfg(c){ return {order: c.order.slice(), hidden: c.hidden.slice(), collapsed: (c.collapsed || []).slice()}; }
+function lpCloneCfg(c){ return JSON.parse(JSON.stringify(c)); }
 function openLayoutSettings(){
   lpDraft = lpCloneCfg(lpLoad());
   renderLpList();
+  renderLpOptions();
   document.getElementById('lp-overlay').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
@@ -2241,8 +2623,10 @@ function closeLayoutSettings(){
 function cancelLayoutSettings(){ closeLayoutSettings(); }
 function saveLayoutSettings(){
   var cfg = lpNormalize(lpDraft);
+  var prevOptions = lpLoad().options;
   var stored = lpStore(cfg);
   applyLayout(cfg);
+  lpApplyOptions(cfg, prevOptions);
   closeLayoutSettings();
   var shown = cfg.order.length - cfg.hidden.length;
   showToaster(stored ? 'Landing page saved — '+shown+' of '+cfg.order.length+' panels shown'
@@ -2251,6 +2635,37 @@ function saveLayoutSettings(){
 function resetLayoutDraft(){
   lpDraft = lpNormalize(null);
   renderLpList();
+  renderLpOptions();
+}
+// ── Panel options section of the dialog ──
+function lpOptSwitch(key, label){
+  var on = !!lpDraft.options[key];
+  return '<button type="button" class="lp-switch" role="switch" aria-checked="'+on+'" aria-label="'+label+'" onclick="lpDraft.options.'+key+'=!lpDraft.options.'+key+';renderLpOptions()"></button>';
+}
+function lpOptRow(name, desc, control){
+  return '<div class="lp-opt"><div class="lp-opt-text"><div class="lp-opt-name">'+name+'</div>'+(desc ? '<div class="lp-opt-desc">'+desc+'</div>' : '')+'</div>'+control+'</div>';
+}
+function renderLpOptions(){
+  var o = lpDraft.options;
+  var rangeSel = '<select class="lp-select" aria-label="Default date range" onchange="lpDraft.options.range=this.value">'
+    + AF_PRESETS.map(function(p){ return '<option value="'+p.id+'"'+(o.range===p.id?' selected':'')+'>'+p.name+'</option>'; }).join('') + '</select>';
+  var tabSeg = '<div class="lp-seg" role="group" aria-label="Default tab">'
+    + '<button type="button" class="'+(o.tab==='myact'?'on':'')+'" onclick="lpDraft.options.tab=\'myact\';renderLpOptions()">My activities</button>'
+    + '<button type="button" class="'+(o.tab==='unassigned'?'on':'')+'" onclick="lpDraft.options.tab=\'unassigned\';renderLpOptions()">Unassigned</button></div>';
+  var zoneSel = '<select class="lp-select" aria-label="Default zone" onchange="lpDraft.options.zone=this.value">'
+    + '<option value="b4"'+(o.zone==='b4'?' selected':'')+'>CVD Bay — Building 4</option>'
+    + '<option value="b1"'+(o.zone==='b1'?' selected':'')+'>CVD Bay — Building 1</option></select>';
+  document.getElementById('lp-options').innerHTML =
+      '<div class="lp-section-label">Panel options</div>'
+    + '<div class="lp-opt-group"><div class="lp-opt-head">Activities</div>'
+    +   lpOptRow('Default date range', 'What the date filter shows when the page opens', rangeSel)
+    +   lpOptRow('Default tab', null, tabSeg) + '</div>'
+    + '<div class="lp-opt-group"><div class="lp-opt-head">Tool status</div>'
+    +   lpOptRow('Show only my subscribed tools', 'Hide tools you haven\u2019t subscribed to', lpOptSwitch('subscribedOnly','Show only my subscribed tools')) + '</div>'
+    + '<div class="lp-opt-group"><div class="lp-opt-head">Tool telemetry alerts</div>'
+    +   lpOptRow('Critical alerts only', 'Hide readings that are within specification', lpOptSwitch('criticalOnly','Critical alerts only')) + '</div>'
+    + '<div class="lp-opt-group"><div class="lp-opt-head">General</div>'
+    +   lpOptRow('Default zone', 'Zone shown when the page opens', zoneSel) + '</div>';
 }
 function lpFirstMovable(){ return lpDraft.order.filter(lpLocked).length; }
 function lpMove(id, delta){
@@ -2453,8 +2868,11 @@ function closeSubview(key) {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
+      <div class="lp-scroll">
       <div class="lp-list-label">Panels <span>Drag <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg> or use the arrows to reorder</span></div>
       <div class="lp-list" id="lp-list"></div>
+      <div class="lp-options" id="lp-options"></div>
+      </div>
       <div class="lp-dialog-foot">
         <button class="lp-btn lp-btn-trans" type="button" onclick="resetLayoutDraft()">Reset to default</button>
         <div class="lp-foot-right">
