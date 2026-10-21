@@ -408,6 +408,18 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .lp-empty-title { font-size: 16px; font-weight: 700; color: var(--text1); margin-top: 4px; }
 .lp-empty-text { font-size: 13px; color: var(--sapLabelColor); margin-bottom: 10px; }
 
+
+/* Collapsible panels — FLP section heading with chevron */
+.lp-head { display: flex; align-items: center; gap: 6px; width: 100%; background: none; border: 0; padding: 4px 6px 4px 2px; margin: 0 0 8px; font: inherit; color: inherit; text-align: left; cursor: pointer; border-radius: var(--radius-sm); -webkit-user-select: none; }
+.lp-head:active { background: var(--sapHoverBackground); }
+.lp-head .section-label { flex-shrink: 1; min-width: 0; }
+.lp-chev { color: var(--sapHighlightColor); flex-shrink: 0; transition: transform .18s; }
+.lp-summary { display: none; margin-left: auto; padding-left: 12px; font-size: 12px; color: var(--sapLabelColor); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lp-panel.collapsed > :not(.lp-head) { display: none !important; }
+.lp-panel.collapsed > .lp-head { margin-bottom: 0; background: var(--surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-md); padding: 10px 14px; }
+.lp-panel.collapsed .lp-chev { transform: rotate(-90deg); }
+.lp-panel.collapsed .lp-summary { display: inline; }
+.lp-collapsed-tag { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 700; color: var(--sapLabelColor); background: var(--sapNeutralBackground); padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
 /* Horizon dialog */
 .lp-overlay { display: none; position: fixed; inset: 0; background: rgba(19,30,41,0.45); z-index: 300; align-items: center; justify-content: center; padding: 16px; }
 .lp-overlay.active { display: flex; }
@@ -554,7 +566,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 
     <!-- ZONE OVERVIEW -->
     <div class="lp-panel" data-panel="overview">
-      <div class="section-label" style="margin-bottom:8px">Zone overview</div>
+      <button type="button" class="lp-head" onclick="lpToggleCollapse('overview')" aria-expanded="true"><span class="section-label">Zone overview</span><svg class="lp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lp-summary" id="lp-sum-overview"></span></button>
       <div class="stat-row">
         <div class="stat-card" id="stat-card-tools" onclick="openSubview('all12')">
           <div class="stat-val green" id="stat-val-tools">12</div>
@@ -581,9 +593,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 
     <!-- TOOL STATUS -->
     <div class="lp-panel" data-panel="tools">
-      <div class="section-header">
-        <div class="section-label">Tool status — CVD Bay</div>
-      </div>
+      <button type="button" class="lp-head" onclick="lpToggleCollapse('tools')" aria-expanded="true"><span class="section-label">Tool status — CVD Bay</span><svg class="lp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lp-summary" id="lp-sum-tools"></span></button>
       <div class="legend" style="margin-bottom:8px;padding:0 2px">
         <div class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>Out of service</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span>Restricted</div>
@@ -670,7 +680,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 
     <!-- TELEMETRY -->
     <div class="lp-panel" data-panel="telemetry">
-      <div class="section-label" style="margin-bottom:8px">Tool telemetry alerts — via SAP APM with integration to AIx</div>
+      <button type="button" class="lp-head" onclick="lpToggleCollapse('telemetry')" aria-expanded="true"><span class="section-label">Tool telemetry alerts — via SAP APM with integration to AIx</span><svg class="lp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lp-summary" id="lp-sum-telemetry"></span></button>
       <div class="telemetry-card" id="telemetry-card-b4">
         <div class="telem-row" onclick="openSheet('cvd204-alert')">
           <div class="telem-left">
@@ -749,6 +759,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 
     <!-- MY ACTIVITIES -->
     <div class="lp-panel" data-panel="activities">
+      <button type="button" class="lp-head" onclick="lpToggleCollapse('activities')" aria-expanded="true"><span class="section-label">Activities</span><svg class="lp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lp-summary" id="lp-sum-activities"></span></button>
       <div class="activity-tabs">
         <div class="activity-tab active" id="tab-myact" onclick="switchActivityTab('myact')">My activities today (5)</div>
         <div class="activity-tab" id="tab-unassigned" onclick="switchActivityTab('unassigned')">Unassigned activities (7)</div>
@@ -2147,11 +2158,16 @@ function lpNormalize(cfg){
   if (cfg && Array.isArray(cfg.order)) cfg.order.forEach(function(id){ if (ids.indexOf(id)>-1 && order.indexOf(id)<0) order.push(id); });
   ids.forEach(function(id){ if (order.indexOf(id)<0) order.push(id); });       // new / missing panels go to the end
   if (cfg && Array.isArray(cfg.hidden)) cfg.hidden.forEach(function(id){ if (ids.indexOf(id)>-1 && hidden.indexOf(id)<0) hidden.push(id); });
+  var collapsed = [];
+  if (cfg && Array.isArray(cfg.collapsed)) cfg.collapsed.forEach(function(id){ if (ids.indexOf(id)>-1 && collapsed.indexOf(id)<0 && lpCollapsible(id)) collapsed.push(id); });
   var locked = ids.filter(lpLocked);                                            // policy wins over saved settings
   order = locked.concat(order.filter(function(id){ return !lpLocked(id); }));
   hidden = hidden.filter(function(id){ return !lpLocked(id); });
-  return {order: order, hidden: hidden};
+  collapsed = collapsed.filter(function(id){ return !lpLocked(id); });
+  return {order: order, hidden: hidden, collapsed: collapsed};
 }
+// a panel can collapse if it has a heading and isn't locked by the administrator
+function lpCollapsible(id){ return !lpLocked(id) && !!document.querySelector('.lp-panel[data-panel="'+id+'"] > .lp-head'); }
 function lpLoad(){
   try { var raw = localStorage.getItem(LP_STORE_KEY); return lpNormalize(raw ? JSON.parse(raw) : null); }
   catch(e){ return lpNormalize(null); }
@@ -2168,11 +2184,49 @@ function applyLayout(cfg){
   });
   var empty = document.getElementById('lp-empty');
   if (empty) empty.classList.toggle('show', cfg.hidden.length === cfg.order.length);
+  lpApplyCollapsed(cfg);
 }
+function lpApplyCollapsed(cfg){
+  Array.prototype.forEach.call(document.querySelectorAll('.lp-panel'), function(el){
+    var id = el.getAttribute('data-panel'), c = (cfg.collapsed || []).indexOf(id) > -1;
+    el.classList.toggle('collapsed', c);
+    var h = el.querySelector(':scope > .lp-head');
+    if (h) h.setAttribute('aria-expanded', String(!c));
+  });
+  lpUpdateSummaries();
+}
+// Collapse / expand from the panel heading — takes effect and is remembered immediately
+function lpToggleCollapse(id){
+  if (!lpCollapsible(id)) return;
+  var cfg = lpLoad(), k = cfg.collapsed.indexOf(id);
+  if (k > -1) cfg.collapsed.splice(k, 1); else cfg.collapsed.push(id);
+  lpStore(cfg);
+  lpApplyCollapsed(cfg);
+}
+// One-line summaries shown on a collapsed panel's heading (reflect the current zone)
+function lpUpdateSummaries(){
+  function txt(id){ var e = document.getElementById(id); return e ? e.textContent.trim() : ''; }
+  function vis(e){ return e && getComputedStyle(e).display !== 'none'; }
+  function set(id, t){ var e = document.getElementById('lp-sum-'+id); if (e) e.textContent = t; }
+  set('overview', txt('stat-val-tools')+' tools · '+txt('stat-val-oos')+' out of service · '+txt('stat-val-atrisk')+' at risk');
+  // zone totals (the home grid only shows the first few cards)
+  var att = parseInt(txt('stat-val-atrisk'), 10) || 0;
+  set('tools', txt('stat-val-tools')+' tools in zone · '+(att ? att+' need attention' : 'all in service'));
+  var card = Array.prototype.filter.call(document.querySelectorAll('[data-panel="telemetry"] .telemetry-card'), function(c){ return c.style.display !== 'none'; })[0];
+  if (card){
+    var r = card.querySelectorAll('.telem-row').length, a = card.querySelectorAll('.telem-val.alert, .telem-val.warn').length;
+    set('telemetry', r+' readings · '+(a ? a+' outside spec' : 'all within spec'));
+  }
+  var m = (txt('tab-myact').match(/\((\d+)\)/) || [])[1], u = (txt('tab-unassigned').match(/\((\d+)\)/) || [])[1];
+  set('activities', (m || 0)+' assigned today · '+(u || 0)+' unassigned');
+}
+// keep summaries current when the zone changes
+var _lpZoneChange = handleZoneChange;
+handleZoneChange = function(){ var r = _lpZoneChange.apply(this, arguments); lpUpdateSummaries(); return r; };
 applyLayout(lpLoad());
 
 // ── Settings dialog ──
-function lpCloneCfg(c){ return {order: c.order.slice(), hidden: c.hidden.slice()}; }
+function lpCloneCfg(c){ return {order: c.order.slice(), hidden: c.hidden.slice(), collapsed: (c.collapsed || []).slice()}; }
 function openLayoutSettings(){
   lpDraft = lpCloneCfg(lpLoad());
   renderLpList();
@@ -2226,7 +2280,7 @@ function renderLpList(){
       + '<div class="lp-pos">'+(i+1)+'</div>'
       + (locked ? '<div class="lp-handle disabled" title="Pinned by your administrator">'+LP_LOCK+'</div>'
                 : '<div class="lp-handle" data-drag="'+id+'" aria-label="Drag to reorder '+p.name+'">'+LP_GRIP+'</div>')
-      + '<div class="lp-row-text"><div class="lp-row-name">'+p.name+'</div><div class="lp-row-desc">'+p.desc+'</div>'
+      + '<div class="lp-row-text"><div class="lp-row-name">'+p.name+((lpDraft.collapsed||[]).indexOf(id)>-1?'<span class="lp-collapsed-tag">Collapsed</span>':'')+'</div><div class="lp-row-desc">'+p.desc+'</div>'
       + (locked ? '<div class="lp-lock-note">'+LP_LOCK.replace('width="16" height="16"','width="11" height="11"')+' Required by your administrator · always shown first</div>' : '')
       + '</div>'
       + '<div class="lp-arrows">'
