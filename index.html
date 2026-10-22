@@ -254,6 +254,11 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .activity-tab.active { color: var(--sapHighlightColor); border-bottom-color: var(--sapHighlightColor); }
 .activity-tabs-date { font-size: 12px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--sapLabelColor); white-space: nowrap; }
 .activity-tabs-right { margin-left: auto; display: flex; align-items: center; gap: 12px; padding-bottom: 8px; }
+.act-sched { display: flex; align-items: center; padding-bottom: 8px; }
+.act-sched-btn { font-family: inherit; font-size: 12px; font-weight: 700; color: #fff; background: var(--sapBrandColor); border: 1px solid var(--sapBrandColor); border-radius: var(--radius-sm) 0 0 var(--radius-sm); padding: 0 12px; height: 32px; cursor: pointer; white-space: nowrap; -webkit-user-select: none; }
+.act-sched-btn:active { background: var(--sapHighlightColor); }
+.act-sched-policy { font-family: inherit; font-size: 12px; font-weight: 600; color: var(--sapHighlightColor); background: var(--surface); border: 1px solid var(--sapBrandColor); border-left: 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; height: 32px; padding: 0 26px 0 10px; cursor: pointer; -webkit-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230064d9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 9px center; }
 .activity-select { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--sapBrandColor); cursor: pointer; }
 .activity-action-btn { display: none; background: var(--sapBrandColor); color: #fff; font-family: inherit; font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: var(--radius-sm); border: none; cursor: pointer; white-space: nowrap; -webkit-user-select: none; }
 .activity-action-btn:active { background: var(--sapHighlightColor); transform: scale(0.96); }
@@ -464,6 +469,43 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .af-err { min-height: 16px; font-size: 12px; color: var(--neg-text); margin: 6px 0 4px; }
 .af-apply { width: 100%; }
 .af-out { display: none !important; }
+.pf-out { display: none !important; }
+/* ── Unassigned pool: filter + sort ── */
+.pf-wrap { position: relative; display: none; align-items: center; gap: 8px; }
+.on-pool .pf-wrap { display: flex; }
+.on-pool .af-wrap, .on-pool .af-days { display: none !important; }
+.pf-count { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--sapBrandColor); color: #fff; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+.pf-count[hidden] { display: none; }
+.pf-sort { padding: 0 0 0 10px; gap: 2px; }
+.pf-sort-k { font-size: 13px; font-weight: 400; color: var(--sapLabelColor); }
+.pf-sort select { font-family: inherit; font-size: 13px; font-weight: 600; color: var(--sapHighlightColor); background: transparent; border: 0; height: 30px; padding: 0 26px 0 2px; cursor: pointer; -webkit-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230064d9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 9px center; }
+.pf-pop { width: 380px; padding: 6px 14px 12px; }
+.pf-sec { padding: 8px 0 4px; }
+.pf-sec + .pf-sec { border-top: 1px solid var(--sapListBorder); }
+.pf-sec-title { font-size: 12px; font-weight: 700; color: var(--sapLabelColor); margin-bottom: 8px; }
+.pf-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pf-chip { font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text1); background: var(--surface); border: 1px solid var(--sapButtonBorder); border-radius: 16px; padding: 6px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.pf-chip .pf-n { font-size: 11px; font-weight: 700; color: var(--sapLabelColor); }
+.pf-chip[aria-pressed="true"] { background: var(--sapBrandColor); border-color: var(--sapBrandColor); color: #fff; }
+.pf-chip[aria-pressed="true"] .pf-n { color: rgba(255,255,255,.8); }
+.pf-chip:disabled { opacity: .45; cursor: default; }
+.pf-skill { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pf-skill-text { font-size: 14px; font-weight: 600; color: var(--text1); }
+.pf-skill-desc { font-size: 12px; color: var(--sapLabelColor); font-weight: 400; }
+.pf-foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--sapListBorder); margin-top: 8px; padding-top: 10px; }
+.pf-link { font-family: inherit; font-size: 13px; font-weight: 600; color: var(--sapHighlightColor); background: none; border: 0; padding: 4px 2px; cursor: pointer; }
+.pf-link:disabled { color: var(--sapIconMuted); cursor: default; }
+.pf-bar { display: none; align-items: center; flex-wrap: wrap; gap: 6px; margin: -2px 0 10px; min-height: 28px; }
+.on-pool .pf-bar { display: flex; }
+.pf-tag { display: inline-flex; align-items: center; gap: 4px; background: var(--info-bg); color: var(--info-text); border-radius: 14px; padding: 3px 4px 3px 10px; font-size: 12px; font-weight: 600; }
+.pf-tag button { font-family: inherit; width: 20px; height: 20px; border-radius: 50%; border: 0; background: transparent; color: var(--info-text); font-size: 15px; line-height: 1; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.pf-tag button:active { background: rgba(0,0,0,.08); }
+.pf-showing { margin-left: auto; font-size: 12px; color: var(--sapLabelColor); white-space: nowrap; }
+.act-day-head.overdue > span:first-child { color: var(--neg-text); }
+.pool-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+.pool-tag { font-size: 10.5px; font-weight: 700; color: var(--sapLabelColor); border: 1px solid var(--sapGroupBorder); border-radius: 4px; padding: 1px 6px; white-space: nowrap; }
+#activity-list-myact .pool-tags { display: none; }
 .act-day-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 10px 4px 2px; font-size: 13px; font-weight: 700; color: var(--text1); }
 .act-day-head:first-child { padding-top: 0; }
 .act-day-count { font-size: 12px; font-weight: 400; color: var(--sapLabelColor); }
@@ -718,7 +760,7 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
 .lp-tabs { display: flex; gap: 24px; padding: 0 20px; border-bottom: 1px solid var(--sapGroupBorder); }
 .lp-tab { font-family: inherit; font-size: 14px; font-weight: 600; color: var(--text1); background: none; border: 0; border-bottom: 3px solid transparent; margin-bottom: -1px; padding: 12px 2px 9px; cursor: pointer; }
 .lp-tab[aria-selected="true"] { color: var(--sapHighlightColor); border-bottom-color: var(--sapHighlightColor); }
-.lp-scroll { min-height: min(520px, calc(100vh - 220px)); }
+.lp-scroll { min-height: min(640px, calc(100vh - 220px)); }
 .lp-options { padding-top: 14px; }
 .lp-options-intro { font-size: 13px; color: var(--sapLabelColor); padding: 0 4px 12px; }
 /* Horizon dialog */
@@ -1067,8 +1109,27 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
       <div class="activity-tabs">
         <div class="activity-tab active" id="tab-myact" onclick="switchActivityTab('myact')">My activities today (5)</div>
         <div class="activity-tab" id="tab-unassigned" onclick="switchActivityTab('unassigned')">Unassigned activities (7)</div>
+        <div class="act-sched" id="auto-schedule-btn">
+          <button type="button" class="act-sched-btn" id="resched-btn" onclick="runAutoSchedule()">(Re)-Schedule</button>
+          <select class="act-sched-policy" id="sched-policy" aria-label="FSA scheduling policy" title="FSA scheduling policy">
+            <option value="Skills" selected>Skills</option>
+            <option value="Distance">Distance</option>
+            <option value="Availability">Availability</option>
+            <option value="DistanceAndSkills">DistanceAndSkills</option>
+          </select>
+        </div>
         <div class="activity-tabs-right">
-          <button class="activity-action-btn" id="auto-schedule-btn" onclick="runAutoSchedule()">Auto-schedule</button>
+          <div class="pf-wrap" id="pf-wrap">
+            <button type="button" class="af-btn pf-btn" id="pf-btn" onclick="pfTogglePopover(event)" aria-haspopup="true" aria-expanded="false">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              <span>Filter</span><span class="pf-count" id="pf-count" hidden></span>
+            </button>
+            <div class="af-btn pf-sort"><span class="pf-sort-k">Sort:</span>
+              <select id="pf-sort" aria-label="Sort unassigned activities" onchange="pfSetSort(this.value)">
+                <option value="start">Planned start</option><option value="priority">Priority</option><option value="duration">Duration</option><option value="tool">Tool</option>
+              </select></div>
+            <div class="af-pop pf-pop" id="pf-pop" onclick="event.stopPropagation()"></div>
+          </div>
           <button class="activity-action-btn secondary" id="unassign-btn" onclick="unassignSelected()">Unassign</button>
           <button class="activity-action-btn" id="assign-to-me-btn" onclick="assignSelectedToMe()">Assign to me</button>
           <div class="af-wrap">
@@ -1094,6 +1155,7 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
         </div>
       </div>
       <div class="af-days" id="af-days" role="group" aria-label="Day" hidden></div>
+      <div class="pf-bar" id="pf-bar"></div>
       <div class="legend" style="margin-bottom:8px;padding:0 2px">
         <div class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>Corrective</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>Preventive PM</div>
@@ -1723,26 +1785,53 @@ function updateAutoScheduleButtonVisibility(){
   if(!btn) return;
   var tabMyAct = document.getElementById('tab-myact');
   var isMyActTab = tabMyAct && tabMyAct.classList.contains('active');
-  var listMyAct = document.getElementById('activity-list-myact');
-  var tbdCount = listMyAct ? listMyAct.querySelectorAll('.act-time.tbd').length : 0;
-  btn.style.display = (isMyActTab && tbdCount > 0) ? 'inline-block' : 'none';
+  btn.style.display = isMyActTab ? 'flex' : 'none';           // (Re)-Schedule is always available on My activities
 }
 
 var PRIORITY_RANK = {escalated:1, high:2, medium:3, low:4};
-var TYPE_RANK = {corrective:1, install:2, remote:3, pm:4, 'pm-re':5};
+var TYPE_RANK = {corrective:1, install:2, remote:3, software:4, pm:5, 'pm-re':6};
 
 function formatMinutesToHHMM(mins){
   var h = Math.floor(mins/60), m = mins%60;
   return (h<10?'0':'')+h+':'+(m<10?'0':'')+m;
 }
 
+// ── (Re)-Schedule: sequences today's work (plus anything not yet scheduled) into the
+// 07:00–17:00 shift, ordered by the FSA scheduling policy picked next to the button.
+// Escalated work always goes first under every policy (P1 SLA).
+var SCHED_POLICIES = ['Skills','Distance','Availability','DistanceAndSkills'];
+var PERSONA_SKILLS = {            // activity types each engineer is qualified for
+  philip:  ['corrective','pm','pm-re','remote'],
+  install: ['install'],
+  process: ['remote','pm'],
+  tse:     ['remote','corrective'],
+  sse:     ['software','remote']
+};
+function schedPolicy(){ var el = document.getElementById('sched-policy'); return el ? el.value : 'Skills'; }
+function schedLocation(item){           // position on the fab floor: bay walk order by tool number; Building 1 is a building away
+  var m = ((item.querySelector('.act-title') || {}).textContent || '').match(/CVD-(\d+)/);
+  if (!m) return 200;                   // bay-wide work starts at the bay entrance
+  var n = +m[1];
+  return n < 200 ? n + 1000 : n;
+}
+function schedNearestRoute(list, start){ // greedy nearest-next-tool walk from the current position
+  var pos = start, out = [], left = list.slice();
+  while (left.length){
+    left.sort(function(a, b){ return (Math.abs(a.loc - pos) - Math.abs(b.loc - pos)) || ((PRIORITY_RANK[a.priority]||9) - (PRIORITY_RANK[b.priority]||9)); });
+    var next = left.shift(); out.push(next); pos = next.loc;
+  }
+  return out;
+}
 function runAutoSchedule(){
   var listMyAct = document.getElementById('activity-list-myact');
   if(!listMyAct) return;
+  var policy = schedPolicy();
+  var skills = PERSONA_SKILLS[personaState.current] || [];
 
   var items = Array.prototype.slice.call(listMyAct.querySelectorAll('.activity-item')).filter(function(item){
     var t = item.querySelector('.act-time');
     if (item.classList.contains('persona-out')) return false;          // only this persona's day
+    if (item.hasAttribute('data-span') || item.hasAttribute('data-day-at')) return false;   // installation phases keep their plan
     var unscheduled = !t || t.classList.contains('tbd') || t.classList.contains('nocap');
     return unscheduled || (parseInt(item.getAttribute('data-day'), 10) || 0) === 0;
   });
@@ -1752,29 +1841,41 @@ function runAutoSchedule(){
     var priority = 'low';
     ['escalated','high','medium','low'].forEach(function(c){ if(prioEl && prioEl.classList.contains(c)) priority = c; });
     var type = 'pm';
-    ['corrective','install','remote','pm-re','pm'].forEach(function(c){ if(badgeEl && badgeEl.classList.contains(c)) type = c; });
+    ['corrective','install','remote','software','pm-re','pm'].forEach(function(c){ if(badgeEl && badgeEl.classList.contains(c)) type = c; });
     var durationMin = parseInt(item.getAttribute('data-duration-min'), 10) || 60;
-    return { el:item, priority:priority, type:type, durationMin:durationMin };
+    return { el:item, priority:priority, type:type, durationMin:durationMin, loc:schedLocation(item), outOfSkill: skills.indexOf(type) > -1 ? 0 : 1 };
   });
-
-  data.sort(function(a,b){
-    var pr = (PRIORITY_RANK[a.priority]||9) - (PRIORITY_RANK[b.priority]||9);
-    if(pr !== 0) return pr;
-    var tr = (TYPE_RANK[a.type]||9) - (TYPE_RANK[b.type]||9);
-    if(tr !== 0) return tr;
-    return a.durationMin - b.durationMin;
-  });
+  var byAvail = function(a,b){
+    return ((PRIORITY_RANK[a.priority]||9) - (PRIORITY_RANK[b.priority]||9))
+        || ((TYPE_RANK[a.type]||9) - (TYPE_RANK[b.type]||9))
+        || (a.durationMin - b.durationMin);
+  };
+  var esc = data.filter(function(a){ return a.priority === 'escalated'; }).sort(byAvail);
+  var rest = data.filter(function(a){ return a.priority !== 'escalated'; });
+  var start = esc.length ? esc[esc.length-1].loc : 200;          // walk on from the last escalated job
+  if (policy === 'Skills'){
+    rest.sort(function(a,b){ return (a.outOfSkill - b.outOfSkill) || byAvail(a,b); });
+  } else if (policy === 'Distance'){
+    rest = schedNearestRoute(rest, start);
+  } else if (policy === 'DistanceAndSkills'){
+    var inSkill = schedNearestRoute(rest.filter(function(a){ return !a.outOfSkill; }), start);
+    var outSkill = schedNearestRoute(rest.filter(function(a){ return a.outOfSkill; }), inSkill.length ? inSkill[inSkill.length-1].loc : start);
+    rest = inSkill.concat(outSkill);
+  } else {
+    rest.sort(byAvail);                                          // Availability: earliest free slot by priority
+  }
+  data = esc.concat(rest);
 
   var cursor = 7*60;
   var shiftEnd = 17*60;
-  var capacityExhausted = false;
+  var capacityExhausted = false, over = 0;
   data.forEach(function(a){
     if(!capacityExhausted && (cursor + a.durationMin) <= shiftEnd){
       a.newTime = formatMinutesToHHMM(cursor);
       cursor += a.durationMin;
     } else {
       capacityExhausted = true;
-      a.newTime = null;
+      a.newTime = null; over++;
     }
   });
 
@@ -1782,7 +1883,8 @@ function runAutoSchedule(){
     var timeEl = a.el.querySelector('.act-time');
     if(!timeEl){
       timeEl = document.createElement('div');
-      a.el.insertBefore(timeEl, a.el.firstChild);
+      var cb = a.el.querySelector('.activity-select');
+      a.el.insertBefore(timeEl, cb ? cb.nextSibling : a.el.firstChild);
     }
     a.el.setAttribute('data-day', '0');   // scheduled into today's shift
     if(a.newTime){
@@ -1797,6 +1899,9 @@ function runAutoSchedule(){
 
   if (typeof afApply === 'function') afApply(); else updateActivityCounts();
   updateAutoScheduleButtonVisibility();
+  var n = data.length;
+  showToaster(n ? ('Re-scheduled ' + n + (n === 1 ? ' activity' : ' activities') + ' · Policy: ' + policy + (over ? ' · ' + over + ' over capacity' : ''))
+                : 'Nothing to schedule today · Policy: ' + policy);
 }
 
 var selectedUnassigned = {};
@@ -2945,11 +3050,9 @@ function afTimeKey(item){
 var afDay = null;        // selected day offset, or 'all'; null = choose a sensible default
 var afPage = 0;          // which 7-day page of the strip is showing (long custom ranges)
 var AF_PAGE = 7;
-var AF_LISTS = ['activity-list-myact','activity-list-unassigned-b4','activity-list-unassigned-b1'];
-function afActiveListId(){
-  var t = document.getElementById('tab-unassigned');
-  return (t && t.classList.contains('active')) ? getActiveUnassignedListId() : 'activity-list-myact';
-}
+var AF_LISTS = ['activity-list-myact'];            // the Unassigned pool is dateless (see pool filter)
+function afActiveListId(){ return 'activity-list-myact'; }
+function poolTabActive(){ var t = document.getElementById('tab-unassigned'); return !!(t && t.classList.contains('active')); }
 // installation-phase activities take their dates from INSTALL_PLAN
 function installSyncItems(){
   Array.prototype.forEach.call(document.querySelectorAll('#activity-list-myact [data-span]'), function(it){
@@ -3049,6 +3152,7 @@ function afApply(){
     }
   });
   afRenderDays(r, multi);
+  if (typeof poolApply === 'function') poolApply();
   var any = false; for (var k in selectedUnassigned) if (selectedUnassigned[k]) any = true;
   var ab = document.getElementById('assign-to-me-btn'); if (ab && !any) ab.style.display = 'none';
   updateUnassignButton();
@@ -3067,7 +3171,7 @@ function afPageBy(delta){
   afApply();
 }
 function afStepDay(step){
-  var r = afGet(); if (r.to <= r.from || afDay === 'all' || afDay === null) return false;
+  var r = afGet(); if (poolTabActive() || r.to <= r.from || afDay === 'all' || afDay === null) return false;
   var d = afDay + step; if (d < r.from || d > r.to) return false;
   afSelectDay(d); return true;
 }
@@ -3159,6 +3263,232 @@ function afApplyCustom(){
   afSetRange(match ? afPreset(match.id) : {id:'custom', from:f, to:t});
 }
 document.addEventListener('click', function(){ afClosePopover(); });
+
+// ══ Unassigned pool — dateless, like the FSA Planning & Scheduling board ══
+// Filter by priority / service type / activity type / planned start / my skills; sort by
+// planned start (grouped), priority, duration or tool. Filters live in the session; the
+// default sort and skills filter come from Settings.
+var POOL_SVC  = ['Service','Preventive Service','Phase 1 Tool Install','Phase 2 Tool Install','Phase 3 Tool Install','Inspection'];
+var POOL_AT   = ['Installation','Malfunction','Preventive','Remediation'];
+var POOL_PRIO = [['escalated','Escalated'],['high','High'],['medium','Medium'],['low','Low']];
+var POOL_WHEN = [['overdue','Overdue'],['today','Today'],['week','This week'],['later','Later'],['none','Not planned']];
+var POOL_SORT = [['start','Planned start'],['priority','Priority'],['duration','Duration'],['tool','Tool']];
+// [service type, activity type] for every activity that can sit in the pool
+var POOL_META = {
+  unassign1:['Service','Malfunction'], unassign2:['Service','Remediation'], unassign3:['Service','Installation'],
+  unassign4:['Inspection','Preventive'], unassign5:['Service','Installation'], unassign6:['Inspection','Malfunction'],
+  unassign7:['Service','Remediation'],
+  b1unassign1:['Service','Remediation'], b1unassign2:['Inspection','Malfunction'], b1unassign3:['Service','Installation'], b1unassign4:['Inspection','Preventive'],
+  act1:['Service','Malfunction'], act2:['Preventive Service','Preventive'], act3:['Phase 2 Tool Install','Installation'], act4:['Service','Remediation'],
+  act5:['Preventive Service','Preventive'], act6:['Service','Remediation'], act7:['Phase 2 Tool Install','Installation'], act8:['Inspection','Malfunction'],
+  act9:['Phase 3 Tool Install','Installation'], act10:['Inspection','Remediation'], act11:['Inspection','Preventive'],
+  act12:['Phase 2 Tool Install','Installation'], act13:['Phase 2 Tool Install','Installation'], act14:['Phase 3 Tool Install','Installation'], act15:['Phase 1 Tool Install','Installation'],
+  act16:['Service','Malfunction'], act17:['Service','Malfunction'], act18:['Service','Remediation'], act19:['Service','Remediation'],
+  act20:['Service','Installation'], act21:['Service','Remediation'], act22:['Inspection','Preventive'], act23:['Service','Installation']
+};
+// extra pool work so filters have something to bite on (day: offset from today, null = not yet planned)
+var POOL_EXTRA = [
+  {zone:'b4', key:'unassign8',  tool:'10190566 CVD-213', title:'Phase 1 punch list — seismic anchor torque re-check', ref:'Order 4000835', prio:'medium', badge:'install', bl:'Installation', dot:'amber', day:-2, dur:60, svc:'Phase 1 Tool Install', at:'Installation', note:'Punch list from Phase 1 sign-off', detail:'Re-torque and record 8 seismic anchors flagged at Phase 1 sign-off'},
+  {zone:'b4', key:'unassign9',  tool:'10190561 CVD-207', title:'Post-PM chamber leak-rate inspection', ref:'Order 4000817', prio:'high', badge:'pm', bl:'Inspection', dot:'green', day:-1, dur:60, svc:'Inspection', at:'Preventive', note:'Required before tool release', detail:'Rate-of-rise leak check after the rescheduled PM — must pass before release to production'},
+  {zone:'b4', key:'unassign10', tool:'10190562 CVD-208', title:'RF generator 2 — intermittent arc faults', ref:'CRM Ticket SR-48840', prio:'high', badge:'corrective', bl:'Corrective', dot:'red', day:0, dur:120, svc:'Service', at:'Malfunction', note:'Reported 07:20 today', detail:'Arc-detect interlock tripped 3 times on the last 2 lots — generator 2'},
+  {zone:'b4', key:'unassign11', tool:'10190566 CVD-213', title:'Phase 2 — process cooling water hookup punch item', ref:'Order 4000835', prio:'high', badge:'install', bl:'Installation', dot:'amber', day:1, dur:120, svc:'Phase 2 Tool Install', at:'Installation', note:'Blocking Phase 2 sign-off', detail:'PCW return line flow below spec at the tool inlet — rework fitting and re-verify flow'},
+  {zone:'b4', key:'unassign12', tool:'10190560 CVD-206', title:'Mass flow controller 3 drift — replace MFC', ref:'CRM Ticket SR-48843', prio:'medium', badge:'corrective', bl:'Corrective', dot:'red', day:3, dur:120, svc:'Service', at:'Malfunction', note:'Raised by process engineering', detail:'MFC 3 (N2O) reading 4% high against reference — replace and recalibrate'},
+  {zone:'b4', key:'unassign13', tool:'10190551 CVD-204', title:'Chamber B wall deposit inspection', ref:'Order 4000912', prio:'low', badge:'pm', bl:'Inspection', dot:'green', day:5, dur:90, svc:'Inspection', at:'Preventive', note:'Quarterly inspection', detail:'Borescope inspection of chamber B walls and showerhead for deposit build-up'},
+  {zone:'b4', key:'unassign14', tool:'10190556 CVD-201', title:'Quarterly exhaust line clean', ref:'Order 4000915', prio:'low', badge:'pm', bl:'Planned PM', dot:'green', day:12, dur:180, svc:'Preventive Service', at:'Preventive', note:'From maintenance plan', detail:'Foreline and exhaust line clean — quarterly maintenance plan item'},
+  {zone:'b4', key:'unassign15', tool:'10190563 CVD-209', title:'Controller firmware rollback validation', ref:'Order 4000918', prio:'medium', badge:'software', bl:'Software', dot:'teal', day:null, dur:60, svc:'Service', at:'Remediation', note:'Waiting on change window', detail:'Validate rollback path from SP-8.4.2-HF3 before the change window is confirmed'},
+  {zone:'b4', key:'unassign16', tool:'10190566 CVD-213', title:'Phase 3 — gas line leak-back test plan', ref:'Order 4000835', prio:'low', badge:'install', bl:'Installation', dot:'amber', day:null, dur:90, svc:'Phase 3 Tool Install', at:'Installation', note:'Commissioning preparation', detail:'Prepare leak-back test plan and gas panel checklist for Phase 3 commissioning'},
+  {zone:'b1', key:'b1unassign5', tool:'10190448 CVD-158', title:'Monthly preventive maintenance — overdue', ref:'Order 4000955', prio:'medium', badge:'pm', bl:'Planned PM', dot:'green', day:-3, dur:120, svc:'Preventive Service', at:'Preventive', note:'From maintenance plan', detail:'Monthly chamber kit and o-ring inspection — past its planned date'},
+  {zone:'b1', key:'b1unassign6', tool:'10190444 CVD-154', title:'Exhaust interlock inspection', ref:'Order 4000957', prio:'low', badge:'pm', bl:'Inspection', dot:'green', day:null, dur:60, svc:'Inspection', at:'Preventive', note:'Safety compliance item', detail:'Annual functional check of the exhaust pressure interlock'}
+];
+var pf = {prio:[], svc:[], at:[], when:[], skills:false, sort:'start'};
+var PF_FSA_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>';
+function poolDur(m){ var h = m / 60; return (h === 1 ? '1 hour' : h + ' hours'); }
+function poolSheet(d){
+  var P = {escalated:['P1 — escalated','red'], high:['P2 — high','amber'], medium:['P3 — medium'], low:['P4 — routine']};
+  var id = d.ref.replace(/^.* /, '');
+  return '<div class="sheet-title">'+d.tool+' · '+d.title+'</div>'
+    + '<div class="sheet-sub">'+d.ref+' · Unassigned · '+d.note+'</div>'
+    + rows([['Service type', d.svc], ['Activity type', d.at], ['Priority', P[d.prio][0], P[d.prio][1]], ['Assigned to','Unassigned — awaiting dispatch'],
+            ['Planned start', d.day === null ? 'Not yet planned' : plannedDate(d.day) + (d.day < 0 ? ' · overdue' : '')], ['Planned finish', d.day === null ? '—' : plannedDate(d.day)],
+            ['Estimated duration', poolDur(d.dur)], ['Tool', d.tool + ' · Applied Centura CVD'], ['Scope', d.detail], ['Entitlement','Applied Global Care — Gold · Covered']])
+    + '<div class="faux-links">' + fauxLink(PF_FSA_ICON,'fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/'+id,'Direct activity link — available when running as FSA Mobile extension') + '</div>';
+}
+(function(){
+  POOL_EXTRA.forEach(function(d){
+    var list = document.getElementById('activity-list-unassigned-' + d.zone); if (!list) return;
+    var el = document.createElement('div');
+    el.className = 'activity-item';
+    el.setAttribute('onclick', "openSheet('" + d.key + "')");
+    el.setAttribute('data-duration-min', d.dur);
+    if (d.day !== null){ el.setAttribute('data-day', d.day); el.setAttribute('data-day-end', d.day); }
+    el.innerHTML = '<input type="checkbox" class="activity-select" data-id="' + d.key + '" onclick="event.stopPropagation(); handleActivitySelect(this)">'
+      + '<div class="act-dot ' + d.dot + '"></div><div class="act-main"><div class="act-title">' + d.tool + ' · ' + d.title + '</div>'
+      + '<div class="act-sub">' + d.ref + ' · ' + (d.day === null ? 'Not yet planned' : 'Planned Start: ' + plannedDate(d.day) + ' · Planned Finish: ' + plannedDate(d.day)) + ' · Est. ' + (d.dur / 60) + 'h</div></div>'
+      + '<div class="act-priority ' + d.prio + '">' + d.prio.charAt(0).toUpperCase() + d.prio.slice(1) + '</div><div class="act-badge ' + d.badge + '">' + d.bl + '</div>';
+    list.appendChild(el);
+    POOL_META[d.key] = [d.svc, d.at];
+    sheets[d.key] = function(){ return poolSheet(d); };
+  });
+})();
+function poolDerive(item){
+  var b = item.querySelector('.act-badge'), has = function(c){ return b && b.classList.contains(c); };
+  if (has('corrective')) return ['Service','Malfunction'];
+  if (has('pm') || has('pm-re')) return ['Preventive Service','Preventive'];
+  if (has('install')) return ['Service','Installation'];
+  return ['Service','Remediation'];
+}
+var PF_WHEN_ORDER = {overdue:0, today:1, week:2, later:3, none:4};
+function poolRow(item){
+  var key = actKey(item), m = POOL_META[key] || poolDerive(item);
+  var pr = item.querySelector('.act-priority'), prio = 'low';
+  ['escalated','high','medium','low'].forEach(function(c){ if (pr && pr.classList.contains(c)) prio = c; });
+  var b = item.querySelector('.act-badge'), type = 'pm';
+  ['corrective','install','remote','software','pm-re','pm'].forEach(function(c){ if (b && b.classList.contains(c)) type = c; });
+  var d0 = item.hasAttribute('data-day') ? parseInt(item.getAttribute('data-day'), 10) : null;
+  var when = d0 === null ? 'none' : d0 < 0 ? 'overdue' : d0 === 0 ? 'today' : d0 < 7 ? 'week' : 'later';
+  return {el:item, key:key, svc:m[0], at:m[1], prio:prio, type:type, d0:d0, when:when, t:afTimeKey(item),
+          dur:parseInt(item.getAttribute('data-duration-min'), 10) || 60, loc:schedLocation(item), ord:+item.getAttribute('data-ord') || 0};
+}
+function pfActiveCount(){ return pf.prio.length + pf.svc.length + pf.at.length + pf.when.length + (pf.skills ? 1 : 0); }
+function pfMatch(r){
+  var skills = PERSONA_SKILLS[personaState.current] || [];
+  return (!pf.prio.length || pf.prio.indexOf(r.prio) > -1) && (!pf.svc.length || pf.svc.indexOf(r.svc) > -1)
+      && (!pf.at.length || pf.at.indexOf(r.at) > -1) && (!pf.when.length || pf.when.indexOf(r.when) > -1)
+      && (!pf.skills || skills.indexOf(r.type) > -1);
+}
+function pfSorter(sort){
+  var pr = function(r){ return PRIORITY_RANK[r.prio] || 9; };
+  var day = function(r){ return r.d0 === null ? 9999 : r.d0; };
+  if (sort === 'priority') return function(a, b){ return (pr(a) - pr(b)) || (day(a) - day(b)) || (a.t - b.t) || (a.ord - b.ord); };
+  if (sort === 'duration') return function(a, b){ return (a.dur - b.dur) || (pr(a) - pr(b)) || (a.ord - b.ord); };
+  if (sort === 'tool')     return function(a, b){ return (a.loc - b.loc) || (pr(a) - pr(b)) || (a.ord - b.ord); };
+  return function(a, b){ return (PF_WHEN_ORDER[a.when] - PF_WHEN_ORDER[b.when]) || (day(a) - day(b)) || (a.t - b.t) || (pr(a) - pr(b)) || (a.ord - b.ord); };
+}
+function pfGroup(r){ return r.when === 'week' ? 'd' + r.d0 : r.when; }
+function pfGroupLabel(g){
+  if (g === 'overdue') return 'Overdue';
+  if (g === 'today') return afDayHeading(0);
+  if (g === 'later') return 'Later';
+  if (g === 'none') return 'Not planned';
+  return afDayHeading(+g.slice(1));
+}
+function poolApply(){
+  if (!pf) return;
+  var onPool = poolTabActive();
+  var panel = document.querySelector('.lp-panel[data-panel="activities"]');
+  if (panel) panel.classList.toggle('on-pool', onPool);
+  if (onPool) afClosePopover(); else pfClosePopover();
+  var sel = document.getElementById('pf-sort'); if (sel && sel.value !== pf.sort) sel.value = pf.sort;
+  var activeId = getActiveUnassignedListId(), shownActive = 0, totalActive = 0;
+  ['activity-list-unassigned-b4','activity-list-unassigned-b1'].forEach(function(listId){
+    var list = document.getElementById(listId); if (!list) return;
+    Array.prototype.forEach.call(list.querySelectorAll('.act-day-head, .act-empty'), function(e){ e.remove(); });
+    var items = Array.prototype.slice.call(list.querySelectorAll('.activity-item'));
+    items.forEach(function(it, i){
+      if (!it.hasAttribute('data-ord')) it.setAttribute('data-ord', 100 + i);
+      it.classList.remove('af-out', 'af-day-out', 'persona-out');
+      var main = it.querySelector('.act-main');
+      if (main && !main.querySelector('.pool-tags')){
+        var m = POOL_META[actKey(it)] || poolDerive(it), tg = document.createElement('div');
+        tg.className = 'pool-tags'; tg.innerHTML = '<span class="pool-tag">' + m[0] + '</span><span class="pool-tag">' + m[1] + '</span>';
+        main.appendChild(tg);
+      }
+    });
+    var rows = items.map(poolRow).sort(pfSorter(pf.sort)), last = null, shown = 0;
+    rows.forEach(function(r){
+      var ok = pfMatch(r);
+      r.el.classList.toggle('pf-out', !ok);
+      if (!ok){ var cb = r.el.querySelector('.activity-select'); if (cb && cb.checked){ cb.checked = false; selectedUnassigned[cb.getAttribute('data-id')] = false; } }
+      if (ok && pf.sort === 'start' && pfGroup(r) !== last){
+        last = pfGroup(r);
+        var n = rows.filter(function(x){ return pfMatch(x) && pfGroup(x) === last; }).length;
+        var h = document.createElement('div');
+        h.className = 'act-day-head' + (last === 'overdue' ? ' overdue' : '');
+        h.innerHTML = '<span>' + pfGroupLabel(last) + '</span><span class="act-day-count">' + n + ' ' + (n === 1 ? 'activity' : 'activities') + '</span>';
+        list.appendChild(h);
+      }
+      list.appendChild(r.el);
+      if (ok) shown++;
+    });
+    if (!shown){
+      var e = document.createElement('div'); e.className = 'act-empty';
+      e.innerHTML = rows.length ? 'No unassigned activities match your filters. <button type="button" onclick="pfClear()">Clear filters</button>'
+                                : 'No unassigned activities in this zone.';
+      list.appendChild(e);
+    }
+    if (listId === activeId){ shownActive = shown; totalActive = rows.length; }
+  });
+  var cnt = document.getElementById('pf-count'), k = pfActiveCount();
+  if (cnt){ cnt.hidden = !k; cnt.textContent = k; }
+  pfRenderBar(shownActive, totalActive);
+  if (document.getElementById('pf-pop').classList.contains('open')) pfRenderPopover();
+  var any = false; for (var x in selectedUnassigned) if (selectedUnassigned[x]) any = true;
+  var ab = document.getElementById('assign-to-me-btn'); if (ab && !any) ab.style.display = 'none';
+}
+function pfLabel(group, v){
+  var src = {prio:POOL_PRIO, when:POOL_WHEN}[group];
+  if (src) return src.filter(function(x){ return x[0] === v; })[0][1];
+  return v;
+}
+function pfRenderBar(shown, total){
+  var bar = document.getElementById('pf-bar'); if (!bar) return;
+  var h = '';
+  ['prio','svc','at','when'].forEach(function(g){
+    pf[g].forEach(function(v){
+      h += '<span class="pf-tag">' + pfLabel(g, v) + '<button type="button" aria-label="Remove ' + pfLabel(g, v) + '" onclick="pfToggle(\'' + g + '\',\'' + v + '\')">×</button></span>';
+    });
+  });
+  if (pf.skills) h += '<span class="pf-tag">Matches my skills<button type="button" aria-label="Remove skills filter" onclick="pfSetSkills(false)">×</button></span>';
+  if (pfActiveCount()) h += '<button type="button" class="pf-link" onclick="pfClear()">Clear all</button>';
+  h += '<span class="pf-showing">' + (pfActiveCount() ? 'Showing ' + shown + ' of ' + total : 'All ' + total + ' unassigned') + '</span>';
+  bar.innerHTML = h;
+}
+function pfCounts(){
+  var list = document.getElementById(getActiveUnassignedListId()), c = {};
+  if (!list) return c;
+  Array.prototype.forEach.call(list.querySelectorAll('.activity-item'), function(it){
+    var r = poolRow(it);
+    [['prio', r.prio], ['svc', r.svc], ['at', r.at], ['when', r.when]].forEach(function(p){ var k = p[0] + ':' + p[1]; c[k] = (c[k] || 0) + 1; });
+  });
+  return c;
+}
+function pfRenderPopover(){
+  var c = pfCounts();
+  var chips = function(g, list){
+    return '<div class="pf-chips">' + list.map(function(x){
+      var v = Array.isArray(x) ? x[0] : x, label = Array.isArray(x) ? x[1] : x, on = pf[g].indexOf(v) > -1, n = c[g + ':' + v] || 0;
+      return '<button type="button" class="pf-chip" aria-pressed="' + on + '"' + (!n && !on ? ' disabled' : '') + ' onclick="pfToggle(\'' + g + '\',\'' + v + '\')">' + label + '<span class="pf-n">' + n + '</span></button>';
+    }).join('') + '</div>';
+  };
+  var sec = function(t, body){ return '<div class="pf-sec"><div class="pf-sec-title">' + t + '</div>' + body + '</div>'; };
+  document.getElementById('pf-pop').innerHTML =
+      sec('Priority', chips('prio', POOL_PRIO))
+    + sec('Service type', chips('svc', POOL_SVC))
+    + sec('Activity type', chips('at', POOL_AT))
+    + sec('Planned start', chips('when', POOL_WHEN))
+    + '<div class="pf-sec pf-skill"><div><div class="pf-skill-text">Matches my skills</div><div class="pf-skill-desc">Only work ' + personaCur().name.split(' ')[0] + ' is qualified for</div></div>'
+    +   '<button type="button" class="lp-switch" role="switch" aria-checked="' + pf.skills + '" aria-label="Matches my skills" onclick="pfSetSkills(!pf.skills)"></button></div>'
+    + '<div class="pf-foot"><button type="button" class="pf-link" onclick="pfClear()"' + (pfActiveCount() ? '' : ' disabled') + '>Clear all</button>'
+    +   '<button type="button" class="lp-btn lp-btn-emph" onclick="pfClosePopover()">Done</button></div>';
+}
+function pfTogglePopover(e){
+  if (e) e.stopPropagation();
+  var pop = document.getElementById('pf-pop');
+  if (pop.classList.contains('open')){ pfClosePopover(); return; }
+  pfRenderPopover();
+  pop.classList.add('open');
+  document.getElementById('pf-btn').setAttribute('aria-expanded', 'true');
+}
+function pfClosePopover(){
+  var pop = document.getElementById('pf-pop'); if (!pop) return;
+  pop.classList.remove('open');
+  var b = document.getElementById('pf-btn'); if (b) b.setAttribute('aria-expanded', 'false');
+}
+function pfToggle(g, v){ var a = pf[g], i = a.indexOf(v); if (i > -1) a.splice(i, 1); else a.push(v); poolApply(); updateActivityCounts(); }
+function pfSetSkills(on){ pf.skills = !!on; poolApply(); }
+function pfSetSort(v){ pf.sort = v; poolApply(); }
+function pfClear(){ pf.prio = []; pf.svc = []; pf.at = []; pf.when = []; pf.skills = false; poolApply(); }
+document.addEventListener('click', function(){ pfClosePopover(); });
 document.addEventListener('keydown', function(e){ if (e.key === 'Escape') afClosePopover(); });
 
 // ── Personas (AMAT engineer roles) ──
@@ -3710,7 +4040,10 @@ function lpNormalizeOptions(o){
     tab:            o.tab === 'unassigned' ? 'unassigned' : 'myact',
     subscribedOnly: o.subscribedOnly === true,
     criticalOnly:   o.criticalOnly === true,
-    zone:           o.zone === 'b1' ? 'b1' : 'b4'
+    zone:           o.zone === 'b1' ? 'b1' : 'b4',
+    schedPolicy:    SCHED_POLICIES.indexOf(o.schedPolicy) > -1 ? o.schedPolicy : 'Skills',
+    poolSort:       ['start','priority','duration','tool'].indexOf(o.poolSort) > -1 ? o.poolSort : 'start',
+    poolSkills:     o.poolSkills === true
   };
 }
 function lpApplyOptions(cfg, prev){
@@ -3723,6 +4056,9 @@ function lpApplyOptions(cfg, prev){
   }
   if (first || prev.tab !== o.tab) switchActivityTab(o.tab);
   if (first || prev.range !== o.range) afRange = afPreset(o.range);
+  if (first || prev.poolSort !== o.poolSort) pf.sort = o.poolSort;
+  if (first || prev.poolSkills !== o.poolSkills) pf.skills = o.poolSkills;
+  if (first || prev.schedPolicy !== o.schedPolicy){ var ps = document.getElementById('sched-policy'); if (ps) ps.value = o.schedPolicy; }
   afApply();
   if (typeof personaApplyProfRules === 'function') personaApplyProfRules();   // proficiency limits win over defaults
 }
@@ -3884,14 +4220,21 @@ function renderLpOptions(){
   var tabSeg = '<div class="lp-seg" role="group" aria-label="Default tab">'
     + '<button type="button" class="'+(o.tab==='myact'?'on':'')+'" onclick="lpDraft.options.tab=\'myact\';renderLpOptions()">My activities</button>'
     + '<button type="button" class="'+(o.tab==='unassigned'?'on':'')+'" onclick="lpDraft.options.tab=\'unassigned\';renderLpOptions()">Unassigned</button></div>';
+  var polSel = '<select class="lp-select" aria-label="Default scheduling policy" onchange="lpDraft.options.schedPolicy=this.value">'
+    + SCHED_POLICIES.map(function(p){ return '<option value="'+p+'"'+(o.schedPolicy===p?' selected':'')+'>'+p+'</option>'; }).join('') + '</select>';
+  var poolSortSel = '<select class="lp-select" aria-label="Unassigned default sort" onchange="lpDraft.options.poolSort=this.value">'
+    + POOL_SORT.map(function(x){ return '<option value="'+x[0]+'"'+(o.poolSort===x[0]?' selected':'')+'>'+x[1]+'</option>'; }).join('') + '</select>';
   var zoneSel = '<select class="lp-select" aria-label="Default zone" onchange="lpDraft.options.zone=this.value">'
     + '<option value="b4"'+(o.zone==='b4'?' selected':'')+'>CVD Bay — Building 4</option>'
     + '<option value="b1"'+(o.zone==='b1'?' selected':'')+'>CVD Bay — Building 1</option></select>';
   document.getElementById('lp-options').innerHTML =
       '<div class="lp-options-intro">Defaults apply when the landing page opens, and straight away when you save.</div>'
     + '<div class="lp-opt-group"><div class="lp-opt-head">Activities</div>'
-    +   lpOptRow('Default date range', 'What the date filter shows when the page opens', rangeSel)
-    +   lpOptRow('Default tab', null, tabSeg) + '</div>'
+    +   lpOptRow('Default date range', 'My activities date filter when the page opens', rangeSel)
+    +   lpOptRow('Default tab', null, tabSeg)
+    +   lpOptRow('Default scheduling policy', 'FSA policy used by (Re)-Schedule', polSel)
+    +   lpOptRow('Unassigned — default sort', 'How the unassigned pool is ordered', poolSortSel)
+    +   lpOptRow('Unassigned — only work matching my skills', 'Start with the skills filter on', lpOptSwitch('poolSkills','Only work matching my skills')) + '</div>'
     + '<div class="lp-opt-group"><div class="lp-opt-head">Tool status</div>'
     +   lpOptRow('Show only my subscribed tools', 'Hide tools you haven\u2019t subscribed to', lpOptSwitch('subscribedOnly','Show only my subscribed tools')) + '</div>'
     + '<div class="lp-opt-group"><div class="lp-opt-head">Tool telemetry alerts</div>'
@@ -4024,7 +4367,9 @@ function renderSheet(key, scrollTo){
       + '<span class="sheet-back-parent">'+sheetTitleText(parent)+'</span></div>';
   }
   currentSheetKey = key;
-  var html = fn(), loc = actLocation(key);
+  var html = fn(), loc = actLocation(key), meta = (typeof POOL_META !== 'undefined') && POOL_META[key];
+  if (meta && html.indexOf('>Service type<') < 0)
+    html = html.replace(/<div class="sheet-row"><div class="sheet-key">Activity type<\/div><div class="sheet-val[^"]*">[^<]*<\/div><\/div>/, rows([['Service type', meta[0]], ['Activity type', meta[1]]]));
   if (loc === 'pool') html = html.split('Philip White · CE Level Principal').join('Unassigned — awaiting dispatch');
   else if (loc === 'mine') html = html.split('Unassigned — awaiting dispatch').join('Philip White · CE Level Principal');
   document.getElementById('sheet-content').innerHTML = back + html.split('Philip White · CE Level Principal').join(personaAssignLabel());
