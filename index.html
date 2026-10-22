@@ -1661,13 +1661,13 @@ function updateHeaderTime(){
   var el = document.getElementById('header-time');
   if(!el) return;
   var now = new Date();
-  var opts = {timeZone:'America/Chicago', weekday:'short', month:'short', day:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', hour12:true, timeZoneName:'short'};
+  var opts = {timeZone:'America/Phoenix', weekday:'short', month:'short', day:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', hour12:true, timeZoneName:'short'};
   var parts = new Intl.DateTimeFormat('en-US', opts).formatToParts(now);
   var map = {};
   parts.forEach(function(p){ map[p.type] = p.value; });
   var ampm = (map.dayPeriod || '').toUpperCase();
-  // CST in winter, CDT in summer — follows daylight saving automatically
-  var tz = map.timeZoneName || 'CT';
+  // Site time for Intel Chandler, AZ — Arizona stays on MST all year (no daylight saving)
+  var tz = map.timeZoneName || 'MST';
   var stamp = map.weekday+' '+map.day+' '+map.month+' '+map.year+' &middot; '+map.hour+':'+map.minute+' '+ampm+' '+tz;
   el.innerHTML = stamp;
   var subEls = document.querySelectorAll('.subview-datetime');
@@ -1938,7 +1938,7 @@ function buildStartingInbox(){
 }
 // Refresh 1 — STO parts transfer; scheduled arrival = tomorrow
 function makeMsg6(){
-  return {sender:'SAP ERP Workflow Message',subject:'Part — AMAT Loadlock — has been issued from — General Warehouse — and shipping to — '+personaCur().name+' — at — Customer 0001 World Communications Dr., 7350, 68122, Omaha, US. Scheduled arrival '+longDate(1)+' approx 10:00 AM EST',date:inboxDate(0),time:'12:21 PM',badge:'parts-order',bl:'Parts Ordering'};
+  return {sender:'SAP ERP Workflow Message',subject:'Part — AMAT Loadlock — has been issued from — General Warehouse — and shipping to — '+personaCur().name+' — at — Intel Chandler, Building 4, CVD Bay — S. Dobson Rd., 4500, 85248, Chandler, US. Scheduled arrival '+longDate(1)+' approx 10:00 AM MST',date:inboxDate(0),time:'12:21 PM',badge:'parts-order',bl:'Parts Ordering'};
 }
 // Refresh 2 — parts return received
 function makeMsg7(){
@@ -2430,7 +2430,7 @@ var sheets = {
 
 
 'act1': function(){
-  var stepHtml = stepper(['Accept and pre-entry triage','Travel and site arrival','Safety lockout / tagout','Diagnosis and repair','Functional verification','Labor capture and closure'],0);
+  var stepHtml = stepper(['Accept and pre-entry triage','Cleanroom gowning and tool access','Safety lockout / tagout','Diagnosis and repair','Functional verification','Labor capture and closure'],0);
   return '<div class="sheet-title">10190551 CVD-204 · Corrective Maintenance</div>'
   +'<div class="sheet-sub">Order 4000821 · P1 · 07:15 today</div>'
   +rows([['Activity type','Corrective — unplanned'],['Priority','P1 — tool down','red'],['Assigned to','Philip White · CE Level Principal'],['Estimated duration','2.5 hours'],['Tool','10190551 CVD-204 · Chamber A'],['Entitlement','Applied Global Care — Platinum · Covered'],['Response SLA','4 hours · 1h 29m remaining','red'],['ECC order','4000821'],['CRM ticket','SR-48820']])
@@ -2442,7 +2442,7 @@ var sheets = {
   +'</div>';},
 
 'act2': function(){
-  var stepHtml = stepper(['Accept and review task list','Travel and site arrival','Safety lockout / tagout','PM execution and measurement capture','Labor capture and closure'],0);
+  var stepHtml = stepper(['Accept and review task list','Cleanroom gowning and tool access','Safety lockout / tagout','PM execution and measurement capture','Labor capture and closure'],0);
   return '<div class="sheet-title">10190556 CVD-201 · Quarterly PM — Chamber Kit</div>'
   +'<div class="sheet-sub">Order 4000804 · Planned · 09:00 today</div>'
   +rows([['Activity type','Preventive maintenance — planned'],['Priority','P3 — scheduled'],['Assigned to','Philip White · CE Level Principal'],['Estimated duration','3 hours'],['Tool','10190556 CVD-201'],['Task list','Centura CVD — Quarterly Chamber Kit'],['Offline supported','Yes — task list pre-downloaded'],['Entitlement','Applied Global Care — Platinum · Covered'],['ECC order','4000804']])
@@ -2475,7 +2475,7 @@ var sheets = {
   +'</div>';},
 
 'act5': function(){
-  var stepHtml = stepper(['Confirm rescheduled time with dispatcher','Travel and site arrival','Safety lockout / tagout','PM execution and measurement capture','Labor capture and closure'],0);
+  var stepHtml = stepper(['Confirm rescheduled time with dispatcher','Cleanroom gowning and tool access','Safety lockout / tagout','PM execution and measurement capture','Labor capture and closure'],0);
   return '<div class="sheet-title">10190561 CVD-207 · Preventive Maintenance — Rescheduled</div>'
   +'<div class="sheet-sub">Order 4000817 · Rescheduled · 15:00 today</div>'
   +rows([['Activity type','Preventive maintenance — rescheduled'],['Priority','P3 — scheduled'],['Assigned to','Philip White · CE Level Principal'],['Estimated duration','2 hours'],['Original start','08:00 — auto-rescheduled by FSA P&S'],['New start time','15:00'],['Rescheduled reason','P1 override — 10190551 CVD-204 corrective inserted'],['Task list','Centura CVD — Standard PM'],['Offline supported','Yes — task list pre-downloaded'],['ECC order','4000817']])
