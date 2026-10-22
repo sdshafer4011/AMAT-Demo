@@ -257,6 +257,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .act-sched { display: flex; align-items: center; padding-bottom: 8px; }
 .act-sched-btn { font-family: inherit; font-size: 12px; font-weight: 700; color: #fff; background: var(--sapBrandColor); border: 1px solid var(--sapBrandColor); border-radius: var(--radius-sm) 0 0 var(--radius-sm); padding: 0 12px; height: 32px; cursor: pointer; white-space: nowrap; -webkit-user-select: none; }
 .act-sched-btn:active { background: var(--sapHighlightColor); }
+.act-sched-btn.off { background: var(--sapNeutralBackground); border-color: var(--sapButtonBorder); color: var(--sapIconMuted); cursor: not-allowed; }
 .act-sched-policy { font-family: inherit; font-size: 12px; font-weight: 600; color: var(--sapHighlightColor); background: var(--surface); border: 1px solid var(--sapBrandColor); border-left: 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; height: 32px; padding: 0 26px 0 10px; cursor: pointer; -webkit-appearance: none; appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230064d9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 9px center; }
 .activity-select { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--sapBrandColor); cursor: pointer; }
@@ -1799,12 +1800,23 @@ function updateActivityCounts(){
   }
 }
 
+// (Re)-Schedule plans into the date filter's days — supported for Today, Tomorrow and Next 3 days
+var SCHED_RANGES = ['today','tomorrow','next3'];
+// early calls run before the date filter exists, so fall back to Today
+function schedRange(){ var r = window.AF_PRESETS ? afGet() : {id:'today', from:0, to:0}; return SCHED_RANGES.indexOf(r.id) > -1 ? r : null; }
+function schedRangeLabel(r){ return r.id === 'today' ? 'today' : r.id === 'tomorrow' ? 'tomorrow' : 'the next 3 days'; }
 function updateAutoScheduleButtonVisibility(){
   var btn = document.getElementById('auto-schedule-btn');
   if(!btn) return;
   var tabMyAct = document.getElementById('tab-myact');
   var isMyActTab = tabMyAct && tabMyAct.classList.contains('active');
-  btn.style.display = isMyActTab ? 'flex' : 'none';           // (Re)-Schedule is always available on My activities
+  btn.style.display = isMyActTab ? 'flex' : 'none';           // (Re)-Schedule is always shown on My activities
+  var rb = document.getElementById('resched-btn'), ok = !!schedRange();
+  if (rb){
+    rb.classList.toggle('off', !ok);
+    rb.setAttribute('aria-disabled', String(!ok));
+    rb.title = ok ? 'Schedule into ' + schedRangeLabel(schedRange()) : 'Available for Today, Tomorrow or Next 3 days';
+  }
 }
 
 var PRIORITY_RANK = {escalated:1, high:2, medium:3, low:4};
@@ -1844,6 +1856,8 @@ function schedNearestRoute(list, start){ // greedy nearest-next-tool walk from t
 function runAutoSchedule(){
   var listMyAct = document.getElementById('activity-list-myact');
   if(!listMyAct) return;
+  var range = schedRange();
+  if (!range){ showToaster('(Re)-Schedule works for Today, Tomorrow or Next 3 days — change the date filter'); return; }
   var policy = schedPolicy();
   var skills = PERSONA_SKILLS[personaState.current] || [];
 
@@ -1852,7 +1866,8 @@ function runAutoSchedule(){
     if (item.classList.contains('persona-out')) return false;          // only this persona's day
     if (item.hasAttribute('data-span') || item.hasAttribute('data-day-at')) return false;   // installation phases keep their plan
     var unscheduled = !t || t.classList.contains('tbd') || t.classList.contains('nocap');
-    return unscheduled || (parseInt(item.getAttribute('data-day'), 10) || 0) === 0;
+    var d = parseInt(item.getAttribute('data-day'), 10) || 0;
+    return unscheduled || (d >= range.from && d <= range.to);          // unscheduled work + work already on the range's days
   });
   var data = items.map(function(item){
     var prioEl = item.querySelector('.act-priority');
@@ -1885,17 +1900,15 @@ function runAutoSchedule(){
   }
   data = esc.concat(rest);
 
-  var cursor = 7*60;
-  var shiftEnd = 17*60;
-  var capacityExhausted = false, over = 0;
+  // pack in policy order: each activity takes the earliest day in the range with room (07:00–17:00 shift)
+  var shiftStart = 7*60, shiftEnd = 17*60, cursor = {}, over = 0, perDay = {};
+  for (var d = range.from; d <= range.to; d++) cursor[d] = shiftStart;
   data.forEach(function(a){
-    if(!capacityExhausted && (cursor + a.durationMin) <= shiftEnd){
-      a.newTime = formatMinutesToHHMM(cursor);
-      cursor += a.durationMin;
-    } else {
-      capacityExhausted = true;
-      a.newTime = null; over++;
+    a.day = null;
+    for (var d = range.from; d <= range.to; d++){
+      if (cursor[d] + a.durationMin <= shiftEnd){ a.day = d; a.newTime = formatMinutesToHHMM(cursor[d]); cursor[d] += a.durationMin; perDay[d] = (perDay[d] || 0) + 1; break; }
     }
+    if (a.day === null) over++;
   });
 
   data.forEach(function(a){
@@ -1905,22 +1918,25 @@ function runAutoSchedule(){
       var cb = a.el.querySelector('.activity-select');
       a.el.insertBefore(timeEl, cb ? cb.nextSibling : a.el.firstChild);
     }
-    a.el.setAttribute('data-day', '0');   // scheduled into today's shift
-    if(a.newTime){
+    if(a.day !== null){
+      a.el.setAttribute('data-day', String(a.day));
       timeEl.className = 'act-time';
       timeEl.textContent = a.newTime;
     } else {
+      a.el.setAttribute('data-day', String(range.from));
       timeEl.className = 'act-time nocap';
-      timeEl.textContent = 'No remaining capacity for today';
+      timeEl.textContent = 'No remaining capacity for ' + schedRangeLabel(range);
     }
     listMyAct.appendChild(a.el);
   });
 
   if (typeof afApply === 'function') afApply(); else updateActivityCounts();
   updateAutoScheduleButtonVisibility();
-  var n = data.length;
-  showToaster(n ? ('Re-scheduled ' + n + (n === 1 ? ' activity' : ' activities') + ' · Policy: ' + policy + (over ? ' · ' + over + ' over capacity' : ''))
-                : 'Nothing to schedule today · Policy: ' + policy);
+  var n = data.length - over;
+  var where = range.from === range.to ? (range.from === 0 ? 'today' : 'tomorrow')
+            : Object.keys(perDay).map(function(d){ d = +d; return (d === 0 ? 'Today' : d === 1 ? 'Tomorrow' : afWeekday(d) + ' ' + afShortDate(d)) + ' (' + perDay[d] + ')'; }).join(', ');
+  showToaster(data.length ? ('Scheduled ' + n + (n === 1 ? ' activity' : ' activities') + ' ' + (range.from === range.to ? 'for ' : 'across ') + where + ' · Policy: ' + policy + (over ? ' · ' + over + ' over capacity' : ''))
+                          : 'Nothing to schedule for ' + schedRangeLabel(range) + ' · Policy: ' + policy);
 }
 
 var selectedUnassigned = {};
