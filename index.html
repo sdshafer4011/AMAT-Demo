@@ -1794,7 +1794,8 @@ function updateActivityCounts(){
   }
   if(listUnassigned && tabUnassigned){
     var m = listUnassigned.querySelectorAll('.activity-item:not(.af-out)').length;
-    tabUnassigned.textContent = 'Unassigned activities ('+m+')';
+    var shown = listUnassigned.querySelectorAll('.activity-item:not(.af-out):not(.pf-out)').length;
+    tabUnassigned.textContent = 'Unassigned activities (' + (shown < m ? shown + '/' : '') + m + ')';   // filtered: shown/total
   }
 }
 
@@ -3442,6 +3443,7 @@ function poolApply(){
   if (document.getElementById('pf-pop').classList.contains('open')) pfRenderPopover();
   var any = false; for (var x in selectedUnassigned) if (selectedUnassigned[x]) any = true;
   var ab = document.getElementById('assign-to-me-btn'); if (ab && !any) ab.style.display = 'none';
+  updateActivityCounts();
 }
 function pfLabel(group, v){
   var src = {prio:POOL_PRIO, when:POOL_WHEN}[group];
@@ -3478,7 +3480,7 @@ function pfRenderPopover(){
   var chips = function(g, list){
     return '<div class="pf-chips">' + vals(list).map(function(x){
       var on = pf[g].indexOf(x[0]) > -1, n = c[g + ':' + x[0]] || 0;
-      return '<button type="button" class="pf-chip" aria-pressed="' + on + '"' + (!n && !on ? ' disabled' : '') + ' onclick="pfToggle(\'' + g + '\',\'' + x[0] + '\')">' + x[1] + '<span class="pf-n">' + n + '</span></button>';
+      return '<button type="button" class="pf-chip" aria-pressed="' + on + '"' + (!n && !on ? ' disabled' : '') + ' onclick="pfToggle(\'' + g + '\',\'' + x[0] + '\')">' + x[1] + '<span class="pf-n">(' + n + ')</span></button>';
     }).join('') + '</div>';
   };
   var dd = function(g, name, list){
@@ -3492,7 +3494,7 @@ function pfRenderPopover(){
       + '<div class="pf-dd-list" role="group" aria-label="' + name + '">' + opts.map(function(x){
           var on = pf[g].indexOf(x[0]) > -1, n = c[g + ':' + x[0]] || 0;
           return '<button type="button" class="pf-opt" role="checkbox" aria-checked="' + on + '"' + (!n && !on ? ' disabled' : '') + ' onclick="pfToggle(\'' + g + '\',\'' + x[0] + '\')">'
-            + '<span class="pf-box">' + (on ? PF_TICK : '') + '</span>' + x[1] + '<span class="pf-n">' + n + '</span></button>';
+            + '<span class="pf-box">' + (on ? PF_TICK : '') + '</span>' + x[1] + '<span class="pf-n">(' + n + ')</span></button>';
         }).join('') + '</div></div>';
   };
   document.getElementById('pf-pop').innerHTML =
@@ -4192,7 +4194,7 @@ function lpUpdateSummaries(){
     var r = card.querySelectorAll('.telem-row').length, a = card.querySelectorAll('.telem-val.alert, .telem-val.warn').length;
     set('telemetry', r+' readings · '+(a ? a+' outside spec' : 'all within spec'));
   }
-  var m = (txt('tab-myact').match(/\((\d+)\)/) || [])[1], u = (txt('tab-unassigned').match(/\((\d+)\)/) || [])[1];
+  var m = (txt('tab-myact').match(/\((\d+)\)/) || [])[1], u = (txt('tab-unassigned').match(/\((?:\d+\/)?(\d+)\)/) || [])[1];
   var rg = (typeof afGet === 'function') ? (afGet().id === 'custom' ? afSpan(afGet()) : afRangeName().toLowerCase()) : 'today';
   set('activities', (m || 0)+' assigned · '+(u || 0)+' unassigned · '+rg);
   set('install', 'Phase 2 of 3 · day ' + installDayOf(INSTALL_PLAN.p2, 0) + ' of ' + installLen(INSTALL_PLAN.p2) + ' · commissioning in ' + INSTALL_PLAN.commission + ' days');
