@@ -1961,7 +1961,7 @@ function assignSelectedToMe(){
     var note = sub && sub.querySelector('.assign-note');
     if (note) note.textContent = 'Self assigned';
     else if(sub && sub.innerHTML.indexOf('Self assigned') === -1){
-      sub.innerHTML = sub.innerHTML.replace(' · Planned Start', ' · <span class="assign-note">Self assigned</span> · Planned Start');
+      sub.innerHTML = sub.innerHTML.replace(/ · (Planned Start|Not yet planned)/, ' · <span class="assign-note">Self assigned</span> · $1');
     }
 
     listMyAct.appendChild(item);
@@ -3094,13 +3094,15 @@ function afRows(listId, r){
     var d1 = it.hasAttribute('data-day-end') && (span || listId !== 'activity-list-myact') ? parseInt(it.getAttribute('data-day-end'), 10) : d0;
     var mine = listId !== 'activity-list-myact' || personaOwns(it);      // My activities = this persona's work only
     it.classList.toggle('persona-out', !mine);
-    return {el: it, d0: d0, d1: d1, span: span, day: Math.max(d0, r.from), t: afTimeKey(it), ord: +it.getAttribute('data-ord'), on: mine && d0 <= r.to && d1 >= r.from};
+    // assigned but not yet scheduled ('To be scheduled' / over capacity) shows whatever the date filter says
+    var tbd = listId === 'activity-list-myact' && !!it.querySelector('.act-time.tbd, .act-time.nocap');
+    return {el: it, d0: d0, d1: d1, span: span, tbd: tbd, day: Math.max(d0, r.from), t: afTimeKey(it), ord: +it.getAttribute('data-ord'), on: mine && (tbd || (d0 <= r.to && d1 >= r.from))};
   });
 }
 function afDayCounts(listId, r){
   var c = {};
   afRows(listId, r).forEach(function(x){
-    if (!x.on) return;
+    if (!x.on || x.tbd) return;
     if (x.span){ for (var d = Math.max(x.d0, r.from); d <= Math.min(x.d1, r.to); d++) c[d] = (c[d] || 0) + 1; }
     else c[x.day] = (c[x.day] || 0) + 1;
   });
@@ -3127,11 +3129,14 @@ function afApply(){
     Array.prototype.forEach.call(list.querySelectorAll('.act-day-head, .act-empty'), function(e){ e.remove(); });
     var rows = afRows(listId, r);
     // multi-day activities first (they run through the whole view), then by day and time
-    rows.sort(function(a, b){ return (b.span - a.span) || (a.day - b.day) || (a.t - b.t) || (a.ord - b.ord); });
+    rows.sort(function(a, b){ return (b.tbd - a.tbd) || (b.span - a.span) || (a.day - b.day) || (a.t - b.t) || (a.ord - b.ord); });
     var lastKey = null, shownAny = false;
     var refDay = showAll ? (multi ? null : r.from) : afDay;      // the day a multi-day item is shown 'as of'
+    rows.forEach(function(row){ row.shown = row.on && (showAll || row.tbd || (row.span ? (afDay >= row.d0 && afDay <= row.d1) : row.day === afDay)); });
+    var hasTbd = rows.some(function(x){ return x.shown && x.tbd; });
+    var grp = function(x){ return x.tbd ? 'tbd' : x.span ? 'span' : x.day; };
     rows.forEach(function(row){
-      var shown = row.on && (showAll || (row.span ? (afDay >= row.d0 && afDay <= row.d1) : row.day === afDay));
+      var shown = row.shown;
       row.el.classList.toggle('af-out', !row.on);
       row.el.classList.toggle('af-day-out', row.on && !shown);
       if (!shown){ var cb = row.el.querySelector('.activity-select'); if (cb && cb.checked){ cb.checked = false; selectedUnassigned[cb.getAttribute('data-id')] = false; } }
@@ -3142,12 +3147,12 @@ function afApply(){
         if (tEl) tEl.innerHTML = idx === null ? (row.d1 < 0 ? 'Done' : 'Ongoing') : 'Day ' + idx + '<span class="act-time-of">of ' + len + '</span>';
         if (note) note.textContent = (idx === null || idx < 1 ? '' : 'Day ' + idx + ' of ' + len + ' · ') + afShortDate(row.d0) + ' – ' + afShortDate(row.d1);
       }
-      var key = row.span ? 'span' : row.day;
-      if (multi && showAll && row.on && key !== lastKey){
-        var n = rows.filter(function(x){ return x.on && (row.span ? x.span : (!x.span && x.day === row.day)); }).length;
+      var key = grp(row);
+      if (shown && key !== lastKey && ((multi && showAll) || hasTbd)){       // with unscheduled work on top, label every group
+        var n = rows.filter(function(x){ return x.shown && grp(x) === key; }).length;
         var h = document.createElement('div');
         h.className = 'act-day-head';
-        h.innerHTML = '<span>'+(row.span ? 'Multi-day work' : afDayHeading(row.day))+'</span><span class="act-day-count">'+n+' '+(n === 1 ? 'activity' : 'activities')+'</span>';
+        h.innerHTML = '<span>'+(row.tbd ? 'To be scheduled' : row.span ? 'Multi-day work' : afDayHeading(row.day))+'</span><span class="act-day-count">'+n+' '+(n === 1 ? 'activity' : 'activities')+'</span>';
         list.appendChild(h);
         lastKey = key;
       }
