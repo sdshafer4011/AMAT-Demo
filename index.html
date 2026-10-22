@@ -237,6 +237,13 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .act-badge.install { background: var(--crit-bg); color: var(--crit-text); }
 /* Priority chips — solid, as in FSA Mobile ("Medium") */
 .act-priority { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 4px; flex-shrink: 0; white-space: nowrap; width: 66px; text-align: center; }
+/* phone: title gets the full row; priority + type chips wrap to a second line, right-aligned */
+@media (max-width: 600px) {
+  .activity-item { flex-wrap: wrap; row-gap: 8px; gap: 10px; padding: 12px 14px; }
+  .activity-item .act-main { flex: 1 1 55%; }
+  .activity-item .act-priority { margin-left: auto; }
+  .activity-item .act-time.tbd, .activity-item .act-time.nocap { white-space: normal; max-width: 84px; }
+}
 .act-priority.low { background: var(--priority-low); color: #fff; }
 .act-priority.medium { background: var(--priority-medium); color: var(--text1); }
 .act-priority.high { background: var(--priority-high); color: #fff; }
@@ -250,6 +257,8 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .activity-select { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--sapBrandColor); cursor: pointer; }
 .activity-action-btn { display: none; background: var(--sapBrandColor); color: #fff; font-family: inherit; font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: var(--radius-sm); border: none; cursor: pointer; white-space: nowrap; -webkit-user-select: none; }
 .activity-action-btn:active { background: var(--sapHighlightColor); transform: scale(0.96); }
+.activity-action-btn.secondary { background: var(--surface); color: var(--sapBrandColor); box-shadow: inset 0 0 0 1px var(--sapBrandColor); }
+.activity-action-btn.secondary:active { background: var(--sapHoverBackground); }
 
 /* FOOTER */
 .footer-bar { background: var(--sapShellColor); border-top: 1px solid var(--sapGroupBorder); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 -16px 0; }
@@ -511,8 +520,8 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .lp-panel.lp-unavail, .persona-out { display: none !important; }
 /* proficiency rules */
 body.prof-junior #tab-unassigned, body.prof-junior #auto-schedule-btn { display: none !important; }
-body.prof-intermediate .activity-select, body.prof-intermediate #assign-to-me-btn,
-body.prof-junior .activity-select, body.prof-junior #assign-to-me-btn { display: none !important; }
+body.prof-intermediate .activity-select, body.prof-intermediate #assign-to-me-btn, body.prof-intermediate #unassign-btn,
+body.prof-junior .activity-select, body.prof-junior #assign-to-me-btn, body.prof-junior #unassign-btn { display: none !important; }
 
 /* ── Installation progress (Install CE) ── */
 .ip-card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 16px; }
@@ -1060,6 +1069,7 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
         <div class="activity-tab" id="tab-unassigned" onclick="switchActivityTab('unassigned')">Unassigned activities (7)</div>
         <div class="activity-tabs-right">
           <button class="activity-action-btn" id="auto-schedule-btn" onclick="runAutoSchedule()">Auto-schedule</button>
+          <button class="activity-action-btn secondary" id="unassign-btn" onclick="unassignSelected()">Unassign</button>
           <button class="activity-action-btn" id="assign-to-me-btn" onclick="assignSelectedToMe()">Assign to me</button>
           <div class="af-wrap">
             <button type="button" class="af-btn" id="af-btn" onclick="afTogglePopover(event)" aria-haspopup="true" aria-expanded="false">
@@ -1628,11 +1638,11 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
   </div>
   <div class="subview-body">
     <div class="subview-grid">
-      <div class="tool-card t-red" onclick="openSheet('cvd204')"><div class="tool-id">10190551 CVD-204</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot red"></span><span class="status-text">Out of service</span></div><div class="tool-tag danger">Corrective · 07:15</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
-      <div class="tool-card t-blue" onclick="openSheet('cvd201')"><div class="tool-id">10190556 CVD-201</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM</span></div><div class="tool-tag info">Planned PM · 09:00</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
-      <div class="tool-card t-purple" onclick="openSheet('cvd213')"><div class="tool-id">10190566 CVD-213</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot purple"></span><span class="status-text">Under installation</span></div><div class="tool-tag install">Install · 12:00</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
-      <div class="tool-card t-amber" onclick="openSheet('cvd208')"><div class="tool-id">10190562 CVD-208</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted</span></div><div class="tool-tag alert">Remote · 13:30</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
-      <div class="tool-card t-blue" onclick="openSheet('cvd207')"><div class="tool-id">10190561 CVD-207</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM</span></div><div class="tool-tag info">PM rescheduled · 15:00</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-red" data-act="act1" onclick="openSheet('cvd204')"><div class="tool-id">10190551 CVD-204</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot red"></span><span class="status-text">Out of service</span></div><div class="tool-tag danger">Corrective · 07:15</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-blue" data-act="act2" onclick="openSheet('cvd201')"><div class="tool-id">10190556 CVD-201</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM</span></div><div class="tool-tag info">Planned PM · 09:00</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-purple" data-act="act3" onclick="openSheet('cvd213')"><div class="tool-id">10190566 CVD-213</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot purple"></span><span class="status-text">Under installation</span></div><div class="tool-tag install">Install · 12:00</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-amber" data-act="act4" onclick="openSheet('cvd208')"><div class="tool-id">10190562 CVD-208</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot amber"></span><span class="status-text">Restricted</span></div><div class="tool-tag alert">Remote · 13:30</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
+      <div class="tool-card t-blue" data-act="act5" onclick="openSheet('cvd207')"><div class="tool-id">10190561 CVD-207</div><div class="tool-type">Applied Centura · CVD</div><div class="tool-status"><span class="status-dot blue"></span><span class="status-text">Upcoming PM</span></div><div class="tool-tag info">PM rescheduled · 15:00</div><div class="tool-sub"><label class="tool-sub-label" onclick="event.stopPropagation()"><input type="checkbox" class="tool-sub-check" onchange="handleToolSubscribeToggle(this)" checked> Subscribed</label></div></div>
     </div>
   </div>
 </div>
@@ -1816,17 +1826,22 @@ function assignSelectedToMe(){
     if(cb) cb.remove();
     item.setAttribute('data-owner', personaState.current);
 
-    var timeEl = document.createElement('div');
-    timeEl.className = 'act-time tbd';
-    timeEl.textContent = 'To be scheduled';
-    item.insertBefore(timeEl, item.firstChild);
+    if (!item.querySelector('.act-time')){            // pool work has no slot yet; returned work keeps its planned slot
+      var timeEl = document.createElement('div');
+      timeEl.className = 'act-time tbd';
+      timeEl.textContent = 'To be scheduled';
+      item.insertBefore(timeEl, item.firstChild);
+    }
 
     var sub = item.querySelector('.act-sub');
-    if(sub && sub.innerHTML.indexOf('Self assigned') === -1){
-      sub.innerHTML = sub.innerHTML.replace(' · Planned Start', ' · Self assigned · Planned Start');
+    var note = sub && sub.querySelector('.assign-note');
+    if (note) note.textContent = 'Self assigned';
+    else if(sub && sub.innerHTML.indexOf('Self assigned') === -1){
+      sub.innerHTML = sub.innerHTML.replace(' · Planned Start', ' · <span class="assign-note">Self assigned</span> · Planned Start');
     }
 
     listMyAct.appendChild(item);
+    myActEnsureCheckbox(item);
   });
 
   selectedUnassigned = {};
@@ -1834,6 +1849,64 @@ function assignSelectedToMe(){
   if(btn) btn.style.display = 'none';
   if (typeof afApply === 'function') afApply(); else updateActivityCounts();
   updateAutoScheduleButtonVisibility();
+}
+
+// ── Unassign: My activities → back to the Unassigned pool ──
+// Every open activity in My activities gets a checkbox (completed work and multi-week
+// installation phases don't). Selecting one or more shows 'Unassign'.
+var ASSIGN_PHRASE = /Assigned by dispatcher|Auto assigned|Self assigned/;
+function actKey(item){ var m = (item.getAttribute('onclick') || '').match(/openSheet\('([^']+)'\)/); return m ? m[1] : ''; }
+function myActCanUnassign(item){ return !item.hasAttribute('data-span') && !item.classList.contains('act-done'); }
+function myActEnsureCheckbox(item){
+  if (!myActCanUnassign(item) || item.querySelector('.activity-select')) return;
+  var cb = document.createElement('input');
+  cb.type = 'checkbox'; cb.className = 'activity-select'; cb.setAttribute('data-id', 'm-' + actKey(item));
+  cb.setAttribute('aria-label', 'Select activity');
+  cb.setAttribute('onclick', 'event.stopPropagation(); updateUnassignButton()');
+  item.insertBefore(cb, item.firstChild);
+}
+function updateUnassignButton(){
+  var btn = document.getElementById('unassign-btn'); if (!btn) return;
+  var t = document.getElementById('tab-myact');
+  var n = document.querySelectorAll('#activity-list-myact .activity-select:checked').length;
+  btn.style.display = (t && t.classList.contains('active') && n) ? 'inline-block' : 'none';
+}
+function unassignSelected(){
+  var list = document.getElementById('activity-list-myact'); if (!list) return;
+  var picked = Array.prototype.map.call(list.querySelectorAll('.activity-select:checked'), function(cb){ return cb.closest('.activity-item'); });
+  if (!picked.length) return;
+  var who = personaCur().name, zones = {};
+  picked.forEach(function(item){
+    var cb = item.querySelector('.activity-select'); if (cb) cb.remove();
+    item.removeAttribute('data-owner');
+    var t = item.querySelector('.act-time');
+    if (t && (t.classList.contains('tbd') || t.classList.contains('nocap'))) t.remove();   // never got a real slot
+    var sub = item.querySelector('.act-sub');
+    if (sub){
+      var note = sub.querySelector('.assign-note'), label = 'Unassigned by ' + who;
+      if (note) note.textContent = label;
+      else if (ASSIGN_PHRASE.test(sub.innerHTML)) sub.innerHTML = sub.innerHTML.replace(ASSIGN_PHRASE, '<span class="assign-note">' + label + '</span>');
+      else sub.innerHTML += ' · <span class="assign-note">' + label + '</span>';
+    }
+    var title = (item.querySelector('.act-title') || {}).textContent || '';
+    var zone = /CVD-1\d\d\b/.test(title) ? 'b1' : 'b4';           // Building 1 tools are CVD-1xx
+    zones[zone] = (zones[zone] || 0) + 1;
+    var pcb = document.createElement('input');
+    pcb.type = 'checkbox'; pcb.className = 'activity-select'; pcb.setAttribute('data-id', 'u-' + actKey(item));
+    pcb.setAttribute('onclick', 'event.stopPropagation(); handleActivitySelect(this)');
+    item.insertBefore(pcb, item.firstChild);
+    document.getElementById('activity-list-unassigned-' + zone).appendChild(item);
+  });
+  if (typeof afApply === 'function') afApply(); else updateActivityCounts();
+  updateUnassignButton();
+  var n = picked.length, where = Object.keys(zones).map(function(z){ return z === 'b1' ? 'Building 1' : 'Building 4'; }).join(' and ');
+  showToaster(n + (n === 1 ? ' activity' : ' activities') + ' unassigned — returned to the ' + where + ' pool');
+}
+// which list an activity sheet's item lives in now: 'mine', 'pool' or null
+function actLocation(key){
+  var it = document.querySelector('.activity-list .activity-item[onclick="openSheet(\'' + key + '\')"]');
+  if (!it) return null;
+  return it.parentElement.id === 'activity-list-myact' ? 'mine' : 'pool';
 }
 
 function switchActivityTab(tab){
@@ -1855,12 +1928,14 @@ function switchActivityTab(tab){
   selectedUnassigned = {};
   var btn = document.getElementById('assign-to-me-btn');
   if(btn) btn.style.display = 'none';
+  updateUnassignButton();
   updateAutoScheduleButtonVisibility();
 }
 updateHeaderTime();
 updateUnassignedPlannedDates();
 updateActivityCounts();
 updateAutoScheduleButtonVisibility();
+Array.prototype.forEach.call(document.querySelectorAll('#activity-list-myact .activity-item'), myActEnsureCheckbox);
 
 function handleZoneChange(){
   var sel = document.getElementById('zone-select');
@@ -1909,6 +1984,7 @@ function handleZoneChange(){
   selectedUnassigned = {};
   var assignBtn = document.getElementById('assign-to-me-btn');
   if(assignBtn) assignBtn.style.display = 'none';
+  updateUnassignButton();
   updateActivityCounts();
 
   var toolsCard = document.getElementById('stat-card-tools');
@@ -2975,6 +3051,7 @@ function afApply(){
   afRenderDays(r, multi);
   var any = false; for (var k in selectedUnassigned) if (selectedUnassigned[k]) any = true;
   var ab = document.getElementById('assign-to-me-btn'); if (ab && !any) ab.style.display = 'none';
+  updateUnassignButton();
   afRenderLabel();
   updateActivityCounts();
   updateAutoScheduleButtonVisibility();
@@ -3165,19 +3242,27 @@ function personaApplyProfRules(){
     Array.prototype.forEach.call(document.querySelectorAll('.activity-select'), function(c){ c.checked = false; });
     selectedUnassigned = {};
     var ab = document.getElementById('assign-to-me-btn'); if (ab) ab.style.display = 'none';
+    updateUnassignButton();
   }
 }
 // runs at the end of every activity refresh
 function personaAfterApply(){
   var p = personaCur(), el = document.getElementById('stat-val-activities');
   if (!el) return;
-  if (p.id === 'philip'){ el.textContent = (document.getElementById('zone-select').value === 'b1') ? '3' : '5'; return; }
-  var n = Array.prototype.filter.call(document.querySelectorAll('#activity-list-myact .activity-item'), function(it){
+  var todays = Array.prototype.filter.call(document.querySelectorAll('#activity-list-myact .activity-item'), function(it){
     var d0 = parseInt(it.getAttribute('data-day'), 10) || 0;
     var d1 = it.hasAttribute('data-span') ? parseInt(it.getAttribute('data-day-end'), 10) : d0;
     return personaOwns(it) && d0 <= 0 && d1 >= 0;
-  }).length;
-  el.textContent = String(n);
+  });
+  if (p.id === 'philip'){
+    if (document.getElementById('zone-select').value === 'b1'){ el.textContent = '3'; return; }
+    var keys = todays.map(actKey), shown = 0;
+    Array.prototype.forEach.call(document.querySelectorAll('#sub-myactivities .tool-card[data-act]'), function(c){
+      var on = keys.indexOf(c.getAttribute('data-act')) > -1; c.style.display = on ? '' : 'none'; if (on) shown++;
+    });
+    var st = document.querySelector('#sub-myactivities .subview-title'); if (st) st.textContent = 'Tools for my activities today (' + shown + ')';
+  }
+  el.textContent = String(todays.length);
 }
 function personaSwitch(id, silent){
   var p = personaGet(id); if (!p) return;
@@ -3939,7 +4024,10 @@ function renderSheet(key, scrollTo){
       + '<span class="sheet-back-parent">'+sheetTitleText(parent)+'</span></div>';
   }
   currentSheetKey = key;
-  document.getElementById('sheet-content').innerHTML = back + fn().split('Philip White · CE Level Principal').join(personaAssignLabel());
+  var html = fn(), loc = actLocation(key);
+  if (loc === 'pool') html = html.split('Philip White · CE Level Principal').join('Unassigned — awaiting dispatch');
+  else if (loc === 'mine') html = html.split('Unassigned — awaiting dispatch').join('Philip White · CE Level Principal');
+  document.getElementById('sheet-content').innerHTML = back + html.split('Philip White · CE Level Principal').join(personaAssignLabel());
   document.getElementById('sheet').scrollTop = scrollTo || 0;
   activeTooltip = null;
   return true;
