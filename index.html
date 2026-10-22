@@ -377,6 +377,14 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .inbox-item-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:4px; }
 .inbox-sender { font-size:13px; font-weight:700; color:var(--text1); }
 .inbox-time { font-size:11px; color:var(--sapLabelColor); }
+.inbox-item-top { align-items:flex-start; }
+.inbox-meta { display:flex; flex-direction:column; align-items:flex-end; gap:5px; flex-shrink:0; margin-left:12px; }
+.inbox-read { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700; padding:2px 9px 2px 7px; border-radius:10px; }
+.inbox-read-dot { width:7px; height:7px; border-radius:50%; }
+.inbox-read.unread { background:var(--info-bg); color:var(--info-text); }
+.inbox-read.unread .inbox-read-dot { background:var(--info-el); }
+.inbox-read.read { background:var(--sapNeutralBackground); color:var(--sapLabelColor); }
+.inbox-read.read .inbox-read-dot { background:var(--sapIconMuted); }
 .inbox-subject { font-size:13px; color:var(--text1); line-height:1.45; margin-bottom:8px; }
 .inbox-badge { display:inline-block; font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; letter-spacing:.03em; text-transform:uppercase; }
 .inbox-badge.parts { background:var(--blue-light); color:#0057D2; }
@@ -388,13 +396,14 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .inbox-badge.parts-return { background:var(--accent-magenta-bg); color:var(--accent-magenta); }
 
 /* ── Inbox action buttons — Horizon Accept / Reject / Default ── */
-.inbox-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border2); }
+.inbox-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border2); }
 .inbox-action-btn { font-family: inherit; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: var(--radius-sm); border: 1px solid var(--sapButtonBorder); background: var(--surface); color: var(--sapHighlightColor); cursor: pointer; -webkit-user-select: none; transition: background .15s, color .15s; }
 .inbox-action-btn:active { background: var(--sapActiveBackground); }
-.inbox-action-btn.accept { background: var(--pos-bg); border-color: var(--pos-border); color: var(--pos-text); }
-.inbox-action-btn.accept:active { background: var(--pos-el); border-color: var(--pos-el); color: #fff; }
-.inbox-action-btn.decline { background: var(--neg-bg); border-color: var(--neg-border); color: var(--neg-text); }
-.inbox-action-btn.decline:active { background: var(--neg-text); border-color: var(--neg-text); color: #fff; }
+.inbox-action-btn:disabled { color: var(--sapIconMuted); border-color: var(--sapListBorder); background: var(--surface); cursor: default; }
+.inbox-action-btn.cta { background: var(--sapBrandColor); border-color: var(--sapBrandColor); color: #fff; }
+.inbox-action-btn.cta:active { background: var(--sapHighlightColor); border-color: var(--sapHighlightColor); }
+.inbox-action-btn.escalate { background: var(--neg-bg); border-color: var(--neg-border); color: var(--neg-text); }
+.inbox-action-btn.escalate:active { background: var(--neg-text); border-color: var(--neg-text); color: #fff; }
 /* Orange Parts Ordering badge */
 .inbox-badge.parts-order { background: var(--accent-orange-bg); color: var(--accent-orange-text); }
 
@@ -755,7 +764,8 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
   font-size: 13px; font-weight: 400; letter-spacing: 0;
   box-shadow: var(--sapShadow2);
   opacity: 0; transition: opacity .25s, transform .25s;
-  z-index: 999; white-space: nowrap; pointer-events: none;
+  z-index: 999; pointer-events: none;
+  width: max-content; max-width: calc(100vw - 32px); text-align: center; line-height: 1.35;
 }
 .toaster.show {
   opacity: 1; transform: translateX(-50%) translateY(0);
@@ -1928,22 +1938,33 @@ var inboxRefreshCount=0;
 function buildStartingInbox(){
   var today = inboxDate(0);
   return [
-    {sender:'SAP ERP Workflow Message',subject:'AMAT-THROT-VALVE confirmed available — ship date today — CVD-204 repair unblocked',date:today,time:'11:47 AM',badge:'parts-order',bl:'Parts Ordering'},
-    {sender:'Service Manager',subject:'CVD-213 Phase 2 milestone check confirmed 1:00 PM — please confirm attendance',date:today,time:'11:32 AM',badge:'message',bl:'Message'},
-    {sender:'SAP APM',subject:'Priority 1 — Action Required · 10190551 CVD-204 · Process chamber pressure exceedance · Notification 10042817 · Alert age: 2h 31m · Response SLA: 4h · 1h 29m remaining',date:today,time:'11:15 AM',badge:'telem',bl:'Tool Telemetry Alert'},
-    {sender:'SAP APM',subject:'CVD-208 RF power drift trending — 3 consecutive readings above nominal — monitor recommended',date:today,time:'10:58 AM',badge:'telem',bl:'Tool Telemetry Alert'},
-    {sender:'Applied Materials Safety',subject:'SB-2024-047 acknowledgment required — confirm receipt before end of shift',date:today,time:'09:15 AM',badge:'safety',bl:'Safety'},
-    {sender:'Service Manager',subject:'Great work on CVD-204 diagnosis — customer notified — ETA on repair completion?',date:today,time:'08:30 AM',badge:'message',bl:'Message'}
+    {sender:'SAP ERP Workflow Message',subject:'AMAT-THROT-VALVE confirmed available — ship date today — CVD-204 repair unblocked',date:today,time:'11:47 AM',badge:'parts-order',bl:'Parts Ordering',read:false},
+    {sender:'Service Manager',subject:'CVD-213 Phase 2 milestone check confirmed 1:00 PM — please confirm attendance',date:today,time:'11:32 AM',badge:'message',bl:'Message',read:false},
+    {sender:'SAP APM',subject:'Priority 1 — Action Required · 10190551 CVD-204 · Process chamber pressure exceedance · Notification 10042817 · Alert age: 2h 31m · Response SLA: 4h · 1h 29m remaining',date:today,time:'11:15 AM',badge:'telem',bl:'Tool Telemetry Alert',read:false},
+    {sender:'SAP APM',subject:'CVD-208 RF power drift trending — 3 consecutive readings above nominal — monitor recommended',date:today,time:'10:58 AM',badge:'telem',bl:'Tool Telemetry Alert',read:true},
+    {sender:'Applied Materials Safety',subject:'SB-2024-047 acknowledgment required — confirm receipt before end of shift',date:today,time:'09:15 AM',badge:'safety',bl:'Safety',read:true},
+    {sender:'Service Manager',subject:'Great work on CVD-204 diagnosis — customer notified — ETA on repair completion?',date:today,time:'08:30 AM',badge:'message',bl:'Message',read:true}
   ];
 }
-// Refresh 1 — STO parts transfer; scheduled arrival = tomorrow
-function makeMsg6(){
-  return {sender:'SAP ERP Workflow Message',subject:'Part — AMAT Loadlock — has been issued from — General Warehouse — and shipping to — '+personaCur().name+' — at — Intel Chandler, Building 4, CVD Bay — S. Dobson Rd., 4500, 85248, Chandler, US. Scheduled arrival '+longDate(1)+' approx 10:00 AM MST',date:inboxDate(0),time:'12:21 PM',badge:'parts-order',bl:'Parts Ordering'};
+// ── Generated workflow messages, one per tap of Refresh (messages 7 → 8 → 9) ──
+// The loadlock ETA lives in ONE place so the ATP confirmation (msg 7) and the
+// part-issue shipment (msg 8) always quote the same date and time.
+var PART_ETA_DAYS = 1, PART_ETA_TIME = '10:00 AM MST';
+function partEta(){ return longDate(PART_ETA_DAYS) + ' approx ' + PART_ETA_TIME; }
+var PART_SHIP_TO = 'Intel Chandler, Building 4, CVD Bay — S. Dobson Rd., 4500, 85248, Chandler, US';
+// Refresh 1 — msg 7: ATP check response for the loadlock sales order (Escalate lives here)
+function makeMsgAtp(){
+  return {sender:'SAP ERP Workflow Message',subject:'ATP check complete — Sales Order 1004217, Item 10 — Part 676-2583-001 — AMAT Loadlock — Qty 1 — available to promise from — General Warehouse — confirmed delivery to — '+personaCur().name+' — at — '+PART_SHIP_TO+'. Available-to-promise date '+partEta(),date:inboxDate(0),time:'12:09 PM',badge:'parts-order',bl:'Parts Ordering',kind:'atp',read:false};
 }
-// Refresh 2 — parts return received
-function makeMsg7(){
-  return {sender:'SAP ERP Workflow Message',subject:'Returned part — AMAT-CHAMBER-DXZ — has been received at the Applied Materials General Warehouse',date:inboxDate(0),time:'12:48 PM',badge:'parts-return',bl:'Parts Return'};
+// Refresh 2 — msg 8: part issued and shipping; arrival = the ATP date above
+function makeMsgIssue(){
+  return {sender:'SAP ERP Workflow Message',subject:'Part 676-2583-001, Serial No 45-JI8921-03 — AMAT Loadlock — has been issued from — General Warehouse — and shipping to — '+personaCur().name+' — at — '+PART_SHIP_TO+'. Scheduled arrival '+partEta(),date:inboxDate(0),time:'12:21 PM',badge:'parts-order',bl:'Parts Ordering',read:false};
 }
+// Refresh 3 — msg 9: Philip's returned loadlock received at the warehouse
+function makeMsgReturn(){
+  return {sender:'SAP ERP Workflow Message',subject:'Returned part 676-2583-001, Serial No 45-JI8511-06 — AMAT Loadlock — has been received at the Applied Materials General Warehouse',date:inboxDate(0),time:'12:48 PM',badge:'parts-return',bl:'Parts Return',read:false};
+}
+var INBOX_SEQUENCE = [makeMsgAtp, makeMsgIssue, makeMsgReturn];
 var inboxMsgs=buildStartingInbox();
 
 
@@ -1978,24 +1999,17 @@ function resetInbox() {
 }
 
 function doRefresh(){
-  if(inboxRefreshCount>=2)return;
+  if(inboxRefreshCount>=INBOX_SEQUENCE.length)return;
   updateHeaderTime();
   var btn=document.getElementById('rfbtn');
   btn.classList.add('spinning');
   setTimeout(function(){
     btn.classList.remove('spinning');
+    inboxMsgs.unshift(INBOX_SEQUENCE[inboxRefreshCount]());
     inboxRefreshCount++;
-    if(inboxRefreshCount===1){
-      inboxMsgs.unshift(makeMsg6());
-      var el=document.getElementById('inbox-count');
-      el.style.opacity='0';
-      setTimeout(function(){el.innerHTML='My Inbox <span class="count-badge">7</span>';el.style.opacity='1';},220);
-    } else if(inboxRefreshCount===2){
-      inboxMsgs.unshift(makeMsg7());
-      var el=document.getElementById('inbox-count');
-      el.style.opacity='0';
-      setTimeout(function(){el.innerHTML='My Inbox <span class="count-badge">8</span>';el.style.opacity='1';},220);
-    }
+    var n=inboxMsgs.length, el=document.getElementById('inbox-count');
+    el.style.opacity='0';
+    setTimeout(function(){el.innerHTML='My Inbox <span class="count-badge">'+n+'</span>';el.style.opacity='1';},220);
   },900);
 }
 
@@ -2026,22 +2040,51 @@ function showToaster(msg) {
 function inboxApiStub(action) {
   showToaster('SAP ERP Workflow API call — ' + action);
 }
+// ── Inbox message: read status + context-relevant actions ──
+// Base actions on every message: Mark Read / Forward. Extra action on the left for:
+//   SAP APM alerts      → Create Service Activity
+//   ATP check response  → Escalate (available-to-promise date not acceptable for the situation on site)
+var inboxNextActivity = 4000960, inboxNextEscalation = 2296;
+function inboxItemHtml(m, i){
+  var ctx = '';
+  if (m.sender === 'SAP APM') ctx = '<button class="inbox-action-btn cta" onclick="inboxAction('+i+',\'activity\')">Create Service Activity</button>';
+  else if (m.kind === 'atp') ctx = '<button class="inbox-action-btn escalate" onclick="inboxAction('+i+',\'escalate\')">Escalate</button>';
+  return '<div class="inbox-item-top"><span class="inbox-sender">'+m.sender+'</span>'
+    + '<span class="inbox-meta"><span class="inbox-time">'+(m.date?m.date+' · ':'')+m.time+'</span>'
+    + '<span class="inbox-read '+(m.read?'read':'unread')+'"><span class="inbox-read-dot"></span>'+(m.read?'Read':'Unread')+'</span></span></div>'
+    + '<div class="inbox-subject">'+m.subject+'</div>'
+    + '<span class="inbox-badge '+m.badge+'">'+m.bl+'</span>'
+    + '<div class="inbox-actions">' + ctx
+    + '<button class="inbox-action-btn" onclick="inboxAction('+i+',\'read\')"'+(m.read?' disabled':'')+'>Mark Read</button>'
+    + '<button class="inbox-action-btn" onclick="inboxAction('+i+',\'forward\')">Forward</button>'
+    + '</div>';
+}
+function inboxAction(i, action){
+  var m = inboxMsgs[i]; if (!m) return;
+  if (action === 'read'){
+    if (m.read) return;
+    m.read = true;
+    var el = document.querySelectorAll('#inbox-list .inbox-item')[i];
+    if (el) el.innerHTML = inboxItemHtml(m, i);
+    showToaster('SAP ERP Workflow API call — Mark Read');
+  } else if (action === 'forward'){
+    inboxApiStub('Forward');
+  } else if (action === 'activity'){
+    var tool = (m.subject.match(/CVD-\d+/) || ['tool'])[0];
+    showToaster('Service activity ' + (inboxNextActivity++) + ' created for ' + tool);
+  } else if (action === 'escalate'){
+    showToaster('Part availability date not agreeable — escalated as ESC-' + (inboxNextEscalation++));
+  }
+}
 function openInbox(){
   var title=document.getElementById('inbox-subview-title');
   if(title) title.innerHTML='My Inbox &mdash; '+inboxMsgs.length+' Message'+(inboxMsgs.length!==1?'s':'');
   var list=document.getElementById('inbox-list');
   list.innerHTML='';
-  inboxMsgs.forEach(function(m){
+  inboxMsgs.forEach(function(m, i){
     var d=document.createElement('div');
     d.className='inbox-item';
-    d.innerHTML='<div class="inbox-item-top"><span class="inbox-sender">'+m.sender+'</span><span class="inbox-time">'+(m.date?m.date+' · ':'')+m.time+'</span></div>'
-      +'<div class="inbox-subject">'+m.subject+'</div>'
-      +'<span class="inbox-badge '+m.badge+'">'+m.bl+'</span>'
-      +'<div class="inbox-actions">'
-      +'<button class="inbox-action-btn accept" onclick="inboxApiStub(&quot;Accept&quot;)">Accept</button>'
-      +'<button class="inbox-action-btn decline" onclick="inboxApiStub(&quot;Decline&quot;)">Decline</button>'
-      +'<button class="inbox-action-btn" onclick="inboxApiStub(&quot;Forward&quot;)">Forward</button>'
-      +'</div>';
+    d.innerHTML=inboxItemHtml(m, i);
     list.appendChild(d);
   });
   showSub('sub-inbox');
