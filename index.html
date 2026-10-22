@@ -480,7 +480,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .pf-sort-k { font-size: 13px; font-weight: 400; color: var(--sapLabelColor); }
 .pf-sort select { font-family: inherit; font-size: 13px; font-weight: 600; color: var(--sapHighlightColor); background: transparent; border: 0; height: 30px; padding: 0 26px 0 2px; cursor: pointer; -webkit-appearance: none; appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230064d9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 9px center; }
-.pf-pop { width: 380px; padding: 6px 14px 12px; }
+.pf-pop { width: 400px; padding: 6px 14px 12px; }
 .pf-sec { padding: 8px 0 4px; }
 .pf-sec + .pf-sec { border-top: 1px solid var(--sapListBorder); }
 .pf-sec-title { font-size: 12px; font-weight: 700; color: var(--sapLabelColor); margin-bottom: 8px; }
@@ -490,6 +490,24 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .pf-chip[aria-pressed="true"] { background: var(--sapBrandColor); border-color: var(--sapBrandColor); color: #fff; }
 .pf-chip[aria-pressed="true"] .pf-n { color: rgba(255,255,255,.8); }
 .pf-chip:disabled { opacity: .45; cursor: default; }
+.pf-dd { border: 1px solid var(--sapButtonBorder); border-radius: var(--radius-sm); overflow: hidden; }
+.pf-dd + .pf-dd { margin-top: 8px; }
+.pf-dd-btn { width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 0; background: var(--surface); font-family: inherit; text-align: left; cursor: pointer; }
+.pf-dd-btn:active { background: var(--sapActiveBackground); }
+.pf-dd-name { font-size: 13px; font-weight: 700; color: var(--sapLabelColor); flex-shrink: 0; width: 104px; }
+.pf-dd-val { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; color: var(--sapHighlightColor); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pf-dd-val.all { color: var(--text1); font-weight: 400; }
+.pf-dd-chev { flex-shrink: 0; color: var(--sapHighlightColor); transition: transform .15s; }
+.pf-dd.open .pf-dd-chev { transform: rotate(180deg); }
+.pf-dd-list { display: none; border-top: 1px solid var(--sapListBorder); max-height: 252px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.pf-dd.open .pf-dd-list { display: block; }
+.pf-opt { width: 100%; display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 0; background: var(--surface); font-family: inherit; font-size: 14px; color: var(--text1); text-align: left; cursor: pointer; }
+.pf-opt + .pf-opt { border-top: 1px solid var(--sapListBorder); }
+.pf-opt:active { background: var(--sapActiveBackground); }
+.pf-opt:disabled { color: var(--sapIconMuted); cursor: default; }
+.pf-box { width: 18px; height: 18px; border: 1.5px solid var(--sapButtonBorder); border-radius: 4px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #fff; }
+.pf-opt[aria-checked="true"] .pf-box { background: var(--sapBrandColor); border-color: var(--sapBrandColor); }
+.pf-opt .pf-n { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--sapLabelColor); }
 .pf-skill { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .pf-skill-text { font-size: 14px; font-weight: 600; color: var(--text1); }
 .pf-skill-desc { font-size: 12px; color: var(--sapLabelColor); font-weight: 400; }
@@ -3452,32 +3470,55 @@ function pfCounts(){
   });
   return c;
 }
+var pfOpenDd = null;           // which dropdown is expanded in the filter panel
+var PF_TICK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 function pfRenderPopover(){
   var c = pfCounts();
+  var vals = function(list){ return list.map(function(x){ return Array.isArray(x) ? x : [x, x]; }); };
   var chips = function(g, list){
-    return '<div class="pf-chips">' + list.map(function(x){
-      var v = Array.isArray(x) ? x[0] : x, label = Array.isArray(x) ? x[1] : x, on = pf[g].indexOf(v) > -1, n = c[g + ':' + v] || 0;
-      return '<button type="button" class="pf-chip" aria-pressed="' + on + '"' + (!n && !on ? ' disabled' : '') + ' onclick="pfToggle(\'' + g + '\',\'' + v + '\')">' + label + '<span class="pf-n">' + n + '</span></button>';
+    return '<div class="pf-chips">' + vals(list).map(function(x){
+      var on = pf[g].indexOf(x[0]) > -1, n = c[g + ':' + x[0]] || 0;
+      return '<button type="button" class="pf-chip" aria-pressed="' + on + '"' + (!n && !on ? ' disabled' : '') + ' onclick="pfToggle(\'' + g + '\',\'' + x[0] + '\')">' + x[1] + '<span class="pf-n">' + n + '</span></button>';
     }).join('') + '</div>';
   };
-  var sec = function(t, body){ return '<div class="pf-sec"><div class="pf-sec-title">' + t + '</div>' + body + '</div>'; };
+  var dd = function(g, name, list){
+    var opts = vals(list), sel = opts.filter(function(x){ return pf[g].indexOf(x[0]) > -1; });
+    var summary = !sel.length ? 'All' : sel.length === 1 ? sel[0][1] : sel.length + ' selected';
+    var open = pfOpenDd === g;
+    return '<div class="pf-dd' + (open ? ' open' : '') + '" data-dd="' + g + '">'
+      + '<button type="button" class="pf-dd-btn" aria-expanded="' + open + '" onclick="pfToggleDd(\'' + g + '\')">'
+      +   '<span class="pf-dd-name">' + name + '</span><span class="pf-dd-val' + (sel.length ? '' : ' all') + '">' + summary + '</span>'
+      +   '<svg class="pf-dd-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>'
+      + '<div class="pf-dd-list" role="group" aria-label="' + name + '">' + opts.map(function(x){
+          var on = pf[g].indexOf(x[0]) > -1, n = c[g + ':' + x[0]] || 0;
+          return '<button type="button" class="pf-opt" role="checkbox" aria-checked="' + on + '"' + (!n && !on ? ' disabled' : '') + ' onclick="pfToggle(\'' + g + '\',\'' + x[0] + '\')">'
+            + '<span class="pf-box">' + (on ? PF_TICK : '') + '</span>' + x[1] + '<span class="pf-n">' + n + '</span></button>';
+        }).join('') + '</div></div>';
+  };
   document.getElementById('pf-pop').innerHTML =
-      sec('Priority', chips('prio', POOL_PRIO))
-    + sec('Service type', chips('svc', POOL_SVC))
-    + sec('Activity type', chips('at', POOL_AT))
-    + sec('Planned start', chips('when', POOL_WHEN))
+      '<div class="pf-sec"><div class="pf-sec-title">Priority</div>' + chips('prio', POOL_PRIO) + '</div>'
+    + '<div class="pf-sec">' + dd('svc', 'Service type', POOL_SVC) + dd('at', 'Activity type', POOL_AT) + dd('when', 'Planned start', POOL_WHEN) + '</div>'
     + '<div class="pf-sec pf-skill"><div><div class="pf-skill-text">Matches my skills</div><div class="pf-skill-desc">Only work ' + personaCur().name.split(' ')[0] + ' is qualified for</div></div>'
     +   '<button type="button" class="lp-switch" role="switch" aria-checked="' + pf.skills + '" aria-label="Matches my skills" onclick="pfSetSkills(!pf.skills)"></button></div>'
     + '<div class="pf-foot"><button type="button" class="pf-link" onclick="pfClear()"' + (pfActiveCount() ? '' : ' disabled') + '>Clear all</button>'
     +   '<button type="button" class="lp-btn lp-btn-emph" onclick="pfClosePopover()">Done</button></div>';
 }
+// keep the whole filter panel on screen (scroll the page just enough)
+function pfKeepInView(){
+  var pop = document.getElementById('pf-pop'); if (!pop || !pop.classList.contains('open')) return;
+  var r = pop.getBoundingClientRect(), over = r.bottom - (window.innerHeight - 12);
+  if (over > 0) window.scrollBy({top: Math.min(over, r.top - 70), behavior: 'smooth'});
+}
+function pfToggleDd(g){ pfOpenDd = pfOpenDd === g ? null : g; pfRenderPopover(); pfKeepInView(); }
 function pfTogglePopover(e){
   if (e) e.stopPropagation();
   var pop = document.getElementById('pf-pop');
   if (pop.classList.contains('open')){ pfClosePopover(); return; }
+  pfOpenDd = null;
   pfRenderPopover();
   pop.classList.add('open');
   document.getElementById('pf-btn').setAttribute('aria-expanded', 'true');
+  pfKeepInView();
 }
 function pfClosePopover(){
   var pop = document.getElementById('pf-pop'); if (!pop) return;
