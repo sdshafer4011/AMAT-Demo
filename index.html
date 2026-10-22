@@ -46,6 +46,7 @@
   --accent-purple: #6C32A9; --accent-purple-bg: #DDCCF0;
   --accent-orange: #D27700; --accent-orange-text: #A45D00; --accent-orange-bg: #FFF3B8;
   --accent-magenta: #A100C2; --accent-magenta-bg: #FFDCF3;
+  --accent-teal: #046C7A; --accent-teal-bg: #C2FCEE;
 
   /* Legacy token names kept so existing markup/JS keeps working */
   --bg: var(--sapBackgroundColor);
@@ -296,7 +297,7 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .faux-link-icon { width: 28px; height: 28px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .faux-link-icon.aix { background: var(--pos-bg); }
 .faux-link-icon.apm { background: var(--info-bg); }
-.faux-link-icon.fsm { background: var(--info-bg); }
+.faux-link-icon.fsa { background: var(--info-bg); }
 .faux-link-text { flex: 1; }
 .faux-link-label { font-size: 13px; font-weight: 600; color: var(--sapHighlightColor); }
 .faux-link-url { font-size: 11px; color: var(--sapLabelColor); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px; }
@@ -604,6 +605,71 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
 /* multi-day activities */
 .act-time.span { min-width: 48px; font-size: 13px; font-weight: 700; color: var(--accent-purple); text-align: center; line-height: 1.1; white-space: nowrap; }
 .act-time-of { display: block; font-size: 10px; font-weight: 600; color: var(--sapLabelColor); }
+
+/* ── Software activity type ── */
+.act-dot.teal { background: var(--accent-teal); }
+.act-badge.software { background: var(--accent-teal-bg); color: var(--accent-teal); }
+
+/* ── Escalation queue (Technical Support Engineer) ── */
+.esc-card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 14px; }
+.esc-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.esc-kpi { background: var(--sapBackgroundColor); border-radius: var(--radius-md); padding: 10px 12px; }
+.esc-kpi-v { font-size: 24px; font-weight: 400; line-height: 1; color: var(--text1); }
+.esc-kpi-v.neg { color: var(--neg-text); } .esc-kpi-v.pos { color: var(--pos-text); }
+.esc-kpi-l { font-size: 11px; color: var(--sapLabelColor); margin-top: 5px; }
+.esc-list { display: flex; flex-direction: column; border-top: 1px solid var(--sapListBorder); }
+.esc-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 11px 2px; background: none; border: 0; border-bottom: 1px solid var(--sapListBorder); font-family: inherit; text-align: left; cursor: pointer; }
+.esc-row:active { background: var(--sapHoverBackground); }
+.esc-prio { width: 38px; flex-shrink: 0; }
+.esc-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.esc-id { font-size: 11px; font-weight: 700; color: var(--sapLabelColor); }
+.esc-title { font-size: 13px; font-weight: 700; color: var(--text1); line-height: 1.3; }
+.esc-from { font-size: 11px; color: var(--sapLabelColor); }
+.esc-side { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; max-width: 38%; text-align: right; }
+.esc-status { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text1); }
+.esc-ok { width: 16px; height: 16px; border-radius: 50%; background: var(--pos-el); color: #fff; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.esc-sla { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
+.esc-sla.neg { background: var(--neg-bg); color: var(--neg-text); } .esc-sla.pos { background: var(--pos-bg); color: var(--pos-text); } .esc-sla.info { background: var(--info-bg); color: var(--info-text); }
+.esc-chev { color: var(--sapIconMuted); flex-shrink: 0; }
+.esc-row.done .esc-title { color: var(--sapLabelColor); }
+.esc-row.done .esc-prio { opacity: .45; }
+.esc-sessions .ip-row:last-child { border-bottom: 0; }
+
+/* ── Tool software & recipes (Software Support Engineer) ── */
+.sw-card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 14px; }
+.sw-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.sw-base { font-size: 15px; font-weight: 700; color: var(--text1); }
+.sw-base-sub { font-size: 12px; color: var(--sapLabelColor); margin-top: 3px; }
+.sw-meter { min-width: 150px; text-align: right; }
+.sw-meter-v { font-size: 24px; line-height: 1; color: var(--text1); }
+.sw-meter-v span { font-size: 13px; color: var(--sapLabelColor); }
+.sw-meter-l { font-size: 11px; color: var(--sapLabelColor); margin-top: 3px; }
+.sw-meter-bar { height: 6px; border-radius: 3px; background: var(--sapNeutralBackground); margin-top: 6px; overflow: hidden; }
+.sw-meter-bar span { display: block; height: 100%; background: var(--pos-el); border-radius: 3px; }
+.sw-cols { display: grid; grid-template-columns: 1fr 1.15fr; gap: 18px; }
+.sw-table { display: flex; flex-direction: column; }
+.sw-trow { display: grid; grid-template-columns: 70px 52px 1fr; align-items: center; gap: 8px; width: 100%; padding: 7px 2px; background: none; border: 0; border-bottom: 1px solid var(--sapListBorder); font-family: inherit; text-align: left; cursor: pointer; }
+.sw-trow:active { background: var(--sapHoverBackground); }
+.sw-tool { font-size: 13px; font-weight: 700; color: var(--text1); }
+.sw-ver { font-size: 13px; color: var(--text1); font-variant-numeric: tabular-nums; }
+.sw-ver.off { color: var(--crit-text); font-weight: 700; }
+.sw-st { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--sapLabelColor); min-width: 0; }
+.sw-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.sw-dot.pos { background: var(--pos-el); } .sw-dot.neg { background: var(--neg-el); } .sw-dot.crit { background: var(--crit-el); } .sw-dot.info { background: var(--info-el); } .sw-dot.purple { background: var(--accent-purple); }
+.sw-gap { margin-top: 14px; }
+.sw-item { display: flex; align-items: center; gap: 10px; width: 100%; padding: 9px 2px; background: none; border: 0; border-bottom: 1px solid var(--sapListBorder); font-family: inherit; text-align: left; cursor: pointer; color: var(--sapIconMuted); }
+.sw-item:active { background: var(--sapHoverBackground); }
+.sw-item-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.sw-item-id { font-size: 11px; font-weight: 700; color: var(--sapLabelColor); }
+.sw-item-title { font-size: 13px; font-weight: 600; color: var(--text1); line-height: 1.3; }
+.sw-item-meta { font-size: 11px; color: var(--sapLabelColor); }
+.sw-chip { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+.sw-chip.pos { background: var(--pos-bg); color: var(--pos-text); } .sw-chip.crit { background: var(--crit-bg); color: var(--crit-text); } .sw-chip.info { background: var(--info-bg); color: var(--info-text); } .sw-chip.neutral { background: var(--sapNeutralBackground); color: var(--sapLabelColor); }
+@media (max-width: 700px) {
+  .esc-kpis { grid-template-columns: repeat(2, 1fr); }
+  .esc-row { flex-wrap: wrap; } .esc-side { max-width: 100%; align-items: flex-start; text-align: left; padding-left: 50px; }
+  .sw-cols { grid-template-columns: 1fr; } .sw-top { flex-direction: column; align-items: flex-start; } .sw-meter { text-align: left; }
+}
 /* ── Panel filters ── */
 .sub-out, .crit-out { display: none !important; }
 .lp-chip { display: flex; align-items: center; gap: 6px; margin: -2px 0 10px; padding: 6px 6px 6px 10px; width: fit-content; max-width: 100%; background: var(--info-bg); color: var(--info-text); border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; }
@@ -1014,6 +1080,7 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
         <div class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span>Installation</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--purple)"></span>Remote consult</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--blue-accent)"></span>PM — rescheduled</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--accent-teal)"></span>Software</div>
       </div>
       <div class="activity-list" id="activity-list-myact">
         <div class="activity-item" onclick="openSheet('act1')" data-duration-min="150" data-day="0">
@@ -1166,7 +1233,87 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
           <div class="act-priority medium">Medium</div>
           <div class="act-badge install">Installation</div>
         </div>
-      </div>
+      <div class="activity-item" onclick="openSheet('act16')" data-duration-min="60" data-day="0">
+          <div class="act-time">10:00</div>
+          <div class="act-dot purple"></div>
+          <div class="act-main">
+            <div class="act-title">10190551 CVD-204 · Remote diagnostics — chamber pressure exceedance (ESC-2291)</div>
+            <div class="act-sub">Escalation ESC-2291 · Tier 2 · Teams session with Philip White · Est. 1h</div>
+          </div>
+          <div class="act-priority escalated">Escalated</div>
+          <div class="act-badge remote">Remote</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act17')" data-duration-min="60" data-day="1">
+          <div class="act-time">09:30</div>
+          <div class="act-dot purple"></div>
+          <div class="act-main">
+            <div class="act-title">10190442 CVD-152 · RF power drift — remote triage (ESC-2285)</div>
+            <div class="act-sub">Escalation ESC-2285 · Building 1 · requested by J. Okafor · Est. 1h</div>
+          </div>
+          <div class="act-priority high">High</div>
+          <div class="act-badge remote">Remote</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act18')" data-duration-min="90" data-day="2">
+          <div class="act-time">14:00</div>
+          <div class="act-dot purple"></div>
+          <div class="act-main">
+            <div class="act-title">10190551 CVD-204 · Knowledge capture — throttle valve degradation signature</div>
+            <div class="act-sub">From ESC-2291 · knowledge article for the AIx pattern library · Est. 1.5h</div>
+          </div>
+          <div class="act-priority low">Low</div>
+          <div class="act-badge remote">Remote</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act19')" data-duration-min="60" data-day="4">
+          <div class="act-time">11:00</div>
+          <div class="act-dot purple"></div>
+          <div class="act-main">
+            <div class="act-title">10190560 CVD-206 · Recipe drift — joint review with Process Support (ESC-2279)</div>
+            <div class="act-sub">Escalation ESC-2279 · with Daniel Kim · RCR-1187 · Est. 1h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge remote">Remote</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act20')" data-duration-min="90" data-day="0">
+          <div class="act-time">14:00</div>
+          <div class="act-dot teal"></div>
+          <div class="act-main">
+            <div class="act-title">10190559 CVD-205 · Process controller update — pre-check &amp; backup</div>
+            <div class="act-sub">Order 4000908 · before update to Centura OS 8.4.2 · Est. 1.5h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge software">Software</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act21')" data-duration-min="60" data-day="1">
+          <div class="act-time">09:00</div>
+          <div class="act-dot purple"></div>
+          <div class="act-main">
+            <div class="act-title">10190560 CVD-206 · Recipe change review — RCR-1187 deposition time</div>
+            <div class="act-sub">From Daniel Kim (Process SE) · DEP-OX-450 · Est. 1h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge remote">Remote</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act22')" data-duration-min="120" data-day="3">
+          <div class="act-time">10:00</div>
+          <div class="act-dot teal"></div>
+          <div class="act-main">
+            <div class="act-title">CVD Bay Building 4 · Controller software baseline audit</div>
+            <div class="act-sub">Quarterly compliance check · 11 tools · Est. 2h</div>
+          </div>
+          <div class="act-priority low">Low</div>
+          <div class="act-badge software">Software</div>
+        </div>
+        <div class="activity-item" onclick="openSheet('act23')" data-duration-min="120" data-day="5">
+          <div class="act-time">20:00</div>
+          <div class="act-dot teal"></div>
+          <div class="act-main">
+            <div class="act-title">10190563 CVD-209 · SP-8.4.2-HF3 patch deployment — change window</div>
+            <div class="act-sub">Window 20:00 – 22:00 · backup and rollback plan approved · Est. 2h</div>
+          </div>
+          <div class="act-priority medium">Medium</div>
+          <div class="act-badge software">Software</div>
+        </div>
+        </div>
       <div class="activity-list" id="activity-list-unassigned-b4" style="display:none">
         <div class="activity-item" onclick="openSheet('unassign1')" data-duration-min="120">
           <input type="checkbox" class="activity-select" data-id="1" onclick="event.stopPropagation(); handleActivitySelect(this)">
@@ -1295,6 +1442,18 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
       <div id="pp-wrap"></div>
     </div>
 
+    <!-- ESCALATION QUEUE — Technical Support Engineer persona -->
+    <div class="lp-panel lp-unavail" data-panel="escalation">
+      <button type="button" class="lp-head" onclick="lpToggleCollapse('escalation')" aria-expanded="true"><span class="section-label">Escalation queue — Tier 2 · CVD Bay</span><svg class="lp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lp-summary" id="lp-sum-escalation"></span></button>
+      <div class="esc-card" id="esc-card"></div>
+    </div>
+
+    <!-- TOOL SOFTWARE & RECIPES — Software Support Engineer persona -->
+    <div class="lp-panel lp-unavail" data-panel="software">
+      <button type="button" class="lp-head" onclick="lpToggleCollapse('software')" aria-expanded="true"><span class="section-label">Tool software &amp; recipes — CVD Bay</span><svg class="lp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span class="lp-summary" id="lp-sum-software"></span></button>
+      <div class="sw-card" id="sw-card"></div>
+    </div>
+
     <!-- EMPTY STATE — shown only when every panel is hidden -->
     <div class="lp-empty" id="lp-empty">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/></svg>
@@ -1305,7 +1464,7 @@ button.ip-phase:active { background: var(--sapHoverBackground); }
 
     <!-- FOOTER -->
     <div class="footer-bar">
-      <div class="footer-src">Landing Page data sources — SAP FSM &nbsp;·&nbsp; SAP ECC &nbsp;·&nbsp; SAP CRM 7.0 &nbsp;·&nbsp; SAP APM &nbsp;·&nbsp; AIx Telematics</div>
+      <div class="footer-src">Landing Page data sources — SAP FSA &nbsp;·&nbsp; SAP ECC &nbsp;·&nbsp; SAP CRM 7.0 &nbsp;·&nbsp; SAP APM &nbsp;·&nbsp; AIx Telematics</div>
       <div class="footer-live"><span class="live-dot" style="margin-right:0"></span>All systems connected</div>
     </div>
     <div class="footer-spacer"></div>
@@ -2160,7 +2319,7 @@ var sheets = {
 'cvd207': function(){return '<div class="sheet-title">10190561 CVD-207 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
   +'<div class="health-wrap"><div class="health-label">APM health score: <strong style="color:var(--green-text)">79 / 100 — Good</strong></div><div class="health-track"><div class="health-fill good" style="width:79%"></div></div></div>'
-  +rows([['Applied serial','SN-10190561 CVD-207-001'],['Customer tool ID','FAB-A-CVD-07'],['Current status','In service — PM rescheduled'],['Scheduled PM','Rescheduled to 15:00 · FSM P&S auto-adjust'],['Rescheduled reason','P1 priority override — 10190551 CVD-204'],['ECC order','4000817'],['Service contract','Applied Global Care — Gold · Covered']]);},
+  +rows([['Applied serial','SN-10190561 CVD-207-001'],['Customer tool ID','FAB-A-CVD-07'],['Current status','In service — PM rescheduled'],['Scheduled PM','Rescheduled to 15:00 · FSA P&S auto-adjust'],['Rescheduled reason','P1 priority override — 10190551 CVD-204'],['ECC order','4000817'],['Service contract','Applied Global Care — Gold · Covered']]);},
 
 'cvd209': function(){return '<div class="sheet-title">10190563 CVD-209 — Equipment Detail</div>'
   +'<div class="sheet-sub">Applied Centura CVD · Fab A · Building 4</div>'
@@ -2279,7 +2438,7 @@ var sheets = {
   +stepHtml
   +'<div class="hier-header">Equipment hierarchy — sub-assemblies</div>'+hierList([['cvd204cha','10190552','CVD-204-CHA','Process Chamber A · DxZ · SN-CHA-204-001','red','OOSV — Out of service · Pressure fault active','red'],['cvd204chb','10190553','CVD-204-CHB','Process Chamber B · DxZ · SN-CHB-204-001','green','INSV — In service · All parameters nominal','green'],['cvd204tm','10190554','CVD-204-TM','Transfer Module · Centura · SN-TM-204-001','green','INSV — In service','green'],['cvd204ll','10190555','CVD-204-LL','Loadlock · Centura · SN-LL-204-001','green','INSV — In service · Warranty override WTY-002','green']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000821','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/4000821','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'act2': function(){
@@ -2290,7 +2449,7 @@ var sheets = {
   +'<div class="stepper-header">Service workflow — Planned PM · Step 1 of 5</div>'
   +stepHtml
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000804','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/4000804','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'act3': function(){
@@ -2301,7 +2460,7 @@ var sheets = {
   +'<div class="stepper-header">Service workflow — Tool Installation · Step 3 of 6</div>'
   +stepHtml
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000835','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/4000835','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'act4': function(){
@@ -2312,18 +2471,18 @@ var sheets = {
   +'<div class="stepper-header">Service workflow — Remote Consult · Step 1 of 4</div>'
   +stepHtml
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48821','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/SR-48821','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'act5': function(){
   var stepHtml = stepper(['Confirm rescheduled time with dispatcher','Travel and site arrival','Safety lockout / tagout','PM execution and measurement capture','Labor capture and closure'],0);
   return '<div class="sheet-title">10190561 CVD-207 · Preventive Maintenance — Rescheduled</div>'
   +'<div class="sheet-sub">Order 4000817 · Rescheduled · 15:00 today</div>'
-  +rows([['Activity type','Preventive maintenance — rescheduled'],['Priority','P3 — scheduled'],['Assigned to','Philip White · CE Level Principal'],['Estimated duration','2 hours'],['Original start','08:00 — auto-rescheduled by FSM P&S'],['New start time','15:00'],['Rescheduled reason','P1 override — 10190551 CVD-204 corrective inserted'],['Task list','Centura CVD — Standard PM'],['Offline supported','Yes — task list pre-downloaded'],['ECC order','4000817']])
+  +rows([['Activity type','Preventive maintenance — rescheduled'],['Priority','P3 — scheduled'],['Assigned to','Philip White · CE Level Principal'],['Estimated duration','2 hours'],['Original start','08:00 — auto-rescheduled by FSA P&S'],['New start time','15:00'],['Rescheduled reason','P1 override — 10190551 CVD-204 corrective inserted'],['Task list','Centura CVD — Standard PM'],['Offline supported','Yes — task list pre-downloaded'],['ECC order','4000817']])
   +'<div class="stepper-header">Service workflow — PM Rescheduled · Step 1 of 5</div>'
   +stepHtml
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000817','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/4000817','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'unassign1': function(){
@@ -2331,7 +2490,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-48830 · Unassigned · Reported 06:40 today</div>'
   +rows([['Activity type','Corrective — unplanned'],['Priority','P3 — needs triage','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','2 hours'],['Tool','10190558 CVD-203 · Applied Centura CVD'],['Reported by','Operator — night shift'],['Fault description','Intermittent high-pitched noise from foreline vacuum pump'],['Entitlement','Applied Global Care — Gold · Covered'],['CRM ticket','SR-48830']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48830','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/SR-48830','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'unassign2': function(){
@@ -2339,7 +2498,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-48831 · Unassigned · Reported 07:55 today</div>'
   +rows([['Activity type','Remote diagnostic consult'],['Priority','P3 — process engineering request','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1 hour'],['Tool','10190560 CVD-206 · Applied Centura CVD'],['Requested by','Process Engineering — recipe drift observed on last 3 lots'],['Entitlement','Applied Global Care — Platinum · Covered'],['CRM ticket','SR-48831']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48831','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/SR-48831','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'unassign3': function(){
@@ -2347,7 +2506,7 @@ var sheets = {
   +'<div class="sheet-sub">Order 4000906 · Unassigned · Parts received today</div>'
   +rows([['Activity type','Parts installation — planned'],['Priority','P4 — routine'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(2)],['Planned finish',plannedDate(4)],['Estimated duration','1.5 hours'],['Tool','10190563 CVD-209 · Applied Centura CVD'],['Parts','Throttle valve kit — received in inventory today'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000906']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000906','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/4000906','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'unassign4': function(){
@@ -2355,7 +2514,7 @@ var sheets = {
   +'<div class="sheet-sub">Order 4000907 · Unassigned · Parts N/A · Requested this week</div>'
   +rows([['Activity type','Calibration verification — planned'],['Priority','P4 — routine'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(2)],['Planned finish',plannedDate(4)],['Estimated duration','2 hours'],['Tool','10190557 CVD-202 · Applied Centura CVD'],['Scope','Pressure transducer calibration verification — annual requirement'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000907']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000907','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/4000907','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'unassign5': function(){
@@ -2363,7 +2522,7 @@ var sheets = {
   +'<div class="sheet-sub">Order 4000908 · Unassigned · Release available now</div>'
   +rows([['Activity type','Software update — planned'],['Priority','P3 — recommended update'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1 hour'],['Tool','10190559 CVD-205 · Applied Centura CVD'],['Scope','Process controller firmware update — latest AMAT release'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000908']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000908','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/4000908','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'unassign6': function(){
@@ -2371,7 +2530,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-48832 · Unassigned · Reported this morning</div>'
   +rows([['Activity type','Corrective — customer reported'],['Priority','P3 — needs triage','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','1.5 hours'],['Tool','10190564 CVD-210 · Applied Centura CVD'],['Reported by','Customer — odor reported near enclosure'],['Entitlement','Applied Global Care — Platinum · Covered'],['CRM ticket','SR-48832']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48832','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/SR-48832','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'unassign7': function(){
@@ -2379,7 +2538,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-48833 · Unassigned · Flagged by AIx today</div>'
   +rows([['Activity type','Remote diagnostic consult'],['Priority','P3 — AIx flagged anomaly','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1 hour'],['Tool','10190565 CVD-211 · Applied Centura CVD'],['Fault description','Anomalous OEE dip flagged by AIx — no operator-reported issue'],['Entitlement','Applied Global Care — Gold · Covered'],['CRM ticket','SR-48833']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-48833','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/SR-48833','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'b1unassign1': function(){
@@ -2387,7 +2546,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-49001 · Unassigned · Building 1</div>'
   +rows([['Activity type','Remote diagnostic consult'],['Priority','P3 — process engineering request','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','1 hour'],['Tool','10190442 CVD-152 · Applied Centura CVD · Building 1'],['Fault description','RF power delivery drift · 25 min trending — Generator 1'],['Entitlement','Applied Global Care — Platinum · Covered'],['CRM ticket','SR-49001']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-49001','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/SR-49001','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'b1unassign2': function(){
@@ -2395,7 +2554,7 @@ var sheets = {
   +'<div class="sheet-sub">CRM Ticket SR-49002 · Unassigned · Building 1</div>'
   +rows([['Activity type','Corrective — on-site inspection'],['Priority','P3 — needs inspection','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(1)],['Planned finish',plannedDate(2)],['Estimated duration','1.5 hours'],['Tool','10190446 CVD-156 · Applied Centura CVD · Building 1'],['Fault description','Chamber pressure trending · 40 min — Chamber A'],['Entitlement','Applied Global Care — Gold · Covered'],['CRM ticket','SR-49002']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/SR-49002','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/SR-49002','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'b1unassign3': function(){
@@ -2403,7 +2562,7 @@ var sheets = {
   +'<div class="sheet-sub">Order 4000950 · Unassigned · Building 1</div>'
   +rows([['Activity type','Parts installation — planned'],['Priority','P2 — degrading component','amber'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(0)],['Planned finish',plannedDate(0)],['Estimated duration','2 hours'],['Tool','10190450 CVD-160 · Applied Centura CVD · Building 1'],['Parts','Susceptor heater element kit — received in inventory'],['Entitlement','Applied Global Care — Platinum · Covered'],['ECC order','4000950']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000950','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/4000950','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';},
 
 'b1unassign4': function(){
@@ -2411,7 +2570,7 @@ var sheets = {
   +'<div class="sheet-sub">Order 4000951 · Unassigned · Building 1</div>'
   +rows([['Activity type','Calibration verification — planned'],['Priority','P4 — routine'],['Assigned to','Unassigned — awaiting dispatch'],['Planned start',plannedDate(2)],['Planned finish',plannedDate(4)],['Estimated duration','2 hours'],['Tool','10190440 CVD-150 · Applied Centura CVD · Building 1'],['Scope','Process baseline calibration verification — annual requirement'],['Entitlement','Applied Global Care — Gold · Covered'],['ECC order','4000951']])
   +'<div class="faux-links">'
-  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/4000951','Direct activity link — available when running as FSM Mobile extension')
+  +fauxLink('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>','fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/4000951','Direct activity link — available when running as FSA Mobile extension')
   +'</div>';}
 };
 
@@ -2427,7 +2586,7 @@ var B4_TOOLS = [
   {t:203, eq:'10190558', h:88, ch:'ok'},
   {t:205, eq:'10190559', h:94, ch:'ok'},
   {t:206, eq:'10190560', h:89, ch:'ok'},
-  {t:207, eq:'10190561', h:79, ch:'pm',   note:'PM rescheduled to 15:00 · FSM P&S'},
+  {t:207, eq:'10190561', h:79, ch:'pm',   note:'PM rescheduled to 15:00 · FSA P&S'},
   {t:208, eq:'10190562', h:71, ch:'rstr', note:'RF power drift · Generator 1'},
   {t:209, eq:'10190563', h:92, ch:'ok'},
   {t:210, eq:'10190564', h:86, ch:'ok'},
@@ -2512,7 +2671,7 @@ function installLen(ph){ return ph[1] - ph[0] + 1; }
 // ── Upcoming activity detail sheets (days relative to today) ──
 (function addUpcomingActivitySheets(){
   var DOC_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>';
-  var FSM_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>';
+  var FSA_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>';
   var UP = {
     act6:  {day:1, time:'10:30', title:'10190551 CVD-204 · Throttle Valve Replacement — Chamber A', ref:'Order 4000821 · Follow-up operation', type:'Corrective — planned repair', prio:['P1 follow-up — tool down','red'], dur:'3 hours', tool:'10190552 CVD-204-CHA · Process Chamber A',
             extra:[['Parts','AMAT-THROT-VALVE — confirmed available, shipped today'],['Root cause','Throttle valve degradation — AIx probability 84%'],['Entitlement','Applied Global Care — Platinum · Covered']],
@@ -2535,6 +2694,30 @@ function installLen(ph){ return ph[1] - ph[0] + 1; }
                    ['Completion documents','Phase 1 completion certificate · set-in-place photo set · leveling report']],
             steps:['Site readiness and floor-load check','Uncrating and incoming inspection','Rigging and set-in-place','Leveling and seismic anchoring','Mainframe and chamber mechanical assembly','Phase 1 sign-off'], link:'4000835',
             doc:'Phase 1 completion certificate (PDF)'},
+    act16: {day:0, time:'10:00', title:'10190551 CVD-204 · Remote Diagnostics — Chamber Pressure Exceedance', ref:'Escalation ESC-2291 · Tier 2', type:'Remote diagnostics — escalation', prio:['P1 — tool down','red'], dur:'1 hour', tool:'10190552 CVD-204-CHA · Process Chamber A',
+            extra:[['With','Philip White (Service CE, on site) · Teams'],['Evidence','Pressure 0.00642 mbar · AIx throttle valve degradation 84%'],['Linked','Notification 10042817 · APM alert APM-ALT-204-0042']],
+            steps:['Review APM and AIx evidence','Remote session with field CE','Confirm root cause','Agree repair plan','Update escalation'], link:'ESC-2291'},
+    act17: {day:1, time:'09:30', title:'10190442 CVD-152 · RF Power Drift — Remote Triage', ref:'Escalation ESC-2285 · Building 1', type:'Remote diagnostics — escalation', prio:['P2 — at risk','amber'], dur:'1 hour', tool:'10190442 CVD-152',
+            extra:[['Requested by','J. Okafor (Service CE, Building 1)'],['Linked','CRM ticket SR-49001']],
+            steps:['Review APM trend','Remote session with field CE','Recommend next action'], link:'ESC-2285'},
+    act18: {day:2, time:'14:00', title:'10190551 CVD-204 · Knowledge Capture — Throttle Valve Degradation Signature', ref:'From escalation ESC-2291', type:'Knowledge management', prio:['P3 — scheduled'], dur:'1.5 hours', tool:'10190551 CVD-204',
+            extra:[['Output','Knowledge article + AIx pattern library entry'],['Reuse','Similar signature on CVD-156 (Building 1) — chamber pressure trending']],
+            steps:['Collect diagnostics and repair outcome','Draft knowledge article','Peer review','Publish to field engineers'], link:'ESC-2291'},
+    act19: {day:4, time:'11:00', title:'10190560 CVD-206 · Recipe Drift — Joint Review with Process Support', ref:'Escalation ESC-2279', type:'Remote consult — joint review', prio:['P3 — scheduled'], dur:'1 hour', tool:'10190560 CVD-206',
+            extra:[['With','{name:process} (Process Support Engineer)'],['Linked','CRM ticket SR-48831 · Recipe change RCR-1187'],['Trigger','Deposition rate +2.6% vs bay mean']],
+            steps:['Review matching data','Review RCR-1187 proposal','Agree qualification plan'], link:'ESC-2279'},
+    act20: {day:0, time:'14:00', title:'10190559 CVD-205 · Process Controller Update — Pre-check & Backup', ref:'Order 4000908', type:'Software — pre-update check', prio:['P3 — scheduled'], dur:'1.5 hours', tool:'10190559 CVD-205',
+            extra:[['Current version','Centura OS 8.3.7'],['Target version','Centura OS 8.4.2 (baseline)'],['Update','Unassigned activity — controller firmware update, planned tomorrow']],
+            steps:['Confirm tool state with fab','Back up controller and recipes','Verify update package checksum','Hand over for update'], link:'4000908'},
+    act21: {day:1, time:'09:00', title:'10190560 CVD-206 · Recipe Change Review — RCR-1187', ref:'Recipe change request RCR-1187', type:'Software — recipe change review', prio:['P3 — scheduled'], dur:'1 hour', tool:'10190560 CVD-206',
+            extra:[['Requested by','{name:process} (Process Support Engineer)'],['Change','DEP-OX-450 step 4 deposition time 118 s → 120 s'],['Linked','Escalation ESC-2279']],
+            steps:['Review change and recipe history','Check controller compatibility','Approve for process qualification'], link:'RCR-1187'},
+    act22: {day:3, time:'10:00', title:'CVD Bay Building 4 · Controller Software Baseline Audit', ref:'Quarterly compliance check', type:'Software — compliance audit', prio:['P4 — routine'], dur:'2 hours', tool:'11 production tools · CVD Bay Building 4',
+            extra:[['Baseline','Centura OS 8.4.2 · recipe library v2026.10'],['Current','9 of 11 tools on baseline']],
+            steps:['Pull versions from each tool','Compare to baseline','Raise update requests','Publish audit report'], link:'AUDIT-Q4'},
+    act23: {day:5, time:'20:00', title:'10190563 CVD-209 · SP-8.4.2-HF3 Patch Deployment', ref:'Change window 20:00 – 22:00', type:'Software — patch deployment', prio:['P3 — scheduled'], dur:'2 hours', tool:'10190563 CVD-209',
+            extra:[['Patch','SP-8.4.2-HF3 · chamber pressure controller tuning fix'],['From → to','8.4.1 → 8.4.2-HF3'],['Rollback','Snapshot and rollback plan approved']],
+            steps:['Pre-deployment backup','Apply patch','Controller self-test','Process verification wafer','Release tool to production'], link:'SP-8.4.2-HF3'},
     act12: {span:'p2', time:'07:00 – 15:30 daily', title:'10190566 CVD-213 · Tool Installation — Phase 2: Electrical & Facilities Hookup', ref:'Order 4000835 · Phase 2 of 3', type:'Tool installation — multi-day phase', prio:['P2 — scheduled installation'], dur:'25 days · daily 07:00 – 15:30', tool:'10190566 CVD-213 · Applied Centura CVD — new unit',
             extra:[['PS WBS element','AMAT-INSTALL-2026-0042-01-02'],['Crew','Install CE lead · electrical contractor (2) · AMAT facilities'],['Work complete','40%']],
             steps:['Power distribution and main breaker hookup','Chamber and RF electrical hookup','Process gas and N\u2082 purge lines','Process cooling water and exhaust','Interlock and EMO checks','Facilities sign-off and handover'], stepAt:2, link:'4000835'},
@@ -2580,7 +2763,7 @@ function installLen(ph){ return ph[1] - ph[0] + 1; }
       a.extra.forEach(function(x){
         var v = x[1] === null ? plannedDate(INSTALL_PLAN.commission)
               : x[1] === 'SIGNOFF' ? personaGet('install').name + ' (Install CE) \u00b7 Customer fab facilities \u00b7 ' + plannedDate(ph[1])
-              : x[1];
+              : x[1].replace(/\{name:(\w+)\}/g, function(m, id){ return personaGet(id).name; });
         r.push([x[0], v]);
       });
       return '<div class="sheet-title">'+a.title+'</div>'
@@ -2589,8 +2772,8 @@ function installLen(ph){ return ph[1] - ph[0] + 1; }
         +'<div class="stepper-header">'+stepHead+'</div>'
         +stepper(a.steps, at)
         +'<div class="faux-links">'
-        +(a.doc ? fauxLink(DOC_ICON,'fsm',a.doc,'https://fsm.yourtenant.com/attachments/'+a.link+'/phase1-completion.pdf','Attachment on the FSM activity — available in connected deployment') : '')
-        +fauxLink(FSM_ICON,'fsm','Open activity in FSM Mobile','https://fsm.yourtenant.com/activities/'+a.link,'Direct activity link — available when running as FSM Mobile extension')+'</div>';
+        +(a.doc ? fauxLink(DOC_ICON,'fsa',a.doc,'https://fsa.yourtenant.com/attachments/'+a.link+'/phase1-completion.pdf','Attachment on the FSA activity — available in connected deployment') : '')
+        +fauxLink(FSA_ICON,'fsa','Open activity in FSA Mobile','https://fsa.yourtenant.com/activities/'+a.link,'Direct activity link — available when running as FSA Mobile extension')+'</div>';
     };
   });
   function DATE_LONG(n){ var d = dayFromToday(n); return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]+' '+d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]; }
@@ -2873,7 +3056,15 @@ var PERSONAS = [
   {id:'process', name:'Daniel Kim', initials:'DK', type:'Process Support Engineer', short:'Process SE', ce:false, prof:'principal',
    color:['#C2FCEE','#046C7A'], shift:'Fab A — Process Engineering · Shift start 08:00',
    acts:['act4','act10','act11'], panels:['process'],
-   preset:{order:['priority','process','telemetry','overview','activities','tools'], hidden:['tools'], collapsed:['activities'], options:{range:'next7', tab:'myact', zone:'b4'}}}
+   preset:{order:['priority','process','telemetry','overview','activities','tools'], hidden:['tools'], collapsed:['activities'], options:{range:'next7', tab:'myact', zone:'b4'}}},
+  {id:'tse', name:'Aisha Rahman', initials:'AR', type:'Technical Support Engineer', short:'Technical SE', ce:false, prof:'senior',
+   color:['#FFF3B8','#A45D00'], shift:'AGS Remote Support Center · Shift start 08:00',
+   acts:['act16','act4','act17','act18','act19'], panels:['escalation'],
+   preset:{order:['priority','escalation','activities','telemetry','overview','tools'], hidden:['tools'], collapsed:['overview'], options:{range:'next3', tab:'myact', zone:'b4', criticalOnly:true}}},
+  {id:'sse', name:'Tom Becker', initials:'TB', type:'Software Support Engineer', short:'Software SE', ce:false, prof:'intermediate',
+   color:['#FFD0E7','#BA066C'], shift:'AGS Software Support · Shift start 09:00',
+   acts:['act20','act21','act22','act23'], panels:['software'],
+   preset:{order:['priority','software','activities','tools','overview','telemetry'], hidden:['telemetry'], collapsed:['tools','overview'], options:{range:'next7', tab:'myact', zone:'b4'}}}
 ];
 // Proficiency only adjusts a few defaults (not a layout per level)
 var PROF_LEVELS = [
@@ -2958,7 +3149,7 @@ function personaSwitch(id, silent){
   lpApplyOptions(cfg, null);
   personaApplyProfRules();
   afApply();
-  ipRender(); ppRender();
+  ipRender(); ppRender(); escRender(); swRender();
   window.scrollTo(0, 0);
   if (!silent) showToaster('Now viewing as ' + p.name + ' · ' + p.short);
 }
@@ -3182,6 +3373,170 @@ personaRenderHeader();
 ipRender();
 ppRender();
 
+// ── Support personas: Escalation queue (TSE) + Tool software & recipes (SSE) ──
+// Content links to data already on the page (P1 on CVD-204, CVD-208 RF drift, CVD-206 recipe drift,
+// the CVD-205 firmware update in Unassigned) so a persona switch tells one connected story.
+function supWhen(d, t){ return (d === 0 ? 'Today' : d === 1 ? 'Tomorrow' : afWeekday(d) + ' ' + afShortDate(d)) + (t ? ' · ' + t : ''); }
+var SUP_ICON = {
+  case: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+  doc:  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0064D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+  chev: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>',
+  check:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+};
+
+// ── Escalation cases (tier 2) ──
+function escCases(){
+  var dk = personaGet('process').name, ph = personaGet('philip').name;
+  return [
+    {id:'ESC-2291', key:'esc2291', prio:'P1', pcls:'escalated', tool:'10190551 CVD-204', toolKey:'cvd204', title:'Chamber A pressure exceedance — throttle valve suspected',
+     from: ph + ' (Service CE)', opened:'2h 31m ago', status:'Remote diagnostics in progress', sla:['1h 29m left','neg'], step:2,
+     refs:'Notification 10042817 · APM alert APM-ALT-204-0042', evidence:'AIx: throttle valve degradation · 84% confidence', session:{d:0, t:'10:00', key:'act16'}},
+    {id:'ESC-2288', key:'esc2288', prio:'P2', pcls:'high', tool:'10190562 CVD-208', toolKey:'cvd208', title:'RF power drift — matching network suspected',
+     from: ph + ' (Service CE)', opened:'Today 07:40', status:'Remote review scheduled · 13:30', sla:['On track','pos'], step:2,
+     refs:'CRM ticket SR-48821 · Notification 10042831', evidence:'AIx: matching network degradation · 71% confidence', session:{d:0, t:'13:30', key:'act4'}},
+    {id:'ESC-2285', key:'esc2285', prio:'P2', pcls:'high', tool:'10190442 CVD-152', toolKey:'cvd152', title:'RF power drift — remote review requested (Building 1)',
+     from:'J. Okafor (Service CE, Building 1)', opened:'Today 08:55', status:'New — awaiting triage', sla:['6h left','info'], step:1,
+     refs:'CRM ticket SR-49001', evidence:'APM: RF delivery trending above nominal', session:{d:1, t:'09:30', key:'act17'}},
+    {id:'ESC-2279', key:'esc2279', prio:'P3', pcls:'medium', tool:'10190560 CVD-206', toolKey:'cvd206', title:'Recipe drift — deposition rate +2.6% vs bay mean',
+     from:'Customer process engineering', opened:'Yesterday 15:10', status:'Waiting on Process Support (' + dk + ')', sla:['On track','pos'], step:3,
+     refs:'CRM ticket SR-48831 · Recipe change RCR-1187', evidence:'Chamber matching: CVD-206 outside ±2% band', session:{d:4, t:'11:00', key:'act19'}},
+    {id:'ESC-2274', key:'esc2274', prio:'P3', pcls:'medium', tool:'10190440 CVD-150', toolKey:'cvd150', title:'Pressure transducer calibration offset',
+     from:'K. Nguyen (Service CE, Building 1)', opened:'2 days ago', status:'Resolved yesterday · KA-0412 published', sla:['Resolved','pos'], step:5, resolved:true,
+     refs:'CRM ticket SR-48790 · Knowledge article KA-0412', evidence:'Remote fix — no site visit needed'}
+  ];
+}
+var ESC_STEPS = ['Raised by field engineer','Tier 2 triage','Remote diagnostics','Resolution plan','Knowledge capture'];
+function escRender(){
+  var el = document.getElementById('esc-card'); if (!el) return;
+  var cases = escCases(), open = cases.filter(function(c){ return !c.resolved; });
+  var p1 = open.filter(function(c){ return c.prio === 'P1'; }).length;
+  var risk = open.filter(function(c){ return c.sla[1] === 'neg'; }).length;
+  var kpi = function(v, l, cls){ return '<div class="esc-kpi"><div class="esc-kpi-v ' + (cls || '') + '">' + v + '</div><div class="esc-kpi-l">' + l + '</div></div>'; };
+  var sessions = cases.filter(function(c){ return c.session && c.session.d === 0; });
+  el.innerHTML =
+      '<div class="esc-kpis">' + kpi(open.length, 'Open escalations') + kpi(p1, 'P1', 'neg') + kpi(risk, 'SLA at risk', 'neg') + kpi('72%', 'Remote first-time fix · 30 days', 'pos') + '</div>'
+    + '<div class="esc-list">' + cases.map(function(c){
+        return '<button type="button" class="esc-row' + (c.resolved ? ' done' : '') + '" onclick="openSheet(\'' + c.key + '\')">'
+          + '<span class="act-priority ' + c.pcls + ' esc-prio">' + c.prio + '</span>'
+          + '<span class="esc-main"><span class="esc-id">' + c.id + ' · ' + c.tool + '</span>'
+          + '<span class="esc-title">' + c.title + '</span>'
+          + '<span class="esc-from">From ' + c.from + ' · opened ' + c.opened + '</span></span>'
+          + '<span class="esc-side"><span class="esc-status">' + (c.resolved ? '<span class="esc-ok">' + SUP_ICON.check + '</span>' : '') + c.status + '</span>'
+          + '<span class="esc-sla ' + c.sla[1] + '">' + c.sla[0] + '</span></span>'
+          + '<span class="esc-chev">' + SUP_ICON.chev + '</span></button>';
+      }).join('') + '</div>'
+    + '<div class="esc-sessions"><div class="ip-col-h">Remote-assist sessions today <span class="ip-col-sub">Teams · with the field engineer on site</span></div>'
+    + sessions.map(function(c){
+        return '<button type="button" class="ip-row ip-link" onclick="openSheet(\'' + c.session.key + '\')"><span class="ip-when">' + supWhen(0, c.session.t) + '</span>'
+          + '<span class="ip-what">' + c.id + ' · ' + c.tool.split(' ')[1] + ' — ' + c.title.split(' — ')[0] + '</span>' + SUP_ICON.chev + '</button>';
+      }).join('') + '</div>';
+}
+
+// ── Tool software & recipes ──
+var SW_BASELINE = '8.4.2';
+function swTools(){
+  return [
+    ['cvd201','CVD-201','8.4.2','ok'], ['cvd202','CVD-202','8.4.2','ok'], ['cvd203','CVD-203','8.4.2','ok'],
+    ['cvd204','CVD-204','8.4.2','hold'], ['cvd205','CVD-205','8.3.7','sched'], ['cvd206','CVD-206','8.4.2','ok'],
+    ['cvd207','CVD-207','8.4.2','ok'], ['cvd208','CVD-208','8.4.2','ok'], ['cvd209','CVD-209','8.4.1','patch'],
+    ['cvd210','CVD-210','8.4.2','ok'], ['cvd211','CVD-211','8.4.2','ok'], ['cvd213','CVD-213','—','inst']
+  ];
+}
+var SW_STATUS = {
+  ok:    ['pos',  'On baseline'],
+  hold:  ['neg',  'On baseline · HF3 pending (tool down)'],
+  sched: ['crit', 'Update to 8.4.2 · Tomorrow'],
+  patch: ['info', 'HF3 patch · change window'],
+  inst:  ['purple','Loads 8.4.2 at Phase 3']
+};
+function swChanges(){
+  var dk = personaGet('process').name;
+  return {
+    patches: [
+      {id:'SP-8.4.2-HF3', key:'swhf3', title:'Chamber pressure controller tuning fix', meta:'CVD-204, CVD-209 · approved · window ' + supWhen(5, '20:00'), st:['info','Approved']},
+      {id:'SEC-2026-114', key:'swsec', title:'Controller OS security update', meta:'All tools · in validation · est. release ' + supWhen(12), st:['crit','In validation']}
+    ],
+    rcrs: [
+      {id:'RCR-1187', key:'rcr1187', title:'CVD-206 · DEP-OX-450 deposition time +2 s to correct rate drift', meta:'From ' + dk + ' (Process SE) · review ' + supWhen(1, '09:00'), st:['crit','Pending review']},
+      {id:'RCR-1183', key:'rcr1183', title:'CVD-208 · RF ramp profile v3', meta:'On hold until RF matching network inspection (' + supWhen(2) + ')', st:['neutral','On hold']},
+      {id:'RCR-1179', key:'rcr1179', title:'Bay-wide · recipe library sync to v2026.10', meta:'Deployed to 8 of 11 tools', st:['pos','Approved']}
+    ]
+  };
+}
+function swRender(){
+  var el = document.getElementById('sw-card'); if (!el) return;
+  var tools = swTools(), ch = swChanges();
+  var onBase = tools.filter(function(t){ return t[2] === SW_BASELINE; }).length, counted = tools.filter(function(t){ return t[3] !== 'inst'; }).length;
+  var row = function(x){
+    return '<button type="button" class="sw-item" onclick="openSheet(\'' + x.key + '\')"><span class="sw-item-main"><span class="sw-item-id">' + x.id + '</span>'
+      + '<span class="sw-item-title">' + x.title + '</span><span class="sw-item-meta">' + x.meta + '</span></span>'
+      + '<span class="sw-chip ' + x.st[0] + '">' + x.st[1] + '</span>' + SUP_ICON.chev + '</button>';
+  };
+  el.innerHTML =
+      '<div class="sw-top"><div><div class="sw-base">Controller baseline · Centura OS ' + SW_BASELINE + '</div>'
+    + '<div class="sw-base-sub">CVD Bay — Building 4 · recipe library v2026.10</div></div>'
+    + '<div class="sw-meter"><div class="sw-meter-v">' + onBase + '<span> of ' + counted + '</span></div><div class="sw-meter-l">tools on baseline</div>'
+    + '<div class="sw-meter-bar"><span style="width:' + Math.round(onBase / counted * 100) + '%"></span></div></div></div>'
+    + '<div class="sw-cols"><div class="sw-col"><div class="ip-col-h">Controller software by tool <span class="ip-col-sub">tap a tool</span></div>'
+    + '<div class="sw-table">' + tools.map(function(t){
+        var st = SW_STATUS[t[3]];
+        return '<button type="button" class="sw-trow" onclick="openSheet(\'' + t[0] + '\')"><span class="sw-tool">' + t[1] + '</span>'
+          + '<span class="sw-ver' + (t[2] !== SW_BASELINE && t[2] !== '—' ? ' off' : '') + '">' + t[2] + '</span>'
+          + '<span class="sw-st"><span class="sw-dot ' + st[0] + '"></span>' + st[1] + '</span></button>';
+      }).join('') + '</div></div>'
+    + '<div class="sw-col"><div class="ip-col-h">Pending patches <span class="ip-col-sub">' + ch.patches.length + '</span></div>' + ch.patches.map(row).join('')
+    + '<div class="ip-col-h sw-gap">Recipe change requests <span class="ip-col-sub">' + ch.rcrs.length + '</span></div>' + ch.rcrs.map(row).join('') + '</div></div>';
+}
+
+// ── Detail sheets for cases, patches and recipe changes ──
+(function addSupportSheets(){
+  escCases().forEach(function(c0){
+    sheets[c0.key] = function(){
+      var c = escCases().filter(function(x){ return x.key === c0.key; })[0];
+      var r = [['Priority', c.prio + (c.prio === 'P1' ? ' — tool down' : ''), c.prio === 'P1' ? 'red' : null], ['Tool', c.tool], ['Raised by', c.from], ['Opened', c.opened],
+               ['Status', c.status, c.resolved ? 'green' : null], ['Response SLA', c.sla[0], c.sla[1] === 'neg' ? 'red' : null], ['Linked records', c.refs], ['Evidence', c.evidence],
+               ['Tier 2 owner', personaGet('tse').name + ' · Technical Support Engineer']];
+      if (c.session) r.push(['Remote-assist session', supWhen(c.session.d, c.session.t) + ' · Teams']);
+      return '<div class="sheet-title">' + c.id + ' · ' + c.title + '</div>'
+        + '<div class="sheet-sub">Tier 2 escalation · ' + c.tool + '</div>'
+        + rows(r.map(function(x){ return x[2] ? x : [x[0], x[1]]; }))
+        + '<div class="stepper-header">Escalation workflow · ' + (c.resolved ? 'Closed' : 'Step ' + (c.step + 1) + ' of ' + ESC_STEPS.length) + '</div>'
+        + stepper(ESC_STEPS, c.resolved ? ESC_STEPS.length : c.step)
+        + '<div class="faux-links">'
+        + fauxLink(SUP_ICON.case, 'fsa', 'Open ticket in SAP CRM', 'https://crm.yourtenant.com/tickets/' + c.refs.match(/SR-\d+|10042817/)[0], 'Live link to the CRM ticket — available in connected deployment')
+        + '<div class="faux-link" onclick="openChildSheet(\'' + c.toolKey + '\')"><div class="faux-link-icon fsa">' + SUP_ICON.doc + '</div><div class="faux-link-text"><div class="faux-link-label">View tool ' + c.tool + '</div><div class="faux-link-url">Equipment detail and sub-assemblies</div></div></div>'
+        + '</div>';
+    };
+  });
+  var SW_SHEETS = {
+    swhf3: {t:'SP-8.4.2-HF3 · Chamber pressure controller tuning fix', sub:'Software patch · Centura OS 8.4.2',
+      rows:function(){ return [['Status','Approved — awaiting change window','green'],['Applies to','10190551 CVD-204 · 10190563 CVD-209'],['Change window', supWhen(5, '20:00 – 22:00') + ' (CVD-209)'],['CVD-204','Deploy after throttle valve repair and verification'],['Fixes','Pressure control loop oscillation under high-flow recipes'],['Rollback','Snapshot and rollback plan approved'],['Approved by','AMAT software release board']]; },
+      steps:['Release notes reviewed','Lab validation','Change approval','Deployment','Post-deployment verification'], at:3},
+    swsec: {t:'SEC-2026-114 · Controller OS security update', sub:'Security patch · all Centura tools',
+      rows:function(){ return [['Status','In validation'],['Applies to','All 11 production tools in Building 4'],['Est. release', supWhen(12)],['Risk','Medium — no process impact expected'],['Validation','Running on lab tool LAB-CVD-02']]; },
+      steps:['Release notes reviewed','Lab validation','Change approval','Deployment','Post-deployment verification'], at:1},
+    rcr1187:{t:'RCR-1187 · CVD-206 recipe change — DEP-OX-450', sub:'Recipe change request · deposition time +2 s',
+      rows:function(){ return [['Status','Pending software review'],['Requested by', personaGet('process').name + ' (Process Support Engineer)'],['Reason','Deposition rate +2.6% vs bay mean — outside ±2% matching band'],['Change','Step 4 deposition time 118 s → 120 s'],['Review', supWhen(1, '09:00')],['Linked escalation','ESC-2279 · CRM ticket SR-48831']]; },
+      steps:['Requested','Software review','Process qualification','Approval','Deploy to tool'], at:1},
+    rcr1183:{t:'RCR-1183 · CVD-208 RF ramp profile v3', sub:'Recipe change request · on hold',
+      rows:function(){ return [['Status','On hold'],['Reason for hold','RF matching network inspection first (' + supWhen(2, '08:00') + ')'],['Change','RF ramp 2.0 s → 2.5 s on DEP-OX-450 step 3'],['Linked','Notification 10042831 · ESC-2288']]; },
+      steps:['Requested','Software review','Process qualification','Approval','Deploy to tool'], at:1},
+    rcr1179:{t:'RCR-1179 · Recipe library sync to v2026.10', sub:'Recipe change request · bay-wide',
+      rows:function(){ return [['Status','Approved · deploying','green'],['Progress','8 of 11 tools deployed'],['Remaining','CVD-205 (with controller update), CVD-209 (with HF3), CVD-204 (after repair)']]; },
+      steps:['Requested','Software review','Process qualification','Approval','Deploy to tool'], at:4}
+  };
+  Object.keys(SW_SHEETS).forEach(function(k){
+    sheets[k] = function(){
+      var x = SW_SHEETS[k];
+      return '<div class="sheet-title">' + x.t + '</div><div class="sheet-sub">' + x.sub + '</div>'
+        + rows(x.rows()) + '<div class="stepper-header">Change workflow · Step ' + (x.at + 1) + ' of ' + x.steps.length + '</div>' + stepper(x.steps, x.at)
+        + '<div class="faux-links">' + fauxLink(SUP_ICON.doc, 'fsa', 'Open change record', 'https://change.yourtenant.com/' + k, 'Change management record — available in connected deployment') + '</div>';
+    };
+  });
+})();
+escRender();
+swRender();
+
 // ── Landing page personalization (level 1: show / hide + reorder panels) ──
 var LP_PANELS = [
   {id:'priority',   name:'Priority alert',        desc:'P1 alerts and SLA status for your zone'},
@@ -3190,7 +3545,9 @@ var LP_PANELS = [
   {id:'telemetry',  name:'Tool telemetry alerts', desc:'SAP APM / AIx readings outside specification'},
   {id:'activities', name:'Activities',            desc:'Assigned and unassigned activities, filtered by date'},
   {id:'install',    name:'Installation progress', desc:'CVD-213 phases, milestones and punch list', persona:'install'},
-  {id:'process',    name:'Process performance',   desc:'Trends against spec limits, with AIx drift flags', persona:'process'}
+  {id:'process',    name:'Process performance',   desc:'Trends against spec limits, with AIx drift flags', persona:'process'},
+  {id:'escalation', name:'Escalation queue',      desc:'Tier 2 cases from field engineers and remote-assist sessions', persona:'tse'},
+  {id:'software',   name:'Tool software & recipes', desc:'Controller software baseline, patches and recipe change requests', persona:'sse'}
 ];
 // Administrator policy: a locked panel is always shown and pinned to the top.
 // (Mirrors company / policy-group settings — set locked:false to give users full control.)
@@ -3335,6 +3692,8 @@ function lpUpdateSummaries(){
   set('activities', (m || 0)+' assigned · '+(u || 0)+' unassigned · '+rg);
   set('install', 'Phase 2 of 3 · day ' + installDayOf(INSTALL_PLAN.p2, 0) + ' of ' + installLen(INSTALL_PLAN.p2) + ' · commissioning in ' + INSTALL_PLAN.commission + ' days');
   set('process', '1 out of control · 1 drifting · 2 tools outside matching band');
+  set('escalation', '4 open · 1 P1 · 1 SLA at risk · 2 remote sessions today');
+  set('software', '9 of 11 tools on baseline · 2 patches · 3 recipe changes');
 }
 // keep summaries current when the zone changes
 var _lpZoneChange = handleZoneChange;
