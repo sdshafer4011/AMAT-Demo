@@ -252,13 +252,19 @@ html, body { font-family: "72", "72full", -apple-system, 'SF Pro Text', 'Helveti
 .activity-tabs { display: flex; gap: 22px; margin-bottom: 12px; border-bottom: 1px solid var(--sapGroupBorder); }
 .activity-tab { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--text1); padding: 2px 2px 9px; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px; -webkit-user-select: none; white-space: nowrap; }
 .activity-tab.active { color: var(--sapHighlightColor); border-bottom-color: var(--sapHighlightColor); }
+/* tab labels share the vertical centre of the toolbar controls (30px control + 8px gap); underline stays on the bottom edge */
+.activity-tabs > .activity-tab { display: flex; align-items: center; align-self: stretch; padding: 0 2px 5px; }
 .activity-tabs-date { font-size: 12px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--sapLabelColor); white-space: nowrap; }
 .activity-tabs-right { margin-left: auto; display: flex; align-items: center; gap: 12px; padding-bottom: 8px; }
 .act-sched { display: flex; align-items: center; padding-bottom: 8px; }
-.act-sched-btn { font-family: inherit; font-size: 12px; font-weight: 700; color: #fff; background: var(--sapBrandColor); border: 1px solid var(--sapBrandColor); border-radius: var(--radius-sm) 0 0 var(--radius-sm); padding: 0 12px; height: 29px; cursor: pointer; white-space: nowrap; -webkit-user-select: none; }
+.act-sched-btn { font-family: inherit; font-size: 12px; font-weight: 700; color: #fff; background: var(--sapBrandColor); border: 1px solid var(--sapBrandColor); border-radius: var(--radius-sm) 0 0 var(--radius-sm); padding: 0 12px; cursor: pointer; white-space: nowrap; -webkit-user-select: none; }
 .act-sched-btn:active { background: var(--sapHighlightColor); }
 .act-sched-btn.off { background: var(--sapNeutralBackground); border-color: var(--sapButtonBorder); color: var(--sapIconMuted); cursor: not-allowed; }
-.act-sched-policy { font-family: inherit; font-size: 12px; font-weight: 600; color: var(--sapHighlightColor); background: var(--surface); border: 1px solid var(--sapBrandColor); border-left: 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; height: 29px; padding: 0 26px 0 10px; cursor: pointer; -webkit-appearance: none; appearance: none;
+/* one fixed control height across the Activities toolbar, so Safari and Chrome draw them identically */
+.activity-tabs .af-btn, .act-sched-btn, .act-sched-policy { height: 30px; box-sizing: border-box; line-height: 1; margin: 0; vertical-align: middle; }
+.activity-tabs .af-btn { padding-top: 0; padding-bottom: 0; }
+.activity-tabs .pf-sort select { height: 28px; line-height: 1; }
+.act-sched-policy { font-family: inherit; font-size: 12px; font-weight: 600; color: var(--sapHighlightColor); background: var(--surface); border: 1px solid var(--sapBrandColor); border-left: 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 0 26px 0 10px; cursor: pointer; -webkit-appearance: none; appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230064d9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 9px center; }
 .activity-select { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--sapBrandColor); cursor: pointer; }
 .activity-action-btn { display: none; background: var(--sapBrandColor); color: #fff; font-family: inherit; font-size: 12px; font-weight: 700; padding: 7px 14px; border-radius: var(--radius-sm); border: none; cursor: pointer; white-space: nowrap; -webkit-user-select: none; }
